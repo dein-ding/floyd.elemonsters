@@ -33,19 +33,20 @@
                 <!-- prettier-ignore -->
                 <input type="checkbox" id="settings-toggle" style="display: none" />
                 <div class="settings-panel">
-                    <h1>settings</h1>
-                    <div class="settings-item restartGame">
-                        <button
-                            class="restartButton"
-                            onclick="game.restart()"
-                            title="restart the game"
-                        >
+                    <h1>Settings</h1>
+                    <!-- prettier-ignore -->
+                    <div class="settings-item gameActions">
+
+                        <button class="resumeButton" onclick="startPauseButton.click()" title="resume the game">
+                            <i class="fad fa-play"></i>
+                        </button>
+                        <button class="restartButton" onclick="game.restart()" title="restart the game">
                             <i class="fad fa-redo-alt"></i>
                         </button>
                     </div>
                     <!-- prettier-ignore -->
                     <div class="settings-item maxScore">
-                        <label for="maxSoreSlider">max player score (<span id="maxScoreSpan">5</span>)</label>
+                        <label for="maxSoreSlider">Max Score (<span id="maxScoreSpan">5</span>)</label>
                         <div>
                             <span class="min">3</span>
                             <input id="maxScoreSlider" type="range" value="5" min="3" max="15"/>
@@ -56,9 +57,18 @@
                         <!-- prettier-ignore -->
                         <div>
                             <label for="gameColorInput">game color:</label>
-                            <input id="gameColorInput" type="color" value="#ffffff">
-                            <button class="randomColorButton"><i class="fad fa-random"></i></button>
+                            <div class="colorInputs">
+                                <input id="gameColorInput" type="color" value="#ffffff" title="change the game color scheme">
+                                <button class="randomColorButton" title="random color scheme"><i class="fad fa-random"></i></button>
+                            </div>
                         </div>
+                    </div>
+                    <div class="settings-item playAudio">
+                        <input type="checkbox" id="playAudioSwitch" checked style="display: none;">
+                        <label class="switch" for="playAudioSwitch">
+                            <span class="slider"></span>
+                        </label>
+                        play a die-sound
                     </div>
                 </div>
                 <canvas id="pongGame" width="1200" height="600"> </canvas>

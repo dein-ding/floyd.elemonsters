@@ -8,7 +8,7 @@
     <script defer src="js/menu.js"></script>
     <title>PHP playground</title>
 </head>
-<body>
+<body data-active-link=".phpPlaygroundLink">
     <?php
         echo "test 123"
     ?>
