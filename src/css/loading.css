@@ -1,0 +1,94 @@
+:root {
+    --blocks_color: rgb(0, 174, 255);
+    --background: rgb(1, 28, 70);
+    --blocks_count: 20;
+}
+body {
+    background: black;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", Courier, monospace;
+}
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* background: var(--background); */
+    animation: animateBackgroundC0lor 10s linear infinite;
+}
+@keyframes animateBackgroundC0lor {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+.loading {
+    transform: translateY(-18%);
+    position: relative;
+    /* width: 250px;
+    height: 250px; */
+}
+.loading .blocks {
+    position: absolute;
+    left: 50%;
+    width: 8px;
+    height: 25px;
+    border-radius: 3px;
+    background: var(--blocks_color);
+    transform: rotate(calc(calc(360deg / var(--blocks_count)) * var(--i)));
+    transform-origin: 0 150px;
+
+    box-shadow: 0 0 5px var(--blocks_color), 0 0 15px var(--blocks_color),
+        0 0 30px var(--blocks_color), 0 0 60px var(--blocks_color),
+        0 0 90px var(--blocks_color);
+
+    animation: animate 2s ease-in-out infinite;
+    animation-delay: calc(calc(1s / var(--blocks_count)) * var(--i));
+}
+@keyframes animate {
+    0%,
+    47% {
+        /* background: var(--background);
+        box-shadow: none; */
+        opacity: 0%;
+    }
+    53%,
+    100% {
+        /* background: var(--blocks_color);
+        box-shadow: 0 0 5px var(--blocks_color),
+                    0 0 15px var(--blocks_color),
+                    0 0 30px var(--blocks_color),
+                    0 0 60px var(--blocks_color),
+                    0 0 90px var(--blocks_color); */
+        opacity: 100%;
+    }
+}
+h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 132px);
+    font-size: 2em;
+    color: var(--blocks_color);
+    /* letter-spacing: 1px; */
+    text-shadow: 0 0 5px var(--blocks_color), 0 0 15px var(--blocks_color),
+        0 0 30px var(--blocks_color);
+
+    animation: animateText 2s ease-in-out infinite;
+    animation-delay: -1s;
+}
+@keyframes animateText {
+    0%,
+    100% {
+        opacity: 20%;
+    }
+    50% {
+        opacity: 100%;
+    }
+}

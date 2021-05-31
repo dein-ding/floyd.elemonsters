@@ -1,0 +1,119 @@
+body {
+    font-family: helvetica;
+
+    min-height: 100vh;
+    margin: 0;
+    box-sizing: border-box;
+    padding-top: 60px;
+
+    background: rgb(36, 36, 36);
+
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    height: 70vh;
+    width: 25%;
+
+    padding: 10px;
+    border-radius: 28px;
+
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "output output output output"
+        "btn-divide btn-multi btn-minus btn-AC"
+        "btn-7 btn-8 btn-9 btn-plus"
+        "btn-4 btn-5 btn-6 btn-plus"
+        "btn-1 btn-2 btn-3 btn-equal"
+        "btn-0 btn-0 btn-comma btn-equal";
+    grid-gap: 3px;
+
+    background-color: rgb(85, 85, 85);
+    box-shadow: 0 0 50px rgb(85, 85, 85);
+}
+@media screen and (max-width: 1600px) {
+    .container {
+        width: 30%;
+    }
+}
+@media screen and (max-width: 1300px) {
+    .container {
+        width: 37%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .container {
+        width: 47%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container {
+        width: 57%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .container {
+        width: 67%;
+    }
+}
+
+#btn-divide {
+    grid-area: btn-divide;
+} /* prettier-ignore */
+#output {grid-area: output;} /* prettier-ignore */
+#btn-multi {grid-area: btn-multi;} /* prettier-ignore */
+#btn-minus {grid-area: btn-minus;} /* prettier-ignore */
+#btn-AC {grid-area: btn-AC;} /* prettier-ignore */
+#btn-7 {grid-area: btn-7;} /* prettier-ignore */
+#btn-8 {grid-area: btn-8;} /* prettier-ignore */
+#btn-9 {grid-area: btn-9;} /* prettier-ignore */
+#btn-plus {grid-area: btn-plus;} /* prettier-ignore */
+#btn-4 {grid-area: btn-4;} /* prettier-ignore */
+#btn-5 {grid-area: btn-5;} /* prettier-ignore */
+#btn-6 {grid-area: btn-6;} /* prettier-ignore */
+#btn-1 {grid-area: btn-1;} /* prettier-ignore */
+#btn-2 {grid-area: btn-2;} /* prettier-ignore */
+#btn-3 {grid-area: btn-3;} /* prettier-ignore */
+#btn-equal {grid-area: btn-equal;} /* prettier-ignore */
+#btn-comma {grid-area: btn-comma;} /* prettier-ignore */
+#btn-0 {grid-area: btn-0;} /* prettier-ignore */
+
+#output {
+    padding: 10px;
+    font-weight: 900;
+
+    background-color: rgb(142, 142, 142);
+
+    display: grid;
+    place-items: center;
+}
+.btn,
+#output {
+    border-radius: 20px;
+    border: none;
+    font-size: 30pt;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.486);
+}
+.btn {
+    background: rgb(151, 150, 150);
+    transition: transform 180ms ease-in-out;
+}
+.btn:hover {
+    transform: scale(1.07);
+}
+.btn-orange {
+    background-color: rgb(253, 115, 36);
+}
+.btn-AC {
+    color: white;
+    font-weight: 800;
+
+    background-color: rgb(37, 37, 37);
+}
+
+footer {
+    color: white;
+}

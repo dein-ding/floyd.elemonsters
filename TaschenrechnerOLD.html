@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <!-- prettier-ignore -->
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet"/>
+        <!-- libraries -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- page items -->
+        <script src="src/scripts/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/css/main.css">
+
+        <title>Taschenrechner mit Tastatur</title>
+        <style type="text/css">
+            body {
+                font-family: helvetica;
+
+                min-height: 100vh;
+                margin: 0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                background: rgb(36, 36, 36);
+            }
+            #container {
+                background-color: rgb(85, 85, 85);
+
+                box-shadow: 0 0 50px rgb(85, 85, 85);
+                /* width: 445px; */
+                height: 85%;
+                /* margin: auto; */
+                /* margin-top: 5vh; */
+                padding: 11px;
+                border-radius: 28px;
+
+                transform: scale(0.85);
+            }
+            /* table {
+                width: 426px;
+                margin: auto;
+            } */
+            td {
+                height: 90px;
+            }
+            button {
+                /* width: 100%;
+                height: 100%; */
+                width: 105px;
+                height: 105px;
+                font-size: 30pt;
+
+                border: none;
+                border-radius: 20px;
+                background-color: rgb(151, 150, 150);
+
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.486);
+
+                transition: transform 180ms ease-in-out;
+            }
+            button:hover {
+                /* filter: brightness(1.2); */
+                transform: scale(1.07);
+            }
+            #button_0 {
+                width: 215px;
+            }
+            #button_AC {
+                color: white;
+                font-weight: 800;
+                
+                background-color: rgb(37, 37, 37);
+            }
+            #button_equal,
+            #button_plus {
+                height: 215px;
+            }
+            .buttons_orange {
+                background-color: rgb(253, 115, 36);
+            }
+
+            #output {
+                border-radius: 20px;
+
+                text-align: center;
+                /* font-family: "DotGothic16", sans-serif; */
+                font-family: arial;
+                font-size: 40pt;
+                color: rgb(0, 0, 0);
+                font-weight: 900;
+
+                background-color: rgb(142, 142, 142);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.486);
+            }
+            /* #button_toggle_settings {
+                height: 50px;
+                width: 50px;
+
+                position: absolute;
+                top: 8px;
+                left: 775;
+                transform: rotate(-90deg);
+
+                border-radius: 50%;
+
+                background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGwm-GZTmXSCSu1wBSTaxyO5TkKxkr9omYrw&usqp=CAU);
+                background-size: cover;
+                background-position-x: -9px;
+                background-position-y: 2px;
+            }
+            #settings_div {
+                background-color: rgb(2, 109, 77);
+                opacity: 1;
+
+                font-size: 13.5pt;
+
+                border-radius: 28px;
+                border: 2px solid black;
+                padding: 10px;
+
+                display: none;
+
+                height: 210px;
+                width: 220px;
+                position: absolute;
+                top: 63px;
+                left: 775px;
+            }
+            #Display_I_O {
+                width: 100px;
+                margin-top: 5px;
+            } */
+            footer {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+
+                color: white;
+            }
+        </style>
+    </head>
+    <body data-active-link="['#projectsLink','#taschenrechnerLink']">
+        <div id="container">
+            <table>
+                <tr>
+                    <td id="output" colspan="4"></td>
+                </tr>
+                <!--tr id="settings">
+                    <p>
+                        <input id="Display_I_O">
+                        <input type="checkbox" id="round_checkbox"><label for="round_checkbox">ergebnis runden</label>
+                    </p>
+                </tr-->
+                <tr>
+                    <td>
+                        <button
+                            onclick="add_rechenzeichen('/')"
+                            class="buttons_orange"
+                        >
+                            /
+                        </button>
+                    </td>
+                    <td>
+                        <button
+                            onclick="add_rechenzeichen('*')"
+                            class="buttons_orange"
+                        >
+                            *
+                        </button>
+                    </td>
+                    <td>
+                        <button
+                            onclick="add_rechenzeichen('-')"
+                            class="buttons_orange"
+                        >
+                            -
+                        </button>
+                    </td>
+                    <td><button onclick="AC()" id="button_AC">AC</button></td>
+                </tr>
+                <tr>
+                    <td><button onclick="add_character('7')">7</button></td>
+                    <td><button onclick="add_character('8')">8</button></td>
+                    <td><button onclick="add_character('9')">9</button></td>
+                    <td rowspan="2">
+                        <button
+                            onclick="add_rechenzeichen('+')"
+                            id="button_plus"
+                            class="buttons_orange"
+                        >
+                            +
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><button onclick="add_character('4')">4</button></td>
+                    <td><button onclick="add_character('5')">5</button></td>
+                    <td><button onclick="add_character('6')">6</button></td>
+                </tr>
+                <tr>
+                    <td><button onclick="add_character('1')">1</button></td>
+                    <td><button onclick="add_character('2')">2</button></td>
+                    <td><button onclick="add_character('3')">3</button></td>
+                    <td rowspan="2">
+                        <button
+                            onclick="calculate()"
+                            id="button_equal"
+                            class="buttons_orange"
+                        >
+                            =
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button onclick="add_character('0')" id="button_0">
+                            0
+                        </button>
+                    </td>
+                    <td><button onclick="add_character('.')">,</button></td>
+                </tr>
+            </table>
+            <!-- <button
+                id="button_toggle_settings"
+                onclick="toggle_settings()"
+            ></button>
+            <div id="settings_div">
+                <input type="checkbox" id="round_checkbox" /><label
+                    for="round_checkbox"
+                    >Ergebnis runden</label
+                >
+                <input id="Display_I_O" />
+            </div> -->
+        </div>
+        <script>
+            const output = document.getElementById("output");
+            const settings_div = document.getElementById("settings_div");
+            const tggl_settings_btn = document.getElementById(
+                "button_toggle_settings"
+            );
+            const round_checkbox = document.getElementById("round_checkbox");
+
+            var output_storage;
+            var eval_String = "";
+
+            //Bei Eingabe von Zahlen
+            function add_character(new_character) {
+                if (eval_String == "") eval_String = new_character;
+                else eval_String = eval_String + new_character;
+
+                output_func(eval_String);
+            }
+
+            //Bei Eingabe von Rechenzeichen
+            function add_rechenzeichen(new_rechenzeichen) {
+                if (eval_String == "") eval_String = "";
+                else {
+                    eval_String = eval_String + new_rechenzeichen;
+                    output_func(eval_String);
+                }
+            }
+
+            //Beim ausrechnen
+            function calculate() {
+                if (eval_String == "") eval_String = "";
+                else {
+                    if (round_checkbox.checked == false)
+                        eval_String = eval(eval_String);
+                    else eval_String = Math.round(eval(eval_String));
+
+                    output_func(eval_String);
+                }
+            }
+
+            function output_func(value) {
+                output.innerHTML = value;
+            }
+
+            function AC() {
+                eval_String = "";
+                output_func(eval_String);
+            }
+
+            function toggle_settings() {
+                let rotate;
+                if (settings_div.style.display == "none") {
+                    settings_div.style.display = "block";
+
+                    tggl_settings_btn.style.transform = "rotate(" + 0 + "deg)";
+                } else {
+                    settings_div.style.display = "none";
+
+                    tggl_settings_btn.style.transform =
+                        "rotate(" + -90 + "deg)";
+                }
+            }
+        </script>
+    </body>
+</html>

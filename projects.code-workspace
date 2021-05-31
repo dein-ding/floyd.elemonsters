@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "api",
+			"path": "../api"
+		},
+		{
+			"name": "floyd.elemonsters Projekt",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "floyd.elemonsters Projekt"
+	}
+}

@@ -1,0 +1,60 @@
+{
+    "sternzeichen": [
+        "Wasssermann",
+        "Fische",
+        "Widder",
+        "Stier",
+        "Zwillinge",
+        "Krebs",
+        "Löwe",
+        "Jungfrau",
+        "Waage",
+        "Skorpion",
+        "Schütze",
+        "Steinbock"
+    ],
+    "kategorieText": {
+        "liebe": [
+            "Genießen sie den Tag mit einem romantischen Abend zu zweit in vollen Zügen.",
+            "Alles Neue sagt Ihnen heute besonders zu und Sie sind offen für entsprechende Begegnungen mit dem anderen Geschlecht.",
+            "Am Nachmittag lassen Sie sich von Ihren Gefühlen stark beeinflussen. Man merkt Ihnen sofort an, wie es Ihnen geht.",
+            "Sie kommen nicht daran vorbei, sich den Schwierigkeiten und Konkurrenzsituationen in Beziehungen zu stellen.",
+            "Auf Sie warten heute überwiegend harmonische Planetenkonstellationen.",
+            "Sie kommen nicht daran vorbei, sich den Schwierigkeiten und Konkurrenzsituationen in Beziehungen zu stellen.",
+            "Auf Sie warten heute überwiegend harmonische Planetenkonstellationen.",
+            "Sie kommen nicht daran vorbei, sich den Schwierigkeiten und Konkurrenzsituationen in Beziehungen zu stellen.",
+            "Am Nachmittag und Abend, fällt es Ihnen besonders leicht, für sich zu sorgen und das zu tun, was Ihnen wohlbekommt.",
+            "Nehmen Sie Ihre Gefühle ernst! Diesen Vormittag reagieren Sie auf Angriffe besonders emotional.",
+            "Sie kommen nicht daran vorbei, sich den Schwierigkeiten und Konkurrenzsituationen in Beziehungen zu stellen.",
+            "Auf Sie warten heute überwiegend harmonische Planetenkonstellationen."
+        ],
+        "karriere": [
+            "Wenn Sie Ihre Kräfte direkt und effizient einsetzen, bleibt die Wirkung nicht aus.",
+            "Bedürfnisse, denen Sie kein Gehör schenken, melden sich heute besonders deutlich. Haben Sie genügend Abwechslung in ihrem Job?",
+            "Die belebende Stimmung unterstützt Sie, etwas zu unternehmen, was Sie schon lange gerne getan hätten.",
+            "Eine positive Sicht der Dinge erleichtert Ihnen jetzt vieles. Sie verfügen über Weitsicht und ein gestärktes Selbstvertrauen.",
+            "Am Vormittag können Sie ganz detaillierte, kleinteilige Arbeiten, die Fingerfertigkeit erfordern, erledigen.",
+            "Sie können sich für alles Zeit lassen und bekommen so auch schwierige Angelegenheiten besser organisiert.",
+            "Am Vormittag können Sie ganz detaillierte, kleinteilige Arbeiten, die Fingerfertigkeit erfordern, erledigen.",
+            "Heute werden Sie mit den Konsequenzen konfrontiert. Übernehmen Sie die Verantwortung! Sie können jetzt vieles verbessern.",
+            "Wenn Sie die Unruhe packt, sollten Sie sich eine Abwechslung gestatten.",
+            "Sie können sich für alles Zeit lassen und bekommen so auch schwierige Angelegenheiten besser organisiert.",
+            "Am Vormittag können Sie ganz detaillierte, kleinteilige Arbeiten, die Fingerfertigkeit erfordern, erledigen.",
+            "Sie können sich für alles Zeit lassen und bekommen so auch schwierige Angelegenheiten besser organisiert."
+        ],
+        "freundeskreis": [
+            "Nutzen Sie die Gelegenheit und Sie finden mehr freundliche Menschen und offene Türen als an anderen Tagen.",
+            "Sie handeln heute Nachmittag eher spontan aus dem Bauch heraus, als dass Sie sorgfältig überlegen.",
+            "Für die Anliegen anderer sind Sie offen und begegnen ihnen mit einer menschlichen und warmen Herzlichkeit.",
+            "Die Mitmenschen sind nicht so, wie Sie diese gerne hätten. Vielleicht benimmt sich ein Arbeitskollege wie es Ihnen nicht passt.",
+            "Die Mitmenschen sind nicht so, wie Sie diese gerne hätten. Vielleicht benimmt sich ein Arbeitskollege wie es Ihnen nicht passt.",
+            "Auf Sie warten heute überwiegend harmonische Planetenkonstellationen.",
+            "Sie kommen nicht daran vorbei, sich den Schwierigkeiten und Konkurrenzsituationen in Beziehungen zu stellen.",
+            "Die Mitmenschen sind nicht so, wie Sie diese gerne hätten. Vielleicht benimmt sich ein Arbeitskollege wie es Ihnen nicht passt.",
+            "Nehmen Sie Ihre Gefühle ernst! Diesen Vormittag reagieren Sie auf Angriffe besonders emotional.",
+            "Die Mitmenschen sind nicht so, wie Sie diese gerne hätten. Vielleicht benimmt sich ein Arbeitskollege wie es Ihnen nicht passt.",
+            "Auf Sie warten heute überwiegend harmonische Planetenkonstellationen.",
+            "Die Mitmenschen sind nicht so, wie Sie diese gerne hätten. Vielleicht benimmt sich ein Arbeitskollege wie es Ihnen nicht passt."
+        ]
+    }
+}

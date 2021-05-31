@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- prettier-ignore -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- libraries -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- main -->
+        <script src="src/scripts/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/css/main.css">
+
+        <title>Color Picker</title>
+        <link rel="stylesheet" href="src/css/colorPicker.css" />
+        <script type="text/javascript" src="src/scripts/colorPicker.js"></script>
+    </head>
+    <body data-active-link="['#projectsLink','#colorPickerLink']">
+        <header id="navBarHeader">
+            <!-- navBar goes here -->
+        </header>
+        <div class="clipboardMessage">
+            <i class="fas fa-copy"></i>&nbsp;&nbsp;
+            <span id="clipboardMessageSpan">RGB value copied!</span>
+        </div>
+        <div class="colorContainer">
+            <!-- divs are generated here -->
+            <span id="pipetteCursor" class="fa fa-eye-dropper"></span>
+            <!-- this span needs to be inside the container for some hover effects to work properly -->
+
+            <div class="addDivButtonContainer">
+                <button
+                    class="addDivButton"
+                    onclick="addColorFields(5)"
+                    data-description="addDivButton"
+                >
+                    <i class="fas fa-plus" data-description="addDivButton"></i>
+                </button>
+            </div>
+        </div>
+        <div class="centerInfoPanel">
+            <div class="infoPanel">
+                <h1>Color Picker</h1>
+                <h4>randomly generated colors for inspiration</h4>
+                <ul>
+                    <li id="firstLiTag">
+                        <i class="fa fa-eye-dropper"></i> hover over colors to
+                        see their RGB values
+                    </li>
+                    <li>
+                        click on the <i class="fas fa-plus"></i> button for more
+                        colors
+                    </li>
+                    <li>
+                        click <i class="fas fa-random"></i> to randomize the
+                        color
+                    </li>
+                    <li>
+                        click <i class="fas fa-copy"></i> to copy the RGB values
+                    </li>
+                </ul>
+                <h3>Settings</h3>
+                <p>
+                    generate
+                    <select id="colorTonesSelection">
+                        <option>random</option>
+                        <option>red</option>
+                        <option>green</option>
+                        <option>blue</option>
+                        <option>gray</option>
+                    </select>
+                    tones
+                </p>
+            </div>
+        </div>
+        <footer id="footer">
+            <!-- footer goes here -->
+        </footer>
+        <input
+            type="checkbox"
+            id="dontShowAusgabeDiv"
+            checked
+            style="display: none"
+        />
+        <div id="ausgabeDiv">
+            <!-- this div needs to be after the footer for some hover effects to work properly -->
+            R: <span id="R"></span><br />
+            G: <span id="G"></span><br />
+            B: <span id="B"></span><br />
+        </div>
+    </body>
+</html>

@@ -1,0 +1,156 @@
+:root {
+    --gameColor: white;
+}
+
+body {
+    background: hsl(0, 0%, 2%);
+    color: white;
+    font-family: helvetica;
+}
+main {
+    min-height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#pongGame {
+    /* height: 60vh;
+    width: 70vw; */
+
+    background: black;
+    border-radius: 8px;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+#startButton {
+    display: none;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30px, 20px);
+
+    border: none;
+    font-size: 4rem;
+    color: white;
+
+    background: transparent;
+}
+#startPauseButton {
+    z-index: 1;
+    position: absolute;
+    /* top: 10px;
+    right: 10px; */
+
+    transform: translate(550px, -230px);
+
+    border: none;
+    font-size: 3rem;
+    color: white;
+
+    opacity: 0.7;
+
+    background: transparent;
+}
+
+#settings-toggle:checked ~ .settings-panel {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+
+    /* transition: display 10ms 250ms; */
+}
+.settings-panel {
+    opacity: 0;
+    pointer-events: none;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 1.15rem;
+
+    background: rgba(55, 55, 55, 0.516);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.838);
+
+    transform: scale(0.7);
+    transition: all 200ms;
+}
+.settings-panel h1 {
+    margin: 0 0 10px;
+}
+.settings-panel .settings-item {
+    min-width: calc(100% - 20px);
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 6px;
+    padding: 10px;
+
+    background: rgba(74, 74, 74, 0.481);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.687);
+}
+.settings-panel .settings-item label {
+    margin-bottom: 15px;
+}
+
+.settings-panel .settings-item + .settings-item {
+    margin-top: 15px;
+}
+
+.settings-panel .settings-item.restartGame {
+    height: fit-content;
+    /* display: flex;
+    align-items: center; */
+
+    /* margin-top: 0; */
+    padding-top: 10px;
+}
+.restartButton {
+    font-size: 1.6rem;
+    color: black;
+    border: none;
+    border-radius: 5px;
+
+    flex-grow: 1;
+
+    background: var(--gameColor);
+
+    transition: 200ms;
+}
+.restartButton:hover {
+    transform: scaleX(1.08) scaleY(1.35);
+}
+
+#maxScoreSlider {
+    margin: 0 7px;
+}
+.min,
+.max {
+    filter: brightness(0.8);
+    font-size: 0.9rem;
+}
+
+.randomColorButton {
+    font-size: 1rem;
+    color: black;
+    border: none;
+    border-radius: 5px;
+
+    background: var(--gameColor);
+}

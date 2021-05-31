@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- libraries -->
+        <link
+            rel="stylesheet"
+            href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"
+        />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- page items -->
+        <script src="src/scripts/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/css/main.css" />
+
+        <title>Music</title>
+        <!-- <script src="src/scripts/music.js"></script> -->
+        <link rel="stylesheet" href="src/css/music.css" />
+    </head>
+    <body data-active-link="#musicLink">
+        <div class="background"></div>
+        <main>
+            <section id="widgets" class="section">
+                <iframe
+                    class="soundcloud"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1249442128&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=true&show_teaser=true"
+                ></iframe>
+                <iframe
+                    class="spotify"
+                    height="250"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                    src="https://open.spotify.com/embed/artist/13XQXZlGCmbAEbQ9ThJSwV"
+                ></iframe>
+            </section>
+        </main>
+        <footer id="footer"></footer>
+    </body>
+</html>

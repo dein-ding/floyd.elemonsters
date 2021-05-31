@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <title>Bitte warten...</title>
+        <link rel="stylesheet" type="text/css" href="src/css/loading.css" />
+
+        <meta http-equiv="refresh" content="0; url=home.html" />
+    </head>
+    <body>
+        <section class="loading">
+            <div>
+                <div class="blocks" style="--i: 1"></div>
+                <div class="blocks" style="--i: 2"></div>
+                <div class="blocks" style="--i: 3"></div>
+                <div class="blocks" style="--i: 4"></div>
+                <div class="blocks" style="--i: 5"></div>
+                <div class="blocks" style="--i: 6"></div>
+                <div class="blocks" style="--i: 7"></div>
+                <div class="blocks" style="--i: 8"></div>
+                <div class="blocks" style="--i: 9"></div>
+                <div class="blocks" style="--i: 10"></div>
+                <div class="blocks" style="--i: 11"></div>
+                <div class="blocks" style="--i: 12"></div>
+                <div class="blocks" style="--i: 13"></div>
+                <div class="blocks" style="--i: 14"></div>
+                <div class="blocks" style="--i: 15"></div>
+                <div class="blocks" style="--i: 16"></div>
+                <div class="blocks" style="--i: 17"></div>
+                <div class="blocks" style="--i: 18"></div>
+                <div class="blocks" style="--i: 19"></div>
+                <div class="blocks" style="--i: 20"></div>
+
+                <h3>Loading<span id="dots"></span></h3>
+            </div>
+        </section>
+        <script>
+            const dots = document.getElementById("dots");
+
+            redirect = setTimeout(() => {
+                location.href = "home.html";
+                /* location.replace("home.html") */
+            }, 4800);
+
+            var id = null;
+            var dots_var = 0,
+                text;
+            clearInterval(id);
+            setInterval(animate_dots, 1000);
+
+            function animate_dots() {
+                switch (dots_var) {
+                    case 0:
+                        text = "";
+                        break;
+                    case 1:
+                        text = ".";
+                        break;
+                    case 2:
+                        text = "..";
+                        break;
+                    case 3:
+                        text = "...";
+                        dots_var = -1;
+                        break;
+                }
+                dots.innerHTML = text;
+                dots_var++;
+            }
+        </script>
+    </body>
+</html>

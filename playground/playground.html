@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <script defer src="js/menu.js"></script>
+        <title>playground</title>
+        <style>
+            .timeOutputContainer {
+                /* position: fixed;
+                top: 10px;
+                right: 10px; */
+                margin: 0;
+            }
+            #timeOutput {
+                text-align: center;
+                margin: 0;
+                font-size: 2.5rem;
+            }
+            .timeOutputContainer :is(progress, meter) {
+                width: 100%;
+                margin: 0;
+            }
+            /* .second {
+                background: blue;
+            } */
+        </style>
+        <script>
+            var Time;
+
+            window.onload = () => {
+                Time = {
+                    output: {
+                        days: {
+                            meter: document.querySelector(".timeOutputContainer .day")
+                        },
+                        hours: {
+                            span: document.querySelector("#timeOutput span:first-of-type"),
+                            meter: document.querySelector(".timeOutputContainer .hour")
+                        },
+                        minutes: {
+                            span: document.querySelector("#timeOutput span:nth-of-type(2n)"),
+                            meter: document.querySelector(".timeOutputContainer .minute")
+                        },
+                        seconds: {
+                            span: document.querySelector("#timeOutput span:nth-of-type(3n)"),
+                            meter: document.querySelector(".timeOutputContainer .second"),
+                        },
+                    },
+                    start() {
+                        Time.refresh();
+                        setInterval(Time.refresh, 1);
+                    },
+                    display(time) {
+                        Time.output.days.meter.value = time.getHours();
+
+                        Time.output.hours.span.innerText = ("0" + time.getHours()).slice(-2);
+                        Time.output.hours.meter.value = time.getMinutes();
+
+                        Time.output.minutes.span.innerText = ("0" + time.getMinutes()).slice(-2);
+                        Time.output.minutes.meter.value = time.getSeconds();
+
+                        Time.output.seconds.span.innerText = ("0" + time.getSeconds()).slice(-2);
+                        Time.output.seconds.meter.value = time.getMilliseconds();
+                    },
+                    refresh() {
+                        Time.display(new Date());
+                    },
+                }; //prettier-ignore
+                Time.start();
+            };
+        </script>
+    </head>
+    <body>
+        <div class="main-container">
+            <time class="timeOutputContainer">
+                <h3 id="timeOutput">
+                    <span></span>:<span></span>:<span></span>
+                </h3>
+                <label>day: <meter min="0" max="23" class="day"></meter></label>
+                <label
+                    >hour: <meter min="0" max="59" class="hour"></meter
+                ></label>
+                <label
+                    >minute: <meter min="0" max="59" class="minute"></meter
+                ></label>
+                <label
+                    >second: <meter min="0" max="999" class="second"></meter
+                ></label>
+            </time>
+        </div>
+    </body>
+</html>

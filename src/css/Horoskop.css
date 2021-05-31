@@ -1,0 +1,205 @@
+:root {
+    --backDropBlur: 6px;
+
+    --primaryColor: #b812ff;
+
+    --roundButtonSize: 30px;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+
+    background-image: url(https://i.dailymail.co.uk/i/pix/2017/04/06/11/3F006CA900000578-0-image-a-21_1491475782242.jpg);
+    background-size: cover;
+    background-color: rgba(146, 44, 187, 0.612);
+    background-blend-mode: multiply;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container {
+    text-align: center;
+    width: 300px;
+    height: 405px;
+
+    /* margin: auto; */
+    /* transform: translateY(120px); */
+    border-radius: 15px;
+
+    font-size: 16pt;
+    font-family: helvetica;
+    color: white;
+
+    background: rgba(148, 148, 148, 0.255);
+    -webkit-backdrop-filter: blur(var(--backDropBlur));
+    backdrop-filter: blur(var(--backDropBlur));
+
+    box-shadow: /* 0 0 10px black, */ 0 0 60px black, 0 0 80px black;
+}
+#title {
+    transform: translateY(15px);
+    margin: 0;
+}
+input,
+select {
+    font-size: 12pt;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.427);
+
+    background-color: white;
+}
+input:hover,
+select:hover {
+    transition: 0.2s;
+    border: 2px solid white;
+}
+#Name_input {
+    width: 162px;
+}
+#Geburtsdatum_input {
+    width: 115px;
+}
+#Geburtsmonat_input {
+    width: 88px;
+}
+select {
+    width: 137px;
+}
+
+.lockIcons {
+    opacity: 0%;
+    height: 20px;
+
+    transform: translateY(4px);
+}
+
+div.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#reload_button {
+    pointer-events: none;
+    opacity: 0%;
+
+    /* position: absolute;
+    top: 261.5px; /*261.5px Oder 266px --> ist vom Browser abhängig (mit Taste "t"  togglen)*
+    left: 78px;
+    transform: translateY(-3.5px); */
+    border: 2px solid black;
+    border-radius: 50%;
+    width: var(--roundButtonSize);
+    height: var(--roundButtonSize);
+
+    background-color: rgb(4, 196, 255);
+    background-image: url(../../src/assets/images/icons/reload-icon.png);
+    background-repeat: no-repeat;
+    background-size: 19px;
+    background-position-x: 2.65px;
+    background-position-y: 1.5px;
+
+    transition: 0.7s;
+}
+#reload_button:hover {
+    animation: rotation 2s linear infinite;
+    animation-timing-function: ease-in-out;
+
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(0, 217, 255), 0 0 40px rgb(0, 217, 255),
+        0 0 80px rgb(0, 217, 255);
+}
+#submit_button {
+    border-radius: 5px;
+    border: 2px solid black;
+
+    margin: 0 10px;
+
+    background-color: var(--primaryColor);
+    color: rgb(0, 0, 0);
+    font-size: 13pt;
+    font-weight: 700;
+
+    transform-origin: center;
+    transition: 0.4s;
+}
+#submit_button:hover {
+    cursor: pointer;
+    border: 2px solid white;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--primaryColor), 0 0 40px var(--primaryColor),
+        0 0 80px var(--primaryColor);
+}
+#cancel_button {
+    pointer-events: none;
+    opacity: 0%;
+
+    /* position: absolute;
+    top: 261.5px; /*261.5px Oder 266px --> ist vom Browser abhängig (mit Taste "t"  togglen)*
+    /* left: 78px; *
+    transform: translateX(4px); */
+    border: 2px solid black;
+    border-radius: 50%;
+    width: var(--roundButtonSize);
+    height: var(--roundButtonSize);
+
+    background-color: rgb(255, 4, 4);
+    background-image: url(../../src/assets/images/icons/cancel-icon.png);
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position-x: 4px;
+    background-position-y: 4px;
+
+    transition: 0.7s;
+}
+#cancel_button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(255, 4, 4), 0 0 40px rgb(255, 4, 4),
+        0 0 80px rgb(255, 4, 4);
+}
+
+#eingabe_div {
+    width: 300px;
+}
+#ausgabe_div {
+    width: 180px;
+    height: 60px;
+
+    margin: auto;
+    transform: translateY(15px);
+
+    background-color: rgba(255, 255, 255, 0.756);
+    border-radius: 15px;
+    border: 1.5px solid rgba(0, 0, 0, 0.427);
+    color: black;
+    opacity: 0.9;
+
+    display: flex;
+    align-items: center;
+}
+
+@keyframes deckkraft {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

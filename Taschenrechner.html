@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- prettier-ignore -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- libraries -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- page items -->
+        <script src="src/scripts/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/css/main.css" />
+
+        <link rel="stylesheet" href="src/css/taschenrechner.css">
+        <script src="src/scripts/taschenrechner.js"></script>
+        <title>Taschenrechner</title>
+    </head>
+    <body data-active-link="['#projectsLink','#taschenrechnerLink']">
+        <!-- prettier-ignore -->
+        <div class="container">
+            <div id="output"></div>
+            <button id="btn-divide" class="btn btn-orange" onclick="addChar('/')">/</button>
+            <button id="btn-multi" class="btn btn-orange" onclick="addChar('*')">*</button>
+            <button id="btn-minus" class="btn btn-orange" onclick="addChar('-')">-</button>
+            <button id="btn-AC" class="btn btn-AC" onclick="clearAll()">AC</button>
+
+            <button id="btn-7" class="btn" onclick="addChar('7')">7</button>
+            <button id="btn-8" class="btn" onclick="addChar('8')">8</button>
+            <button id="btn-9" class="btn" onclick="addChar('9')">9</button>
+            <button id="btn-plus" class="btn btn-orange" onclick="addChar('+')">+</button>
+
+            <button id="btn-4" class="btn" onclick="addChar('4')">4</button>
+            <button id="btn-5" class="btn" onclick="addChar('5')">5</button>
+            <button id="btn-6" class="btn" onclick="addChar('6')">6</button>
+
+            <button id="btn-1" class="btn" onclick="addChar('1')">1</button>
+            <button id="btn-2" class="btn" onclick="addChar('2')">2</button>
+            <button id="btn-3" class="btn" onclick="addChar('3')">3</button>
+            <button id="btn-equal" class="btn btn-orange" onclick="calculate()">=</button>
+
+            <button id="btn-0" class="btn" onclick="addChar('0')">0</button>
+            <button id="btn-comma" class="btn" onclick="addChar('.')">,</button>
+        </div>
+    </body>
+</html>

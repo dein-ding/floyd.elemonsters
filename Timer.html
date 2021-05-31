@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <!-- prettier-ignore -->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- libraries -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- page items -->
+        <script src="src/scripts/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/css/main.css">
+
+        <title>Timer</title>
+        <link rel="stylesheet" type="text/css" href="src/css/Timer.css" />
+    </head>
+    <body data-active-link="['#projectsLink','#timerLink']">
+        <div id="body_div">
+            <!-- everything in here gets the HUE ROTATE -->
+            <div id="container">
+                <div id="countdown_div">
+                    <h1 id="countdown">
+                        <span id="hour_output">00</span>:<span
+                            id="minute_output"
+                            >00</span
+                        >:<span id="second_output">00</span>
+                    </h1>
+                </div>
+                <div id="progress_bar">
+                    <div id="progress"></div>
+                </div>
+                <div id="inputs_div">
+                    <input
+                        type="number"
+                        min="0"
+                        max="23"
+                        id="hour_input"
+                        placeholder=" hh"
+                    />
+                    <input
+                        type="number"
+                        min="0"
+                        max="59"
+                        id="minute_input"
+                        placeholder=" mm"
+                    />
+                    <input
+                        type="number"
+                        min="0"
+                        max="59"
+                        id="second_input"
+                        placeholder=" ss"
+                        autofocus
+                    />
+                </div>
+                <div id="startStopButtons_div">
+                    <button id="stop_button" onclick="stop_func()">Stop</button>
+                    <button id="start_button" onclick="click_()">Start</button>
+                </div>
+            </div>
+            <label for="settings-dropdown-toggle" id="settings_button"></label>
+            <input type="checkbox" id="settings-dropdown-toggle" />
+            <div id="settings_dropdown">
+                <input id="check_changeColor" type="checkbox" checked /><label
+                    for="check_changeColor"
+                >
+                    Farbe wechseln</label
+                >
+                <br />
+                <input
+                    id="hue_rotation_slider"
+                    type="range"
+                    min="0"
+                    max="360"
+                    value="0"
+                    oninput="hueRotation()"
+                />
+                <br />
+                <br />
+                <input id="check_blinkText" type="checkbox" checked /><label
+                    for="check_blinkText"
+                >
+                    blinkender Countdown</label
+                >
+                <br /><br />
+                <input id="check_alarmSound" type="checkbox" checked /><label
+                    for="check_alarmSound"
+                >
+                    Klingelton abspielen</label
+                >
+                <div class="alarmsoundDiv">
+                    <select id="alarmSound_options">
+                        <option>Harfe</option>
+                        <option>Hahn</option>
+                        <option>Trompete</option>
+                        <option>Weckerpiepen</option>
+                    </select>
+                    <button
+                        id="preview_alarmSound_button"
+                        onclick="preview_alarmSound_func()"
+                    ></button>
+                </div>
+                <br />
+                <label
+                    ><input type="checkbox" id="checkAlertText" /> Mitteilung
+                    anzeigen</label
+                >
+                <textarea
+                    id="alertTextInput"
+                    placeholder="Mitteilungstext..."
+                ></textarea>
+            </div>
+        </div>
+        <audio id="audio"></audio>
+        <script src="src/scripts/Timer.js"></script>
+    </body>
+</html>
