@@ -341,10 +341,14 @@ const custom = {
 
         return new Promise((resolve, reject) => {
             clickPrimary = (event) => {
-                if (event.keyCode === 13) {
+                event.stopPropagation();
+                if (event.keyCode === 13) { //ENTER
                     event.preventDefault();
-                    event.stopPropagation();
                     buttonPressed("primary");
+                }
+                if (event.keyCode === 27 && secondaryBtn) { //ESC
+                    event.preventDefault();
+                    buttonPressed("secondary");
                 }
             };
 
@@ -354,7 +358,7 @@ const custom = {
                 if (response == "primary") resolve(primaryBtn);
                 if (response == "secondary") reject(secondaryBtn);
 
-                document.removeEventListener("keydown", clickPrimary);
+                document.removeEventListener("keydown", clickPrimary, {capture: true});
 
                 document.querySelector(".dialog").classList.remove("appear");
                 $(".dialogContainer").fadeTo(200, 0);
@@ -402,9 +406,9 @@ const custom = {
 
         return new Promise((resolve, reject) => {
             click = (event) => {
+                event.stopPropagation();
                 if (event.keyCode === 13) {
                     event.preventDefault();
-                    event.stopPropagation();
                     buttonPressed();
                 }
             };
@@ -415,7 +419,7 @@ const custom = {
                 let input = document.querySelector(".promptInput").value;
                 resolve(input);
 
-                document.removeEventListener("keydown", click);
+                document.removeEventListener("keydown", click, {capture: true});
 
                 document.querySelector(".dialog").classList.remove("appear");
                 $(".dialogContainer").fadeTo(200, 0);

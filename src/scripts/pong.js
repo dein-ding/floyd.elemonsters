@@ -64,10 +64,10 @@ maxScoreSlider.oninput = () => {
 	game.render();
 };
 gameColorInput.oninput = () => {
-	game.rerenderColor()
+	game.rerenderColor();
 };
 randomColorButton.onclick = () => {
-	game.rerenderColor(getRandomColor())
+	game.rerenderColor(getRandomColor());
 };
 
 //the main object containing all the game logic
@@ -140,8 +140,21 @@ const game = {
 		ball.y += ball.velocity.y;
 
 		//AI to controll the computer paddle
-		computer.y +=
-			(ball.y - (computer.y + computer.height / 2)) * computer.level;
+		computer.y += (ball.y - (computer.y + computer.height / 2)) * computer.level; //prettier-ignore
+		/* if ((computer.y + computer.height / 2) < (canvas.height / 2)) {
+            console.log("top")
+			let amt;
+			if (computer.y <= 0) amt = 1;
+			else amt = (ball.y - (computer.y + computer.height / 2)) * computer.level; //prettier-ignore
+
+			computer.y += amt;
+		} else {
+            console.log("bottom")
+            let amt;
+			if ((computer.y + computer.height) == canvas.height) amt = 0;
+            else amt = (ball.y - (computer.y + computer.height / 2)) * computer.level;
+				computer.y += amt;
+		} */
 
 		if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0)
 			ball.velocity.y = -ball.velocity.y;
@@ -176,7 +189,9 @@ const game = {
 			game.resetBall();
 		} else if (ball.x + ball.radius > canvas.width) {
 			computer.score++;
-			audio.play(); // play the die-sound
+			audio
+				.play() // play the die-sound
+				.catch(() => console.warn("not able to play audio"));
 			game.resetBall();
 		}
 		if (computer.score == game.maxScore) {
@@ -215,6 +230,7 @@ const game = {
     }, //prettier-ignore
 	start() {
 		game.Cycle = setInterval(game.init, 1000 / game.fps);
+		game.isRunning = true;
 
 		startButton.style.display = "none";
 		startPauseButton.style.display = "block";
@@ -224,9 +240,16 @@ const game = {
 		settingsToggle.checked = false;
 
 		canvas.addEventListener("mousemove", game.moveUserPaddle);
+		document.addEventListener("keydown", game.toggle);
+	},
+	toggle(event) {
+		if (event.keyCode == 32)
+			if (game.isRunning) game.pause();
+			else game.start();
 	},
 	pause() {
 		clearInterval(game.Cycle);
+		game.isRunning = false;
 		// startButton.style.display = "block";
 		startPauseButton.innerHTML = `<i class="fad fa-play"></i>`;
 		startPauseButton.onclick = game.start;
@@ -234,14 +257,24 @@ const game = {
 		settingsToggle.checked = true;
 
 		canvas.removeEventListener("mousemove", game.moveUserPaddle);
+		//opens and closes the projects dropdown menu
+
+		canvas.onclick = (event) =>  {
+        if (!event.target.matches(".settings-panel"))
+            if (!game.isRunning)
+                game.start()
+        }
+    
 	},
 	stop() {
 		clearInterval(game.Cycle);
+		game.isRunning = false;
 		startButton.style.display = "block";
 		user.score = 0;
 		computer.score = 0;
 
 		canvas.removeEventListener("mousemove", game.moveUserPaddle);
+        startPauseButton.style.display = "none";
 	},
 	restart() {
 		game.resetBall();
@@ -255,9 +288,10 @@ const game = {
 	rerenderColor(color) {
 		color ||= gameColorInput.value;
 
-        gameColorInput.value = color;
+		gameColorInput.value = color;
 		game.defaultColor = color;
 		game.render();
+
 		canvas.style.border = `1px solid ${color}`;
 		main.style.color = color;
 		root.style.setProperty("--gameColor", color);
@@ -313,6 +347,5 @@ var ball = {
 };
 
 startPauseButton.style.display = "none";
-gameColorInput.value = getRandomColor();
-gameColorInput.oninput();
+game.rerenderColor(getRandomColor());
 game.init();
