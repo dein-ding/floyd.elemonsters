@@ -126,15 +126,6 @@ $(document).ready(async () => {
     //variables
     const data = JSON.parse(getFile("../../src/data/main.json"));
 
-    // setTimeout(() => {
-    //     console.groupCollapsed(
-    //         `%c userCount: ${getUserCount().today}`,
-    //         "color: orange; font-weight: 700;"
-    //     );
-    //     console.table(getUserCount());
-    //     console.groupEnd();
-    // }, 1000);
-
     getUserCountAsync()
         .then((res) => {
             console.groupCollapsed(

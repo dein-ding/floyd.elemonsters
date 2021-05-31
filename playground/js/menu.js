@@ -10,11 +10,13 @@ var sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
 document.body.prepend(sidebar);
 
-var linkButtons = `<a href="index.html">index</a>
-                   <a href="tagLibrary.html">tagLibrary</a>
-                   <a href="PHP-playground.php">PHP playground</a>
-                   <a href="playground.html">playground</a>
+var linkButtons = `<a href="index.html" class="indexLink">index</a>
+                   <a href="tagLibrary.html" class="tagLibraryLink">tagLibrary</a>
+                   <a href="PHP-playground.php" class="phpPlaygroundLink">PHP playground</a>
+                   <a href="playground.html" class="playgroundLink">playground</a>
                    <a href="../${sessionStorage.currURL}">return to main</a>
                    `; //prettier-ignore
 
 sidebar.innerHTML = linkButtons;
+
+document.querySelector(document.body.dataset.activeLink).classList.add("active");

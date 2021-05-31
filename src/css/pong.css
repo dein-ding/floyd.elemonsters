@@ -3,7 +3,7 @@
 }
 
 body {
-    background: hsl(0, 0%, 2%);
+    background: hsl(0, 0%, 5%);
     color: white;
     font-family: helvetica;
 }
@@ -13,6 +13,9 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+button, input[type="color"], input[type="range"] {
+    cursor: pointer;
 }
 .container {
     width: fit-content;
@@ -113,15 +116,20 @@ main {
     margin-top: 15px;
 }
 
-.settings-panel .settings-item.restartGame {
+.settings-panel .settings-item.gameActions {
     height: fit-content;
-    /* display: flex;
-    align-items: center; */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     /* margin-top: 0; */
     padding-top: 10px;
 }
-.restartButton {
+.settings-panel .settings-item.gameActions button + button {
+    margin-left: 10px;
+}
+.settings-panel .settings-item.gameActions button {
     font-size: 1.6rem;
     color: black;
     border: none;
@@ -133,12 +141,35 @@ main {
 
     transition: 200ms;
 }
-.restartButton:hover {
-    transform: scaleX(1.08) scaleY(1.35);
+.settings-panel .settings-item.gameActions button:hover {
+    transform: scale(1.08);
 }
 
+/* .settings-panel .settings-item.maxScore {
+    
+} */
+#gameColorInput {
+    border-radius: 6px;
+    border: 2px solid rgb(255, 255, 255);
+    outline: none;
+
+    background: var(--gameColor);
+}
+/* .settings-panel .settings-item.gameColor {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+} */
+.settings-panel .settings-item.gameColor :is(button, input) {
+    /* height: 20px; */
+    transition: 180ms;
+}
+.settings-panel .settings-item.gameColor :is(button, input):hover {
+    transform: scale(1.1);
+}
 #maxScoreSlider {
     margin: 0 7px;
+    transform: translateY(3px);
 }
 .min,
 .max {
