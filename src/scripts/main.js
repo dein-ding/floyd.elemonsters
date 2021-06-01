@@ -179,7 +179,13 @@ $(document).ready(async () => {
         for (x in activeLinks) {
             document.querySelector(activeLinks[x]).classList.add("activeLink");
         }
-    } else document.querySelector(activeLinks).classList.add("activeLink");
+    } else {
+        console.log("else");
+        activeLinks = activeLinks.toString().split(" ");
+        activeLinks.forEach((item) => {
+            // item.classList.add("activeLink");
+        });
+    }
 
     //adds a title and an alert to disabled links
     const disabledLink = document.querySelectorAll(".disabledLink");
@@ -342,11 +348,13 @@ const custom = {
         return new Promise((resolve, reject) => {
             clickPrimary = (event) => {
                 event.stopPropagation();
-                if (event.keyCode === 13) { //ENTER
+                if (event.keyCode === 13) {
+                    //ENTER
                     event.preventDefault();
                     buttonPressed("primary");
                 }
-                if (event.keyCode === 27 && secondaryBtn) { //ESC
+                if (event.keyCode === 27 && secondaryBtn) {
+                    //ESC
                     event.preventDefault();
                     buttonPressed("secondary");
                 }
@@ -358,7 +366,9 @@ const custom = {
                 if (response == "primary") resolve(primaryBtn);
                 if (response == "secondary") reject(secondaryBtn);
 
-                document.removeEventListener("keydown", clickPrimary, {capture: true});
+                document.removeEventListener("keydown", clickPrimary, {
+                    capture: true,
+                });
 
                 document.querySelector(".dialog").classList.remove("appear");
                 $(".dialogContainer").fadeTo(200, 0);
