@@ -27,51 +27,7 @@
                 background: blue;
             } */
         </style>
-        <script>
-            var Time;
-
-            window.onload = () => {
-                Time = {
-                    output: {
-                        days: {
-                            meter: document.querySelector(".timeOutputContainer .day")
-                        },
-                        hours: {
-                            span: document.querySelector("#timeOutput span:first-of-type"),
-                            meter: document.querySelector(".timeOutputContainer .hour")
-                        },
-                        minutes: {
-                            span: document.querySelector("#timeOutput span:nth-of-type(2n)"),
-                            meter: document.querySelector(".timeOutputContainer .minute")
-                        },
-                        seconds: {
-                            span: document.querySelector("#timeOutput span:nth-of-type(3n)"),
-                            meter: document.querySelector(".timeOutputContainer .second"),
-                        },
-                    },
-                    start() {
-                        Time.refresh();
-                        setInterval(Time.refresh, 1);
-                    },
-                    display(time) {
-                        Time.output.days.meter.value = time.getHours();
-
-                        Time.output.hours.span.innerText = ("0" + time.getHours()).slice(-2);
-                        Time.output.hours.meter.value = time.getMinutes();
-
-                        Time.output.minutes.span.innerText = ("0" + time.getMinutes()).slice(-2);
-                        Time.output.minutes.meter.value = time.getSeconds();
-
-                        Time.output.seconds.span.innerText = ("0" + time.getSeconds()).slice(-2);
-                        Time.output.seconds.meter.value = time.getMilliseconds();
-                    },
-                    refresh() {
-                        Time.display(new Date());
-                    },
-                }; //prettier-ignore
-                Time.start();
-            };
-        </script>
+        <script defer src="js/playground.js"></script>
     </head>
     <body data-active-link=".playgroundLink">
         <div class="main-container">
@@ -90,6 +46,8 @@
                     >second: <meter min="0" max="999" class="second"></meter
                 ></label>
             </time>
+            <button id="playButton">accept</button>
+            <audio preload="auto" src="../src/assets/sounds/die-sound.mp3"></audio>
         </div>
     </body>
 </html>

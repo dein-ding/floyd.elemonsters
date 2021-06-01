@@ -35,6 +35,7 @@ const maxScoreSlider = document.querySelector("#maxScoreSlider");
 const maxScoreSpan = document.querySelector("#maxScoreSpan");
 const gameColorInput = document.querySelector("#gameColorInput");
 const randomColorButton = document.querySelector(".randomColorButton");
+const playAudioSwitch = document.querySelector("#playAudioSwitch");
 
 // DevMode.callback = (status) => {
 //     switch (status) {
@@ -68,6 +69,19 @@ gameColorInput.oninput = () => {
 };
 randomColorButton.onclick = () => {
 	game.rerenderColor(getRandomColor());
+};
+playAudioSwitch.oninput = () => {
+	if (playAudioSwitch.checked)
+		custom
+			.confirm(
+				"Attention",
+				"For this feature to work, you need to have Autoplay enabled.",
+				"OK",
+				"no thanks"
+			)
+			.catch(() => {
+				playAudioSwitch.checked = false;
+			});
 };
 
 //the main object containing all the game logic
@@ -189,22 +203,24 @@ const game = {
 			game.resetBall();
 		} else if (ball.x + ball.radius > canvas.width) {
 			computer.score++;
-			audio
-				.play() // play the die-sound
-				.catch(() => console.warn("not able to play audio"));
 			game.resetBall();
+
+			if (playAudioSwitch.checked)
+				audio
+					.play() // play the die-sound
+					.catch(() => console.warn("not able to play audio"));
 		}
 		if (computer.score == game.maxScore) {
 			game.stop();
 			custom
-				.confirm("Game Over!💀", "", "nochmal spielen", "stop")
+				.confirm("Game Over!💀", "", "play again", "stop")
 				.then(() => game.start())
 				.catch(() => {});
 		}
 		if (user.score == game.maxScore) {
 			game.stop();
 			custom
-				.confirm("Du gewinnst!🎉", "", "nochmal spielen", "stop")
+				.confirm("You Win!🎉", "", "play again", "stop")
 				.then(() => game.start())
 				.catch(() => {});
 		}
@@ -243,9 +259,11 @@ const game = {
 		document.addEventListener("keydown", game.toggle);
 	},
 	toggle(event) {
-		if (event.keyCode == 32)
+		if (event.keyCode == 32) {
+			event.preventDefault();
 			if (game.isRunning) game.pause();
 			else game.start();
+		} else if (event.keyCode == 27 && !game.isRunning) game.start();
 	},
 	pause() {
 		clearInterval(game.Cycle);
@@ -259,12 +277,10 @@ const game = {
 		canvas.removeEventListener("mousemove", game.moveUserPaddle);
 		//opens and closes the projects dropdown menu
 
-		canvas.onclick = (event) =>  {
-        if (!event.target.matches(".settings-panel"))
-            if (!game.isRunning)
-                game.start()
-        }
-    
+		canvas.onclick = event => {
+			if (!event.target.matches(".settings-panel"))
+				if (!game.isRunning) game.start();
+		};
 	},
 	stop() {
 		clearInterval(game.Cycle);
@@ -274,7 +290,7 @@ const game = {
 		computer.score = 0;
 
 		canvas.removeEventListener("mousemove", game.moveUserPaddle);
-        startPauseButton.style.display = "none";
+		startPauseButton.style.display = "none";
 	},
 	restart() {
 		game.resetBall();

@@ -116,6 +116,7 @@ var DevMode = {
 };
 
 $(document).ready(async () => {
+
     //elements
     const head = document.getElementsByTagName("HEAD")[0];
     const titleTag = document.querySelector("title");
@@ -124,7 +125,7 @@ $(document).ready(async () => {
     const body = document.body;
 
     //variables
-    const data = JSON.parse(getFile("../../src/data/main.json"));
+    const data = JSON.parse(await getFile("../../src/data/main.json"));
 
     getUserCountAsync()
         .then((res) => {
@@ -167,7 +168,7 @@ $(document).ready(async () => {
         navBarHeader.id = "navBarHeader";
         document.body.prepend(navBarHeader);
     }
-    navBarHeader.innerHTML = getFile("src/pageItems/navBar.html");
+    navBarHeader.innerHTML = await getFile("src/pageItems/navBar.html");
 
     //execute DevMode preferences
     if (DevMode.status) DevMode.execute();
@@ -180,7 +181,7 @@ $(document).ready(async () => {
             document.querySelector(activeLinks[x]).classList.add("activeLink");
         }
     } else {
-        console.log("else");
+        // console.log("else");
         activeLinks = activeLinks.toString().split(" ");
         activeLinks.forEach((item) => {
             // item.classList.add("activeLink");
@@ -215,7 +216,7 @@ $(document).ready(async () => {
         footer.id = "pageFooter";
         document.body.append(footer);
     }
-    footer.innerHTML = getFile("src/pageItems/footer.html");
+    footer.innerHTML = await getFile("src/pageItems/footer.html");
 
     { //asigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
@@ -295,7 +296,7 @@ async function getUserCountAsync() {
     });
 }
 
-getFile = (URL) => {
+getFile = async (URL) => {
     var XHR = new XMLHttpRequest();
     XHR.open("GET", URL, false);
     XHR.send();
@@ -303,6 +304,7 @@ getFile = (URL) => {
     //console.log("injected:" + XHR.responseText);
     return XHR.responseText;
 };
+
 
 const custom = {
     /**

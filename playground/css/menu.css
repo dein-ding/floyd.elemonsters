@@ -4,7 +4,7 @@
     --primary-color: hsl(300, 95%, 51%);
     --secondary-color: hsl(117, 85%, 45%);
 }
-* {
+.sidebar *, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,6 +17,7 @@ body {
     grid-template: 100% / 12% 88%;
 }
 .sidebar {
+    min-width: 200px;
     position: sticky;
     top: 0;
     left: 0;
@@ -30,7 +31,7 @@ body {
     padding: 8px 5px;
 
     text-decoration: none;
-    text-align: center;
+    padding-left: 20px;
     font-size: 1.4rem;
     color: hsl(var(--backgroundHue), 0%, 87%);
 
