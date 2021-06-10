@@ -168,7 +168,7 @@ $(document).ready(async () => {
         navBarHeader.id = "navBarHeader";
         document.body.prepend(navBarHeader);
     }
-    navBarHeader.innerHTML = await getFile("src/pageItems/navBar.html");
+    navBarHeader.innerHTML = await getFile("src/components/navBar.html");
 
     //execute DevMode preferences
     if (DevMode.status) DevMode.execute();
@@ -216,9 +216,9 @@ $(document).ready(async () => {
         footer.id = "pageFooter";
         document.body.append(footer);
     }
-    footer.innerHTML = await getFile("src/pageItems/footer.html");
+    footer.innerHTML = await getFile("src/components/footer.html");
 
-    { //asigning URLs to links
+    { //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;

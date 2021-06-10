@@ -6,11 +6,11 @@ fontAwsomeLink.href =
 head.prepend(fontAwsomeLink);
 
 const mainContainer = document.querySelector(".main-container");
-var sidebar = document.createElement("div");
+const sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
 document.body.prepend(sidebar);
 
-var linkButtons = `<a href="index.html" class="indexLink">index</a>
+const linkButtons = `<a href="index.html" class="indexLink">index</a>
                    <a href="tagLibrary.html" class="tagLibraryLink">tagLibrary</a>
                    <a href="PHP-playground.php" class="phpPlaygroundLink">PHP playground</a>
                    <a href="playground.html" class="playgroundLink">playground</a>

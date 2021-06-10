@@ -20,7 +20,7 @@
                 font-size: 2.5rem;
             }
             .timeOutputContainer :is(progress, meter) {
-                width: 100%;
+                width: 40%;
                 margin: 0;
             }
             /* .second {
@@ -31,20 +31,15 @@
     </head>
     <body data-active-link=".playgroundLink">
         <div class="main-container">
+            <!-- prettier-ignore -->
             <time class="timeOutputContainer">
                 <h3 id="timeOutput">
                     <span></span>:<span></span>:<span></span>
                 </h3>
                 <label>day: <meter min="0" max="23" class="day"></meter></label>
-                <label
-                    >hour: <meter min="0" max="59" class="hour"></meter
-                ></label>
-                <label
-                    >minute: <meter min="0" max="59" class="minute"></meter
-                ></label>
-                <label
-                    >second: <meter min="0" max="999" class="second"></meter
-                ></label>
+                <label>hour: <meter min="0" max="59" class="hour"></meter></label>
+                <label>minute: <meter min="0" max="59" class="minute"></meter></label>
+                <label>second: <meter min="0" max="999" class="second"></meter></label>
             </time>
             <button id="playButton">accept</button>
             <audio preload="auto" src="../src/assets/sounds/die-sound.mp3"></audio>

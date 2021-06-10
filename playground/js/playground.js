@@ -1,6 +1,4 @@
-var Time;
-
-Time = {
+const Time = {
 	output: {
 		days: {
 			meter: document.querySelector(".timeOutputContainer .day"),
@@ -20,7 +18,15 @@ Time = {
 	},
 	start() {
 		Time.refresh();
-		setInterval(Time.refresh, 10);
+		Time.cycle = setInterval(Time.refresh, 50);
+
+		document.querySelector("#timeOutput button").innerText = "stop";
+		document.querySelector("#timeOutput button").onclick = () => Time.stop();
+	},
+	stop() {
+		clearInterval(Time.cycle)
+		document.querySelector("#timeOutput button").innerText = "start";
+		document.querySelector("#timeOutput button").onclick = () => Time.start();
 	},
 	display(time) {
 		Time.output.days.meter.value = time.getHours();
@@ -38,7 +44,7 @@ Time = {
 		Time.display(new Date());
 	},
 };
-Time.start();
+Time.refresh();
 
 sounds = () => {
     const sounds = [
@@ -48,7 +54,7 @@ sounds = () => {
         "../src/assets/sounds/Trompete.mp3",
         "../src/assets/sounds/Weckerpiepen.mp3",
     ];
-    return sounds[Math.floor(Math.random() * 5)];
+    return sounds[ Math.floor(Math.random() * 5) ];
 }
 
 /* const ctx = new (window.AudioContext || window.webkitAudioContext)();
