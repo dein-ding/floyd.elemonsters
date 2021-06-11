@@ -1,6 +1,10 @@
+// const linkCustom = document.createElement("script");
+// linkCustom.src = "/src/components/custom/custom.js";
+// document.head.prepend(linkCustom);
+
 //////// DevMode ///////
 //prettier-ignore
-var DevMode = {
+const DevMode = {
     status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
     keepAcrossPages: false,
     callback: null,
@@ -56,33 +60,32 @@ var DevMode = {
                     let devModeContainer = document.createElement("div")
                     devModeContainer.classList.add("devModeItem", "devModeContainer")
                     devModeContainer.innerHTML = `
-                    <div class="toolbox">
-                        <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
-                            <i class="fas fa-power-off"></i>
-                        </button>
-                        <button class="log" title="log DevMode settings" onclick="DevMode.log()">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                        <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
-                            <i class="fas fa-redo-alt"></i>
-                        </button>
+                        <div class="toolbox">
+                            <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
+                                <i class="fas fa-power-off"></i>
+                            </button>
+                            <button class="log" title="log DevMode settings" onclick="DevMode.log()">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                            <button class="evalJS" onclick="test('eval')">
+                                <i class="fab fa-js-square"></i>
+                            </button>
 
-                        <button onclick="location.href = 'webuntis.html'">
-                            <i class="fad fa-calendar-alt"></i>
-                        </button>
+                            <button onclick="location.href = 'webuntis.html'">
+                                <i class="fad fa-calendar-alt"></i>
+                            </button>
 
-                        <button class="evalJS" onclick="test('eval')">
-                            <i class="fab fa-js-square"></i>
-                        </button>
-
-                        <button title="show a prompt dialog" onclick="test('prompt')">
-                            <i class="fas fa-keyboard"></i>
-                        </button>
-                        <button title="show a confirmation dialog" onclick="test('confirm')">
-                            <i class="fad fa-window"></i>
-                        </button>
-                    </div>
-                    <div class="userCountDisplay" style="display:none;"></div>
+                            <button title="show a prompt dialog" onclick="test('prompt')">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                            <button title="show a confirmation dialog" onclick="test('confirm')">
+                                <i class="fad fa-window"></i>
+                            </button>
+                        </div>
+                        <div class="userCountDisplay" style="display:none;"></div>
                     `
                     document.body.append(devModeContainer);
                     DevMode.items.push(devModeContainer);
@@ -116,6 +119,7 @@ var DevMode = {
 };
 
 $(document).ready(async () => {
+
     //elements
     const head = document.getElementsByTagName("HEAD")[0];
     const titleTag = document.querySelector("title");
@@ -124,7 +128,7 @@ $(document).ready(async () => {
     const body = document.body;
 
     //variables
-    const data = JSON.parse(getFile("../../src/data/main.json"));
+    const data = JSON.parse(await getFile("../../src/data/main.json"));
 
     getUserCountAsync()
         .then((res) => {
@@ -167,7 +171,7 @@ $(document).ready(async () => {
         navBarHeader.id = "navBarHeader";
         document.body.prepend(navBarHeader);
     }
-    navBarHeader.innerHTML = getFile("src/pageItems/navBar.html");
+    navBarHeader.innerHTML = await getFile("src/components/navBar.html");
 
     //execute DevMode preferences
     if (DevMode.status) DevMode.execute();
@@ -180,10 +184,9 @@ $(document).ready(async () => {
             document.querySelector(activeLinks[x]).classList.add("activeLink");
         }
     } else {
-        console.log("else");
         activeLinks = activeLinks.toString().split(" ");
         activeLinks.forEach((item) => {
-            // item.classList.add("activeLink");
+            document.querySelector(item).classList.add("activeLink");
         });
     }
 
@@ -215,9 +218,9 @@ $(document).ready(async () => {
         footer.id = "pageFooter";
         document.body.append(footer);
     }
-    footer.innerHTML = getFile("src/pageItems/footer.html");
+    footer.innerHTML = await getFile("src/components/footer.html");
 
-    { //asigning URLs to links
+    { //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
@@ -295,7 +298,7 @@ async function getUserCountAsync() {
     });
 }
 
-getFile = (URL) => {
+getFile = async (URL) => {
     var XHR = new XMLHttpRequest();
     XHR.open("GET", URL, false);
     XHR.send();
@@ -303,6 +306,7 @@ getFile = (URL) => {
     //console.log("injected:" + XHR.responseText);
     return XHR.responseText;
 };
+
 
 const custom = {
     /**
@@ -475,7 +479,7 @@ fromConsole = () => {
  * @param {*} l
  * @returns
  */
-const pSBC = (p,c0,c1,l) => {
+pSBC = (p,c0,c1,l) => {
     let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
     if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
     if(!this.pSBCr)this.pSBCr=(d)=>{

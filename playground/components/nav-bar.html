@@ -1,0 +1,64 @@
+<h1 class="logo">Playground</h1> <!-- prettier-ignore -->
+
+         <div style="position: relative;">
+            <button class="change-clr-btn" onclick='colorTheme.change(); settings.toggle("close");'>change Color</button><!-- prettier-ignore -->
+            <input type="checkbox" id="toggleColorSlider" style="display: none">
+            <div class="colorSliderContainer"><!-- prettier-ignore -->
+               <input class="sliderInput colorSlider" id="colorSlider" type="range" value="" min="0" max="360">
+               <button onclick='colorTheme.change("close")'>OK</button>
+            </div>
+         </div>
+
+			<button class="random-clr-btn" onclick="colorTheme.setRandomHue()">
+				<i class="fad fa-random"></i>
+			</button>
+
+         <div style="position: relative;">
+            <button class="settings-btn toggleSettings" onclick="settings.toggle(); colorTheme.change('close')">
+               <i class="fas fa-cog toggleSettings"></i>
+            </button>
+            <input type="checkbox" id="toggleSettings" style="display: none">
+            <div class="settings-container">
+               <h2>Settings</h2>
+               <button class="close-settings-btn" onclick="settings.toggle()">
+                  <i class="far fa-times"></i>
+               </button>
+               <div class="settings-item keepColor"><!-- prettier-ignore -->
+                  <input type="checkbox" id="keepColorSwitch" style="display: none">
+                  <label class="switch" for="keepColorSwitch">
+                     <span class="slider"></span>
+                  </label>
+                  keep color for next time
+               </div>
+               <div class="settings-item color"><!-- prettier-ignore -->
+                  <input class="sliderInput colorSlider" id="colorSlider" type="range" value="" min="0" max="360"/>
+               </div>
+            </div>
+         </div>
+           
+			<div class="search-bar-container removeFocusClick"><!-- prettier-ignore -->
+				<input type="text" class="search-bar removeFocusClick" placeholder="search google...">
+				<i class="fad fa-search search-icon removeFocusClick"></i>
+				<i class="fad fa-times-circle cancel-icon removeFocusClick"></i>
+			</div><!-- prettier-ignore -->
+			<a id="google-query" target="_blank" style="display: none">google</a>
+			<nav>
+				<!-- prettier-ignore -->
+				<ul class="nav-list">
+               <li>
+                  <a id="return-to-main"><i class="fad fa-home-lg-alt"></i> Return to main</a>
+               </li>
+               <li>
+                  <a href="/playground" class="playgroundLink"><i class="fad fa-gamepad-alt"></i> Playground</a>
+               </li>
+               <li>
+                  <a href="PHP-test.php"><i class="fab fa-php"></i> Test</a>
+               </li>
+               <li>
+                  <a href="buttons.html" class="buttonsLink"><i class="fad fa-hockey-puck"></i> Buttons</a>
+               </li>
+               <li>
+                  <a href="tagLibrary.html" class="tagLibraryLink"><i class="fad fa-books"></i> Tag Library</a>
+               </li>
+            </ul>
+			</nav>

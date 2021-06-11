@@ -4,15 +4,29 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="css/menu.css" />
-        <script defer src="js/menu.js"></script>
+        <!-- libraries -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- other -->
+        <script defer src="js/main.js"></script>
+        <link rel="stylesheet" href="css/main.css" />
+
         <title>HTML Tag Library</title>
+        <!-- <script defer src="js/menu.js"></script>
+        <link rel="stylesheet" href="css/menu.css" /> -->
 
         <style>
             body {
                 font-family: helvetica;
                 color: white;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
+            /* .main-container {
+                
+            } */
         </style>
     </head>
     <body data-active-link=".tagLibraryLink">
@@ -37,7 +51,7 @@
                 </section>
                 <!-- prettier-ignore -->
                 <section>
-                <p>hover over the items in the image to see the magic happen</p>
+                <p>click on the items in the image to see the magic happen</p>
                 <img src="https://www.w3schools.com/tags/workplace.jpg" alt="Workplace" usemap="#workmap" width="400" height="379">
 
                 <map name="workmap">

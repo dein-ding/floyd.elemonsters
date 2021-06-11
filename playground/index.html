@@ -1,22 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="css/menu.css" />
-        <script defer src="js/menu.js"></script>
+	<!-- prettier-ignore -->
+	<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- libraries -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- other -->
+    <script defer src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 
-        <link rel="stylesheet" href="css/index.css">
+    <title>Test WebSite</title>
+    <!-- <script defer src="js/index.js"></script> -->
+    <link rel="stylesheet" href="css/index.css" />
+    <script defer src="js/playground.js"></script>
+  </head>
+	<body data-active-link=".playgroundLink">
+		<main>
+			<section class="hero" id="hero">
+				<div class="videoContainer">
+					<video
+						src="../src/assets/videos/background.mov"
+						autoplay
+						loop
+						mute
+					></video>
+					<h1>Title Here</h1>
+				</div>
+			</section>
 
-        <title>playground menu</title>
-        <script>
-            window.onload = () => {
-                mainContainer.innerHTML = linkButtons;
-            };
-        </script>
-    </head>
-    <body data-active-link=".indexLink">
-        <div class="main-container"></div>
-    </body>
+         <section id="time" class="time">
+            <div class="timeOutputContainer">
+               <!-- prettier-ignore -->
+               <time>
+                  <h3 id="timeOutput">
+                     <span>XX</span>:<span>XX</span>:<span>XX</span>
+                     <button onclick="Time.start();">start</button>
+                  </h3>
+                  <label>day: <meter min="0" max="23" class="day"></meter></label>
+                  <label>hour: <meter min="0" max="59" class="hour"></meter></label>
+                  <label>minute: <meter min="0" max="59" class="minute"></meter></label>
+                  <label>second: <meter min="0" max="999" class="second"></meter></label>
+            </time>
+            </div>
+         </section>
+
+         <section style="height: 400px; background-color: rgba(17, 163, 163, 0.534); padding: 40%; box-sizing: border-box;">
+            <h1>test</h1>
+         </section>
+         
+		</main>
+
+		<header class="nav-bar-container">
+			
+		</header>
+	</body>
 </html>

@@ -1,10 +1,10 @@
-:root {
+/* :root {
     --backgroundHue: 0;
 
     --primary-color: hsl(300, 95%, 51%);
     --secondary-color: hsl(117, 85%, 45%);
 }
-* {
+.sidebar *, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,20 +17,21 @@ body {
     grid-template: 100% / 12% 88%;
 }
 .sidebar {
+    min-width: 200px;
     position: sticky;
     top: 0;
     left: 0;
     padding: 10px 0 0 0;
     background: hsl(var(--backgroundHue), 0%, 20%);
     /* height: 100vh; */
-}
+/*}
 .sidebar a {
     width: 100%;
     display: inline-block;
     padding: 8px 5px;
 
     text-decoration: none;
-    text-align: center;
+    padding-left: 20px;
     font-size: 1.4rem;
     color: hsl(var(--backgroundHue), 0%, 87%);
 
@@ -71,3 +72,4 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 30px var(--btn-clr);
 }
+ */

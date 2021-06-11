@@ -16,7 +16,7 @@ const Ausgabe = document.getElementById("Ausgabe");
 //Variables
 var mm, dd;
 var sternzeichenIndex;
-const data = JSON.parse(getFile("../../src/data/horoskopTexte.json"));
+const data = JSON.parse(await getFile("../../src/data/horoskopTexte.json"));
 const sternzeichen = data.sternzeichen;
 const kategorieText = data.kategorieText;
 
