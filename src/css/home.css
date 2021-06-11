@@ -34,6 +34,8 @@ body {
 }
 .image {
     height: 55%;
+
+    animation: wiggle 2.5s ease-in-out infinite;  
 }
 
 footer {
@@ -41,4 +43,17 @@ footer {
     bottom: 0; */
     color: white;
     /* z-index: 10; */
+}
+@keyframes wiggle {
+    /* 0%, 100% {
+        transform: rotate(0deg);
+    } */
+    0%, 100% {
+        transform: rotate(-3deg) translate(240px, -50px);
+        transform-origin: center bottom;
+    }
+    50% {
+        transform: rotate(7deg) translate(-200px, 50px);
+        transform-origin: right bottom;
+    }
 }

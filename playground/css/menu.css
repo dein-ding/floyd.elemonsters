@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --backgroundHue: 0;
 
     --primary-color: hsl(300, 95%, 51%);
@@ -24,7 +24,7 @@ body {
     padding: 10px 0 0 0;
     background: hsl(var(--backgroundHue), 0%, 20%);
     /* height: 100vh; */
-}
+/*}
 .sidebar a {
     width: 100%;
     display: inline-block;
@@ -72,3 +72,4 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 30px var(--btn-clr);
 }
+ */

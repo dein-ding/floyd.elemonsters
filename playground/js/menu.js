@@ -8,7 +8,7 @@ head.prepend(fontAwsomeLink);
 const mainContainer = document.querySelector(".main-container");
 const sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
-document.body.prepend(sidebar);
+// document.body.prepend(sidebar);
 
 const linkButtons = `<a href="index.html" class="indexLink">index</a>
                    <a href="tagLibrary.html" class="tagLibraryLink">tagLibrary</a>

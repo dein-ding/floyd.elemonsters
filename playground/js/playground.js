@@ -15,18 +15,19 @@ const Time = {
 			span: document.querySelector("#timeOutput span:nth-of-type(3n)"),
 			meter: document.querySelector(".timeOutputContainer .second"),
 		},
+		startStopButton: document.querySelector("#timeOutput button"),
 	},
 	start() {
 		Time.refresh();
 		Time.cycle = setInterval(Time.refresh, 50);
 
-		document.querySelector("#timeOutput button").innerText = "stop";
-		document.querySelector("#timeOutput button").onclick = () => Time.stop();
+		Time.output.startStopButton.innerText = "stop";
+		Time.output.startStopButton.onclick = () => Time.stop();
 	},
 	stop() {
 		clearInterval(Time.cycle)
-		document.querySelector("#timeOutput button").innerText = "start";
-		document.querySelector("#timeOutput button").onclick = () => Time.start();
+		Time.output.startStopButton.innerText = "start";
+		Time.output.startStopButton.onclick = () => Time.start();
 	},
 	display(time) {
 		Time.output.days.meter.value = time.getHours();
@@ -79,7 +80,7 @@ const playButton = document.querySelector("#playButton");
 
 playButton.addEventListener("click", playback); */
 
-const audio = document.querySelector("audio")
+/* const audio = document.querySelector("audio")
 const bt = document.querySelector("#playButton");
 
 playAudio = () => {
@@ -97,7 +98,7 @@ bt.addEventListener("click", startPlaying);
 // audio.addEventListener("playing", startPlaying);
 audio.addEventListener("error", (err) => {
 	console.log("error: " + err);
-});
+}); */
 
 
 ////////////////// PONG GAME ////////////////////////

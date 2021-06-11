@@ -1,6 +1,10 @@
+// const linkCustom = document.createElement("script");
+// linkCustom.src = "/src/components/custom/custom.js";
+// document.head.prepend(linkCustom);
+
 //////// DevMode ///////
 //prettier-ignore
-var DevMode = {
+const DevMode = {
     status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
     keepAcrossPages: false,
     callback: null,
@@ -56,33 +60,32 @@ var DevMode = {
                     let devModeContainer = document.createElement("div")
                     devModeContainer.classList.add("devModeItem", "devModeContainer")
                     devModeContainer.innerHTML = `
-                    <div class="toolbox">
-                        <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
-                            <i class="fas fa-power-off"></i>
-                        </button>
-                        <button class="log" title="log DevMode settings" onclick="DevMode.log()">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                        <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
-                            <i class="fas fa-redo-alt"></i>
-                        </button>
+                        <div class="toolbox">
+                            <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
+                                <i class="fas fa-power-off"></i>
+                            </button>
+                            <button class="log" title="log DevMode settings" onclick="DevMode.log()">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                            <button class="evalJS" onclick="test('eval')">
+                                <i class="fab fa-js-square"></i>
+                            </button>
 
-                        <button onclick="location.href = 'webuntis.html'">
-                            <i class="fad fa-calendar-alt"></i>
-                        </button>
+                            <button onclick="location.href = 'webuntis.html'">
+                                <i class="fad fa-calendar-alt"></i>
+                            </button>
 
-                        <button class="evalJS" onclick="test('eval')">
-                            <i class="fab fa-js-square"></i>
-                        </button>
-
-                        <button title="show a prompt dialog" onclick="test('prompt')">
-                            <i class="fas fa-keyboard"></i>
-                        </button>
-                        <button title="show a confirmation dialog" onclick="test('confirm')">
-                            <i class="fad fa-window"></i>
-                        </button>
-                    </div>
-                    <div class="userCountDisplay" style="display:none;"></div>
+                            <button title="show a prompt dialog" onclick="test('prompt')">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                            <button title="show a confirmation dialog" onclick="test('confirm')">
+                                <i class="fad fa-window"></i>
+                            </button>
+                        </div>
+                        <div class="userCountDisplay" style="display:none;"></div>
                     `
                     document.body.append(devModeContainer);
                     DevMode.items.push(devModeContainer);
@@ -181,10 +184,9 @@ $(document).ready(async () => {
             document.querySelector(activeLinks[x]).classList.add("activeLink");
         }
     } else {
-        // console.log("else");
         activeLinks = activeLinks.toString().split(" ");
         activeLinks.forEach((item) => {
-            // item.classList.add("activeLink");
+            document.querySelector(item).classList.add("activeLink");
         });
     }
 
@@ -477,7 +479,7 @@ fromConsole = () => {
  * @param {*} l
  * @returns
  */
-const pSBC = (p,c0,c1,l) => {
+pSBC = (p,c0,c1,l) => {
     let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
     if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
     if(!this.pSBCr)this.pSBCr=(d)=>{

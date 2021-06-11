@@ -8,6 +8,9 @@ const videoContainer = document.querySelector(".videoContainer");
 // adds a prefix before the title
 titleTag.innerText = "playground - " + titleTag.innerText;
 
+// defaults currURL to "/" if it wasn't visited before
+sessionStorage.currURL ||= "/"; 
+
 ////////////////////// Nav Bar //////////////////////
 var navBarContainer = document.querySelector(".nav-bar-container");
 //create new header if not already existing
@@ -17,6 +20,10 @@ if (!navBarContainer) {
 	document.body.prepend(navBarContainer);
 }
 navBarContainer.innerHTML = getFile("./components/nav-bar.html");
+
+document.querySelector("#return-to-main").href = `../${sessionStorage.currURL}`
+document.querySelector(document.body.dataset.activeLink).classList.add("active");
+
 
 const toggleColorSlider = document.querySelector("#toggleColorSlider");
 const colorSlider = document.querySelectorAll("#colorSlider");
@@ -52,13 +59,11 @@ main = () => {
 						"No"
 					) //prettier-ignore
 					.then(() => {
-						let query = searchbar.value
-							.toString()
-							.replace(" ", "+");
+						const query = searchbar.value.toString().replace(" ", "+");
 						googleQuery.href = `https://www.google.com/search?q=${query}`;
 						googleQuery.click();
 					})
-					.catch(() => {});
+					.catch(() => searchbar.select());
 		}
 
 		if (event.keyCode == 27) {

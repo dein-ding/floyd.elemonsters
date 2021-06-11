@@ -36,6 +36,9 @@ body {
   display: flex;
   align-items: center;
 
+  font-family: var(--primaryFont);
+  color: var(--dark-font-clr);
+
   background: hsl(var(--primary-clr-hue), 15%, 42%);
 }
 .logo {
@@ -375,6 +378,9 @@ nav {
 .nav-list li a:hover {
   color: hsl(var(--primary-clr-hue), 100%, 50%);
   text-shadow: 0 0 5px hsl(var(--primary-clr-hue), 100%, 50%);
+}
+.nav-list li a.active {
+  color: hsl(var(--primary-clr-hue), 100%, 50%);
 }
 /* @media screen (min-width: 1100) {
     
