@@ -119,108 +119,99 @@ const DevMode = {
 };
 
 $(document).ready(async () => {
+  //elements
+  const head = document.getElementsByTagName("HEAD")[0];
+  const titleTag = document.querySelector("title");
+  var navBarHeader = document.querySelector("#navBarHeader");
+  var footer = document.querySelector("#footer");
+  const body = document.body;
 
-    //elements
-    const head = document.getElementsByTagName("HEAD")[0];
-    const titleTag = document.querySelector("title");
-    var navBarHeader = document.querySelector("#navBarHeader");
-    var footer = document.querySelector("#footer");
-    const body = document.body;
+  //variables
+  const data = JSON.parse(await getFile("../../src/data/main.json"));
 
-    //variables
-    const data = JSON.parse(await getFile("../../src/data/main.json"));
+  getUserCountAsync()
+    .then((res) => {
+      console.groupCollapsed(
+        `%c userCount: ${res.today}`,
+        "color: orange; font-weight: 700;"
+      );
+      console.table(res);
+      console.groupEnd();
+    })
+    .catch(console.warn);
 
-    getUserCountAsync()
-        .then((res) => {
-            console.groupCollapsed(
-                `%c userCount: ${res.today}`,
-                "color: orange; font-weight: 700;"
-            );
-            console.table(res);
-            console.groupEnd();
-        })
-        .catch(console.warn);
+  var locationURL = {
+    prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
+    curr: location.pathname,
+  };
+  sessionStorage.currURL = location.pathname;
+  sessionStorage.prevURL = locationURL.prev;
 
-    var locationURL = {
-        prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
-        curr: location.pathname,
+  //create script for user counter
+  const userCounterScript = document.createElement("script");
+  userCounterScript.id = "ebsr5556uh";
+  userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${ DevMode.status ? "(DevMode)" : "" }&start=0&design=5`; //prettier-ignore
+  head.append(userCounterScript);
+
+  //create link for favicon
+  const linkFavicon = document.createElement("LINK");
+  linkFavicon.rel = "shortcut icon";
+  linkFavicon.type = "image/png";
+  linkFavicon.href = "src/assets/images/icons/deinding_favicon.png";
+  head.prepend(linkFavicon);
+
+  // adds a prefix before the title
+  titleTag.innerText = "dein.ding - " + titleTag.innerText;
+
+  ////////////////////// Nav Bar //////////////////////
+  //create new header if not already existing
+  if (!navBarHeader) {
+    navBarHeader = document.createElement("header");
+    navBarHeader.id = "navBarHeader";
+    document.body.prepend(navBarHeader);
+  }
+  navBarHeader.innerHTML = await getFile("src/components/navBar.html");
+
+  //execute DevMode preferences
+  if (DevMode.status) DevMode.execute();
+
+  //adds the activeLink class to active links for the current page
+  var activeLinks = body.dataset.activeLink;
+  if (activeLinks[0] == "[") activeLinks = eval(activeLinks);
+  else activeLinks = activeLinks.toString().split(" ");
+
+  activeLinks.forEach((item) =>
+    document.querySelector(item).classList.add("activeLink")
+  );
+
+  //adds a title and an alert to disabled links
+  const disabledLink = document.querySelectorAll(".disabledLink");
+  const disabledLinkMsg = "Diese Seite gibt es noch nicht :(";
+  disabledLink.forEach((item) => {
+    item.title = disabledLinkMsg;
+    item.onclick = () => {
+      custom.confirm("", disabledLinkMsg, "Okay");
     };
-    sessionStorage.currURL = location.pathname;
-    sessionStorage.prevURL = locationURL.prev;
+  });
 
-    //create script for user counter
-    const userCounterScript = document.createElement("script");
-    userCounterScript.id = "ebsr5556uh";
-    userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${ DevMode.status ? "(DevMode)" : "" }&start=0&design=5`; //prettier-ignore
-    head.append(userCounterScript);
+  //opens and closes the projects dropdown menu
+  const projectsDrpdwntggl = document.querySelector(".projects-dropdown-toggle"); //prettier-ignore
+  window.onclick = (event) => {
+    if (event.target.matches(".prjct-tggl"))
+      projectsDrpdwntggl.checked = !projectsDrpdwntggl.checked;
+    else projectsDrpdwntggl.checked = false;
+  };
 
-    //create link for favicon
-    const linkFavicon = document.createElement("LINK");
-    linkFavicon.rel = "shortcut icon";
-    linkFavicon.type = "image/png";
-    linkFavicon.href = "src/assets/images/icons/deinding_favicon.png";
-    head.prepend(linkFavicon);
+  /////////////////////// footer ///////////////////////
+  //create new footer if not already existing
+  if (!footer) {
+    footer = document.createElement("footer");
+    footer.id = "pageFooter";
+    document.body.append(footer);
+  }
+  footer.innerHTML = await getFile("src/components/footer.html");
 
-    // adds a prefix before the title
-    titleTag.innerText = "dein.ding - " + titleTag.innerText;
-
-    ////////////////////// Nav Bar //////////////////////
-    //create new header if not already existing
-    if (!navBarHeader) {
-        navBarHeader = document.createElement("header");
-        navBarHeader.id = "navBarHeader";
-        document.body.prepend(navBarHeader);
-    }
-    navBarHeader.innerHTML = await getFile("src/components/navBar.html");
-
-    //execute DevMode preferences
-    if (DevMode.status) DevMode.execute();
-
-    //adds the activeLink class to active links for the current page
-    var activeLinks = body.dataset.activeLink;
-    if (activeLinks[0] == "[") {
-        activeLinks = eval(activeLinks);
-        for (x in activeLinks) {
-            document.querySelector(activeLinks[x]).classList.add("activeLink");
-        }
-    } else {
-        activeLinks = activeLinks.toString().split(" ");
-        activeLinks.forEach((item) => {
-            document.querySelector(item).classList.add("activeLink");
-        });
-    }
-
-    //adds a title and an alert to disabled links
-    const disabledLink = document.querySelectorAll(".disabledLink");
-    var disabledLinkMsg = "Diese Seite gibt es noch nicht :(";
-    for (x in disabledLink) {
-        disabledLink[x].title = disabledLinkMsg;
-        disabledLink[x].onclick = () => {
-            custom.confirm("", disabledLinkMsg, "Okay");
-        };
-    }
-
-    //opens and closes the projects dropdown menu
-    const projectsDrpdwntggl = document.querySelector(".projects-dropdown-toggle"); //prettier-ignore
-    window.onclick = (event) => {
-        if (event.target.matches(".prjct-tggl")) {
-            if (projectsDrpdwntggl.checked == false)
-                projectsDrpdwntggl.checked = true;
-            else
-                projectsDrpdwntggl.checked = false;
-        } else projectsDrpdwntggl.checked = false;
-    }; //prettier-ignore
-
-    /////////////////////// footer ///////////////////////
-    //create new footer if not already existing
-    if (!footer) {
-        footer = document.createElement("footer");
-        footer.id = "pageFooter";
-        document.body.append(footer);
-    }
-    footer.innerHTML = await getFile("src/components/footer.html");
-
-    { //assigning URLs to links
+  { //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
@@ -228,109 +219,107 @@ $(document).ready(async () => {
 });
 
 test = async (type) => {
-    switch (type) {
-        case "confirm":
-            custom
-                .confirm(
-                    "Attention",
-                    "this is a confirmation dialog",
-                    "Ok",
-                    "leave me alone"
-                )
-                .then(console.info)
-                .catch(console.info);
-            break;
-        case "prompt":
-            console.info(
-                "input recieved: " +
-                    (await custom.prompt(
-                        "Wait a sec,",
-                        "this is a prompt for user input"
-                    ))
-            );
-            break;
-        case "eval":
-            eval(
-                await custom.prompt(
-                    "evaluate JS",
-                    "type in valid JavaScript for evaluation."
-                )
-            );
-    }
+  switch (type) {
+    case "confirm":
+      custom
+        .confirm(
+          "Attention",
+          "this is a confirmation dialog",
+          "Ok",
+          "leave me alone"
+        )
+        .then(console.info)
+        .catch(console.info);
+      break;
+    case "prompt":
+      console.info(
+        "input recieved: " +
+          (await custom.prompt(
+            "Wait a sec,",
+            "this is a prompt for user input"
+          ))
+      );
+      break;
+    case "eval":
+      eval(
+        await custom.prompt(
+          "evaluate JS",
+          "type in valid JavaScript for evaluation."
+        )
+      );
+  }
 };
 
 getUserCount = () => {
-    if (besucher)
-        return {
-            onDomain: location.hostname,
-            online: besucher[0],
-            today: besucher[1],
-            yesterday: besucher[2],
-            ever: besucher[3],
-            since: besucher[4],
-        };
-    else return "not ready yet";
+  if (besucher)
+    return {
+      onDomain: location.hostname,
+      online: besucher[0],
+      today: besucher[1],
+      yesterday: besucher[2],
+      ever: besucher[3],
+      since: besucher[4],
+    };
+  else return "not ready yet";
 };
 
 async function getUserCountAsync() {
-    return new Promise((resolve, reject) => {
-        let i = 1;
-        let wait = setInterval(() => {
-            // console.log(`waiting for user count... (${i})`);
-            i++;
-            if (i > 20) {
-                clearInterval(wait);
-                reject("could not fetch UserCount (besucher)");
-            }
+  return new Promise((resolve, reject) => {
+    let i = 1;
+    let wait = setInterval(() => {
+      // console.log(`waiting for user count... (${i})`);
+      i++;
+      if (i > 20) {
+        clearInterval(wait);
+        reject("could not fetch UserCount (besucher)");
+      }
 
-            if (window.besucher) {
-                clearInterval(wait);
-                resolve({
-                    onDomain: location.hostname,
-                    online: besucher[0],
-                    today: besucher[1],
-                    yesterday: besucher[2],
-                    ever: besucher[3],
-                    since: besucher[4],
-                });
-            }
-        }, 200);
-    });
+      if (window.besucher) {
+        clearInterval(wait);
+        resolve({
+          onDomain: location.hostname,
+          online: besucher[0],
+          today: besucher[1],
+          yesterday: besucher[2],
+          ever: besucher[3],
+          since: besucher[4],
+        });
+      }
+    }, 200);
+  });
 }
 
 getFile = async (URL) => {
-    var XHR = new XMLHttpRequest();
-    XHR.open("GET", URL, false);
-    XHR.send();
+  var XHR = new XMLHttpRequest();
+  XHR.open("GET", URL, false);
+  XHR.send();
 
-    //console.log("injected:" + XHR.responseText);
-    return XHR.responseText;
+  //console.log("injected:" + XHR.responseText);
+  return XHR.responseText;
 };
 
-
 const custom = {
-    /**
-     * **presents a custom alert dialog**
-     * @param {string} title leave empty string or "no title" for no title
-     * @param {string} text
-     * @param {string} primaryBtn
-     * @param {string} secondaryBtn leave empty string, undefined or "no btn" for no secondary button
-     * @returns {Promise<string>} button response
-     */
-    confirm: (title, text, primaryBtn, secondaryBtn) => {
-        //input formatting
-        if (title == ("" || "no title")) title = undefined;
-        if (secondaryBtn == (undefined || "" || "no btn"))
-            secondaryBtn = undefined;
+  /**
+   * **presents a custom alert dialog**
+   * @param {string} title leave empty string or "no title" for no title
+   * @param {string} text
+   * @param {string} primaryBtn
+   * @param {string} secondaryBtn leave empty string, undefined or "no btn" for no secondary button
+   * @returns {Promise<string>} button response
+   */
+  confirm: (title, text, primaryBtn, secondaryBtn) => {
+    //input formatting
+    if (title == ("" || "no title")) title = undefined;
+    if (secondaryBtn == (undefined || "" || "no btn")) secondaryBtn = undefined;
 
-        //create container
-        var dialogContainer = document.createElement("div");
-        dialogContainer.classList.add("dialogContainer");
-        dialogContainer.style.opacity = 0;
-        document.body.prepend(dialogContainer);
+    //create container
+    var dialogContainer = document.createElement("div");
+    dialogContainer.classList.add("dialogContainer");
+    dialogContainer.style.opacity = 0;
+    document.body.prepend(dialogContainer);
 
-        //create the actual pop up dialog
-        dialogContainer.innerHTML = `
+    //create the actual pop up dialog
+    dialogContainer.innerHTML = `
         <div class='dialog'>
             <div class='dialogText'>
                 <h3>${title ? title : ""}</h3>
@@ -343,63 +332,63 @@ const custom = {
         </div>
     `; //prettier-ignore
 
-        //adds the text
-        document.querySelector(".dialogText p").innerText = text;
+    //adds the text
+    document.querySelector(".dialogText p").innerText = text;
 
-        document.querySelector(".dialog").classList.add("appear");
-        $(".dialogContainer").fadeTo(200, 1);
+    document.querySelector(".dialog").classList.add("appear");
+    $(".dialogContainer").fadeTo(200, 1);
 
-        return new Promise((resolve, reject) => {
-            clickPrimary = (event) => {
-                event.stopPropagation();
-                if (event.keyCode === 13) {
-                    //ENTER
-                    event.preventDefault();
-                    buttonPressed("primary");
-                }
-                if (event.keyCode === 27 && secondaryBtn) {
-                    //ESC
-                    event.preventDefault();
-                    buttonPressed("secondary");
-                }
-            };
+    return new Promise((resolve, reject) => {
+      clickPrimary = (event) => {
+        event.stopPropagation();
+        if (event.keyCode === 13) {
+          //ENTER
+          event.preventDefault();
+          buttonPressed("primary");
+        }
+        if (event.keyCode === 27 && secondaryBtn) {
+          //ESC
+          event.preventDefault();
+          buttonPressed("secondary");
+        }
+      };
 
-            document.addEventListener("keydown", clickPrimary, {capture: true});
+      document.addEventListener("keydown", clickPrimary, { capture: true });
 
-            buttonPressed = (response) => {
-                if (response == "primary") resolve(primaryBtn);
-                if (response == "secondary") reject(secondaryBtn);
+      buttonPressed = (response) => {
+        if (response == "primary") resolve(primaryBtn);
+        if (response == "secondary") reject(secondaryBtn);
 
-                document.removeEventListener("keydown", clickPrimary, {
-                    capture: true,
-                });
-
-                document.querySelector(".dialog").classList.remove("appear");
-                $(".dialogContainer").fadeTo(200, 0);
-                setTimeout(() => {
-                    document.body.removeChild(dialogContainer);
-                }, 300);
-            };
+        document.removeEventListener("keydown", clickPrimary, {
+          capture: true,
         });
-    },
-    /**
-     * **presents a custom prompt dialog for user input**
-     * @param {string} title leave empty string or "no title" for no title
-     * @param {string} text
-     * @returns {Promise<string>} input value
-     */
-    prompt: (title, text) => {
-        //input formatting
-        if (title == ("" || "no title")) title = undefined;
 
-        //create container
-        var dialogContainer = document.createElement("div");
-        dialogContainer.classList.add("dialogContainer");
-        dialogContainer.style.opacity = 0;
-        document.body.prepend(dialogContainer);
+        document.querySelector(".dialog").classList.remove("appear");
+        $(".dialogContainer").fadeTo(200, 0);
+        setTimeout(() => {
+          document.body.removeChild(dialogContainer);
+        }, 300);
+      };
+    });
+  },
+  /**
+   * **presents a custom prompt dialog for user input**
+   * @param {string} title leave empty string or "no title" for no title
+   * @param {string} text
+   * @returns {Promise<string>} input value
+   */
+  prompt: (title, text) => {
+    //input formatting
+    if (title == ("" || "no title")) title = undefined;
 
-        //create the actual pop up dialog
-        dialogContainer.innerHTML = `
+    //create container
+    var dialogContainer = document.createElement("div");
+    dialogContainer.classList.add("dialogContainer");
+    dialogContainer.style.opacity = 0;
+    document.body.prepend(dialogContainer);
+
+    //create the actual pop up dialog
+    dialogContainer.innerHTML = `
         <div class='dialog'>
             <div class='dialogText prompt'>
                 <h3>${title ? title : ""}</h3>
@@ -412,62 +401,62 @@ const custom = {
         </div>
         `; //prettier-ignore
 
-        //focus the input field for faster workflow
-        document.querySelector(".promptInput").select();
+    //focus the input field for faster workflow
+    document.querySelector(".promptInput").select();
 
-        document.querySelector(".dialog").classList.add("appear");
-        $(".dialogContainer").fadeTo(200, 1);
+    document.querySelector(".dialog").classList.add("appear");
+    $(".dialogContainer").fadeTo(200, 1);
 
-        return new Promise((resolve, reject) => {
-            click = (event) => {
-                event.stopPropagation();
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    buttonPressed();
-                }
-            };
+    return new Promise((resolve, reject) => {
+      click = (event) => {
+        event.stopPropagation();
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          buttonPressed();
+        }
+      };
 
-            document.addEventListener("keydown", click, {capture: true});
+      document.addEventListener("keydown", click, { capture: true });
 
-            buttonPressed = () => {
-                let input = document.querySelector(".promptInput").value;
-                resolve(input);
+      buttonPressed = () => {
+        let input = document.querySelector(".promptInput").value;
+        resolve(input);
 
-                document.removeEventListener("keydown", click, {capture: true});
+        document.removeEventListener("keydown", click, { capture: true });
 
-                document.querySelector(".dialog").classList.remove("appear");
-                $(".dialogContainer").fadeTo(200, 0);
-                setTimeout(() => {
-                    document.body.removeChild(dialogContainer);
-                }, 300);
-            };
-        });
-    },
+        document.querySelector(".dialog").classList.remove("appear");
+        $(".dialogContainer").fadeTo(200, 0);
+        setTimeout(() => {
+          document.body.removeChild(dialogContainer);
+        }, 300);
+      };
+    });
+  },
 };
 
 /**
  * determine if a function call comes from the console
  */
 fromConsole = () => {
-    var stack;
-    try {
-        // Throwing the error for Safari's sake, in Chrome and Firefox
-        // var stack = new Error().stack; is sufficient.
-        throw new Error();
-    } catch (e) {
-        stack = e.stack;
-    }
-    if (!stack) return false;
+  var stack;
+  try {
+    // Throwing the error for Safari's sake, in Chrome and Firefox
+    // var stack = new Error().stack; is sufficient.
+    throw new Error();
+  } catch (e) {
+    stack = e.stack;
+  }
+  if (!stack) return false;
 
-    var lines = stack.split("\n");
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].indexOf("at Object.InjectedScript.") >= 0) return true; // Chrome console
-        if (lines[i].indexOf("@debugger eval code") == 0) return true; // Firefox console
-        if (lines[i].indexOf("_evaluateOn") == 0) return true; // Safari console
-        if (lines[i].indexOf("evaluateWithScopeExtension@[native code]") == 0)
-            return true; // Safari console
-    }
-    return false;
+  var lines = stack.split("\n");
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].indexOf("at Object.InjectedScript.") >= 0) return true; // Chrome console
+    if (lines[i].indexOf("@debugger eval code") == 0) return true; // Firefox console
+    if (lines[i].indexOf("_evaluateOn") == 0) return true; // Safari console
+    if (lines[i].indexOf("evaluateWithScopeExtension@[native code]") == 0)
+      return true; // Safari console
+  }
+  return false;
 };
 /**
  * **manipulate color (RGB or HEX) values**
