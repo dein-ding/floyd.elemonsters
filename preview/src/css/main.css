@@ -26,6 +26,7 @@ body {
 
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   color: var(--dark-font-clr);
+  font-size: 20px;
 
   background: var(--background-darker-clr);
 }
@@ -281,7 +282,7 @@ li {
   #nav-toggle:checked ~ .nav {
     transform: scale(1);
     box-shadow: 0 0 var(--nav-box-shadow);
-    
+
     transition: transform 200ms, box-shadow 500ms;
   }
 }
@@ -366,13 +367,10 @@ li {
   flex-direction: column;
   align-items: flex-end;
 }
-.rund-um-die-uhr {
-  height: 80px;
-}
-.visiten-karte {
+.taxi-seite {
   min-width: 180px;
-  width: 45vw;
-  max-width: 400px;
+  /* width: 45vw; */
+  max-width: 80%;
 
   /* transform: translateY(-20px); */
 }
@@ -397,21 +395,17 @@ li {
   align-items: center;
 }
 #info-banner h4 {
-  transform: translateY(5px);
-}
-#info-banner img:last-child {
-  height: 180px;
-  transform: translateX(50px);
+  transform: translateY(-25px);
 }
 
 /*////////////////////// sub pages ////////////////////////*/
 /* ////////// Index /////////// */
 .index-container {
-  width: max-content;
+  max-width: max-content;
 }
 /* /////// Datenschutz //////// */
 .datenschutz-container {
-  width: 80ch;
+  max-width: 80ch;
   margin: auto;
 
   padding: 20px;
