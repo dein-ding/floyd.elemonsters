@@ -1,0 +1,441 @@
+:root {
+  --primary-hue: 200;
+  --secondary-hue: 245;
+
+  --background-clr: hsl(var(--primary-hue), 100%, 65%);
+  --background-lighter-clr: hsl(var(--primary-hue), 100%, 75%);
+  --background-darker-clr: hsl(var(--primary-hue), 100%, 50%);
+
+  --dark-font-clr: hsl(var(--primary-hue), 100%, 12%);
+  --secondary-font-clr: hsl(var(--secondary-hue), 100%, 45%);
+  --secondary-font-clr-dark: hsl(var(--secondary-hue), 100%, 32%);
+
+  --nav-bar-height: 80px;
+
+  --hamburgerColor: var(--dark-font-clr);
+}
+
+body {
+  margin: 0;
+  padding: 60px 0 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: var(--dark-font-clr);
+
+  background: var(--background-darker-clr);
+}
+body > * {
+  max-width: 1400px;
+}
+
+a {
+  color: var(--secondary-font-clr);
+}
+/*h1 {
+  font-size: 2.3rem;
+}
+h2 {
+  font-size: 2.15rem;
+}
+h3 {
+  font-size: 1.8rem;
+} */
+h4 {
+  /* font-size: 1.6rem; */
+  color: hsl(var(--primary-hue), 80%, 27%);
+}
+/* p,
+li {
+  font-size: 1.6rem;
+} */
+
+/*////////////////////// nav-bar ////////////////////////*/
+#nav-bar-container {
+  --margin: 15px;
+  --padding-sides: 10px;
+  --nav-box-shadow: 25px rgba(0, 0, 0, 0.685);
+  --border-radius: 10px;
+  z-index: 10;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 20px);
+  height: var(--nav-bar-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 5px var(--padding-sides);
+
+  background: var(--background-clr);
+}
+@media (min-width: 670px) {
+  #nav-bar-container {
+    box-shadow: 0 0 var(--nav-box-shadow);
+    border-radius: var(--border-radius);
+
+    left: unset;
+    margin: var(--margin);
+    width: calc(100% - ((var(--margin) + var(--padding-sides)) * 4));
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 30px;
+
+  cursor: pointer;
+}
+.logo .taxi {
+  height: calc(var(--nav-bar-height) * 0.9);
+  margin: 0 15px 0 0;
+
+  filter: hue-rotate(170deg);
+}
+.logo .taxi-hamm {
+  height: 32px;
+
+  filter: hue-rotate(200deg);
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  background: var(--background-clr);
+}
+.nav-item {
+  height: 100%;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.7rem;
+  padding: 10px;
+
+  cursor: pointer;
+
+  margin: 0;
+
+  transition: background 200ms;
+}
+.nav-item a {
+  position: relative;
+  height: 70%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: inherit;
+  border-radius: 6px;
+  padding: 0 10px;
+
+  text-decoration: none;
+
+  transition: box-shadow 180ms;
+}
+.nav-item a:is(:hover, :focus) {
+  box-shadow: 0 0 10px var(--secondary-font-clr);
+}
+.nav-item a:active {
+  box-shadow: 0 0 10px var(--secondary-font-clr) inset;
+}
+
+.taxi-hamm.activeLink {
+  border-bottom: 5px solid var(--secondary-font-clr);
+}
+.nav-item .activeLink {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.438);
+}
+.nav-item a.activeLink::before {
+  /* content: ""; */
+
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  height: 4.5px;
+
+  border-radius: 5px;
+
+  background: var(--secondary-font-clr);
+}
+
+/*////////////////// hamburger menu buttton //////////////////*/
+.nav-toggle-label {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+
+  padding: 0 1rem 0;
+  margin-left: 0.4rem;
+  height: 100%;
+  display: none;
+  align-items: center;
+  font-size: 20pt;
+  cursor: pointer;
+}
+.hamburger {
+  height: 4px;
+  width: 1.5rem;
+  border-radius: 1.7px;
+
+  background: var(--hamburgerColor);
+
+  transition: 200ms;
+}
+.hamburger::before,
+.hamburger::after {
+  content: "";
+
+  position: absolute;
+  left: 1rem;
+
+  height: 4px;
+  width: 1.5rem;
+  border-radius: 1.7px;
+
+  background: var(--hamburgerColor);
+
+  transform: translateY(-9px);
+
+  transition: 200ms;
+}
+.hamburger::after {
+  transform: translateY(9px);
+}
+
+.nav-toggle:checked ~ label .hamburger::after {
+  transform: rotate(45deg);
+}
+.nav-toggle:checked ~ label .hamburger::before {
+  transform: rotate(-45deg);
+}
+.nav-toggle:checked ~ label .hamburger {
+  background: transparent;
+}
+
+@media screen and (max-width: 1480px) {
+  .nav-toggle-label {
+    /* outline: 2px solid red; */
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .nav {
+    position: absolute;
+    top: 115%;
+    left: 0px;
+    width: calc(100% - calc(var(--margin) * 2));
+    transform: scale(0);
+
+    height: max-content;
+
+    align-items: flex-start;
+    flex-direction: column;
+
+    padding: 15px;
+    border-radius: var(--border-radius);
+
+    background: var(--background-clr);
+    box-shadow: 0 0 var(--nav-box-shadow);
+  }
+  .nav-item {
+    margin: 15px 0;
+  }
+  .nav-item a {
+    height: min-content;
+    padding: 8px;
+    font-size: 2.2rem;
+  }
+  .nav-item a.activeLink {
+    border-left: 5px solid var(--secondary-font-clr);
+  }
+  #nav-toggle:checked ~ .nav {
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 940px) {
+  .telefon {
+    display: none;
+  }
+}
+@media (max-width: 670px) {
+  .nav {
+    margin: 0 20px;
+    width: calc(100% - 70px);
+  }
+}
+@media screen and (max-width: 565px) {
+  .logo .taxi {
+    display: none;
+  }
+  .logo .taxi-hamm {
+    width: 80%;
+    /* height: unset; */
+  }
+}
+
+.telefon {
+  z-index: 9;
+  position: fixed;
+  top: 100%;
+  /* right: 15px; */
+
+  width: 130px;
+  height: 100px;
+
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
+}
+
+/*////////////// body container //////////////////*/
+#body-container {
+  --margin: calc(var(--nav-bar-height) + 70px);
+  --padding: 20px;
+  min-height: calc(100vh - var(--margin));
+  min-width: calc(100% - (var(--padding) * 2));
+  margin-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding: var(--padding);
+
+  background-image: linear-gradient(
+    135deg,
+    hsl(var(--primary-hue), 100%, 60%),
+    hsl(var(--primary-hue), 100%, 40%)
+  );
+}
+#body-container > h1 {
+  margin: auto;
+}
+#body-container > div {
+  max-width: 80ch;
+}
+
+/*///////////////// info-banner ////////////////////*/
+#info-banner {
+  /* outline: 2px solid red; */
+  min-width: 70ch;
+
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  padding: 20px;
+}
+.rund-um-die-uhr {
+  height: 80px;
+}
+.visiten-karte {
+  min-width: 180px;
+  width: 45vw;
+  max-width: 400px;
+
+  /* transform: translateY(-20px); */
+}
+
+@media (min-width: 600px) {
+  /* .visiten-karte {
+    transform: translateY(-20px);
+  }
+
+  .kontakt-link {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+  } */
+}
+#info-banner > div {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#info-banner h4 {
+  transform: translateY(5px);
+}
+#info-banner img:last-child {
+  height: 180px;
+  transform: translateX(50px);
+}
+
+/*////////////////////// sub pages ////////////////////////*/
+/* ////////// Index /////////// */
+.index-container {
+  width: max-content;
+}
+/* /////// Datenschutz //////// */
+.datenschutz-container {
+  width: 80ch;
+  margin: auto;
+
+  padding: 20px;
+}
+.datenschutz-container p {
+  line-height: 1.4;
+}
+/* .datenschutz-container h1 {
+  color: var(--secondary-font-clr-dark);
+} */
+
+/*////////////////////// footer //////////////////////////*/
+footer {
+  --margin: 20px;
+  width: calc(100% - (var(--margin) * 2));
+  min-height: 150px;
+
+  margin: var(--margin);
+
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+
+  border-radius: 8px;
+
+  background: var(--background-darker-clr);
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.322) inset; */
+}
+footer > div:first-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer > div:last-of-type p {
+  line-height: 0.3;
+
+  color: hsl(var(--primary-hue), 100%, 27%);
+}
+footer > div:last-of-type p span {
+  color: hsl(var(--primary-hue), 100%, 12%);
+}
+footer > div:first-of-type > * {
+  margin: 10px;
+}

@@ -1,0 +1,10 @@
+{
+	"emeraldwalk.runonsave": {
+		"commands": [
+			{
+				"match": ".*",
+				"cmd": "cp -a /Users/floyd/Projekte/Coding/Taxi-Hamm/. /Users/floyd/Projekte/Coding/floyd.elemonsters\\ Projekt/preview"
+			}
+		]
+	}
+}
