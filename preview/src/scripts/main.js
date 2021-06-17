@@ -42,7 +42,6 @@ async function getUserCount() {
 //inject components
 navBarContainer.innerHTML = getFile("/src/components/nav-bar.html");
 if (infoBanner) infoBanner.innerHTML = getFile("/src/components/info-banner.html"); //prettier-ignore
-// bodyContainer.innerHTML = `<img class="telefon" src="/src/assets/images/telefon.jpg" alt="telefon Kontakt" />` + bodyContainer.innerHTML; //prettier-ignore
 footer.innerHTML = getFile("/src/components/footer.html");
 
 //mark the active link
@@ -73,4 +72,5 @@ getUserCount().then((userCount) => {
   document.querySelector(".userCount #yesterday").innerText = userCount.yesterday; //prettier-ignore
   document.querySelector(".userCount #ever").innerText = userCount.ever;
   document.querySelector(".userCount #since").innerText = userCount.since;
+  document.querySelector(".userCount #domain").innerText = userCount.onDomain;
 });
