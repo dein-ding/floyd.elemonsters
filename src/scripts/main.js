@@ -40,10 +40,17 @@ const DevMode = {
         if (!this.callback)
             console.warn("no DevMode callback available");
     },
+    GUI: {
+      toggle() {
+        const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
+        devModeGuiToggle.checked = !devModeGuiToggle.checked;
+        },
+    },
     items: [],
     toggleItems(status) {
         const projectsDropdown = document.querySelector(".projects-dropdown");
-        const devModeItem = document.querySelectorAll(".devModeItem")
+      const devModeItem = document.querySelectorAll(".devModeItem")
+      const navUl = document.querySelector("#navBarHeader nav ul")
         // console.log(this.items)
         
         switch (status) {
@@ -56,39 +63,50 @@ const DevMode = {
                     projectsDropdown.append(li);
                     DevMode.items.push(li);
                     
-                    //adds the devMode GUI elements
-                    let devModeContainer = document.createElement("div")
-                    devModeContainer.classList.add("devModeItem", "devModeContainer")
-                    devModeContainer.innerHTML = `
-                        <div class="toolbox">
-                            <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
-                                <i class="fas fa-power-off"></i>
-                            </button>
-                            <button class="log" title="log DevMode settings" onclick="DevMode.log()">
-                                <i class="fas fa-info-circle"></i>
-                            </button>
-                            <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
-                                <i class="fas fa-redo-alt"></i>
-                            </button>
-                            <button class="evalJS" onclick="test('eval')">
-                                <i class="fab fa-js-square"></i>
-                            </button>
-
-                            <button onclick="location.href = 'webuntis.html'">
-                                <i class="fad fa-calendar-alt"></i>
-                            </button>
-
-                            <button title="show a prompt dialog" onclick="test('prompt')">
-                                <i class="fas fa-keyboard"></i>
-                            </button>
-                            <button title="show a confirmation dialog" onclick="test('confirm')">
-                                <i class="fad fa-window"></i>
-                            </button>
+                    navUl.innerHTML = navUl.innerHTML + `
+                    <li class="devModeItem navBarDevItem">
+                        <div class="devModeOutterContainer">
+                            <a id="devModeGuiToggleLabel" onclick="DevMode.GUI.toggle()">
+                                <i class="fad fa-code"></i>
+                            </a>
+                            <input type="checkbox" id="devModeGuiToggle" style="display: none;">
+                            <div class="devModeContainer">
+                                <div class="toolbox">
+                                    <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
+                                        <i class="fas fa-power-off"></i>
+                                    </button>
+                                    <button class="log" title="log DevMode settings" onclick="DevMode.log()">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
+                                        <i class="fas fa-redo-alt"></i>
+                                    </button>
+                                    <button class="evalJS" onclick="test('eval')">
+                                        <i class="fab fa-js-square"></i>
+                                    </button>
+        
+                                    <button onclick="location.href = 'webuntis.html'">
+                                        <i class="fad fa-calendar-alt"></i>
+                                    </button>
+        
+                                    <button title="show a prompt dialog" onclick="test('prompt')">
+                                        <i class="fas fa-keyboard"></i>
+                                    </button>
+                                    <button title="show a confirmation dialog" onclick="test('confirm')">
+                                        <i class="fad fa-window"></i>
+                                    </button>
+                                </div>
+                                <div class="userCountDisplay">
+                                  <h3>UserCount</h3>
+                                  <p>on host: Loading...</P>
+                                  <p>Today: Loading...</P>
+                                  <p>Yesterday: Loading...</P>
+                                  <p>Ever: Loading...</P>
+                                </div>
+                            </div>
                         </div>
-                        <div class="userCountDisplay" style="display:none;"></div>
-                    `
-                    document.body.append(devModeContainer);
-                    DevMode.items.push(devModeContainer);
+                    </li>`; //prettier-ignore
+                    DevMode.items.push(document.querySelector(".navBarDevItem"));
 
                     let userCountDisplay = document.querySelector(".userCountDisplay")
                     getUserCountAsync().then((res) => {
@@ -492,3 +510,36 @@ pSBC = (p,c0,c1,l) => {
     if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
     else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
 } //prettier-ignore
+
+/**
+ *
+ * @param {string | object} json the JSON string or object you want to syntax highlight
+ * @returns HTML string
+ */
+function syntaxHighlight(json) {
+  if (typeof json != "string") {
+    json = JSON.stringify(json, undefined, 4);
+  }
+  json = json
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  return json.replace(
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    function (match) {
+      var cls = "number";
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = "key";
+        } else {
+          cls = "string";
+        }
+      } else if (/true|false/.test(match)) {
+        cls = "boolean";
+      } else if (/null/.test(match)) {
+        cls = "null";
+      }
+      return '<span class="' + cls + '">' + match + "</span>";
+    }
+  );
+}

@@ -1,3 +1,218 @@
+:root {
+  --clr-hue: 39;
+  --clr-1: var(--navBarBackground);
+  --clr-2: var(--navBarBackground);
+
+  --webuntis-bg: rgb(180, 180, 180);
+
+  --cancelled-bg: hsl(0, 0%, 34%);
+  --cancelled-font-clr: rgb(196, 196, 196);
+
+  --irregular-bg: hsl(39, 100%, 32%);
+  --irregular-font-clr: hsl(39, 100%, 70%);
+
+  --default-bg: hsl(115, 66%, 18%);
+  --default-font-clr: hsl(115, 100%, 70%);
+}
 body {
-    background: black;
+  background: var(--clr-2);
+  min-height: 100vh;
+}
+.container {
+  position: relative;
+  outline: 2px solid red;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.webuntis-container {
+  outline: 2px solid red;
+  width: 100%;
+  height: calc(100vh - 75px);
+
+  position: relative;
+}
+.menu-button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+
+  height: 4rem;
+  width: 4rem;
+
+  font-size: 2.2rem;
+  /* color: white; */
+  border: 0;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background: var(--webuntis-bg);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
+
+  transition: 200ms;
+}
+.menu-button:is(:hover, :focus) {
+  transform: scale(1.1);
+}
+.menu-button:active {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.514) inset;
+}
+.timetable {
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  padding: 40px;
+  border-radius: 8px;
+
+  background: var(--webuntis-bg);
+}
+
+.timetableDay {
+  width: 320px;
+
+  padding: 20px;
+  border-radius: 8px;
+
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.527);
+
+  transition: 200ms ease-out;
+}
+.timetableDay:hover {
+  transform: scale(1.005);
+}
+.timetableDay + .timetableDay {
+  margin-left: 40px;
+}
+
+.lesson {
+  position: relative;
+  padding: 10px;
+  border-radius: 6px;
+  color: var(--default-font-clr);
+
+  background: var(--default-bg);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.527);
+
+  transition: 200ms ease-out;
+}
+.lesson .more-info-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+
+  filter: opacity(0.7);
+
+  cursor: pointer;
+
+  font-size: 1.3rem;
+  transition: transform 200ms;
+}
+.lesson:hover {
+  transform: scale(1.02);
+}
+.lesson + .lesson {
+  margin-top: 20px;
+}
+.lesson p {
+  margin: 0;
+}
+.lesson :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 0;
+  word-wrap: wrap;
+}
+.lesson p.teacher {
+  transform: translateY(-15px);
+  filter: brightness(0.85);
+}
+.lesson p.teacher::before {
+  content: "teachers: ";
+  filter: brightness(0.85);
+}
+.lesson p.room {
+  filter: brightness(0.85);
+}
+.lesson p.room::before {
+  content: "rooms: ";
+  filter: brightness(0.85);
+}
+.lesson p.time {
+  font-size: 1.2rem;
+  transform: translateY(-8px);
+}
+.lesson :last-child {
+  margin-bottom: 0;
+}
+
+.lesson.cancelled {
+  position: relative;
+  /* filter: brightness(0.5) grayscale(1); */
+  background: var(--cancelled-bg);
+  color: var(--cancelled-font-clr);
+}
+.lesson.cancelled::before {
+  content: "";
+  z-index: 1;
+
+  position: absolute;
+  bottom: 50%;
+  left: -5%;
+  height: 5px;
+  width: 110%;
+
+  border-radius: 5px;
+
+  background: red;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.644);
+
+  transform: rotate(25deg);
+  transition: 200ms;
+}
+.lesson.cancelled:hover::before {
+  bottom: 100%;
+  transform: rotate(0);
+}
+.lesson.irregular {
+  position: relative;
+  background: var(--irregular-bg);
+  color: var(--irregular-font-clr);
+}
+.lesson.irregular::after {
+  content: "irregular";
+
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  filter: brightness(0.8);
+}
+
+pre {
+  outline: 1px solid #ccc;
+  padding: 5px;
+  margin: 5px;
+
+  background: rgb(37, 37, 37);
+  color: white;
+}
+.string {
+  color: rgb(0, 207, 0);
+}
+.number {
+  color: rgb(225, 0, 255);
+}
+.boolean {
+  color: rgb(0, 110, 255);
+}
+.null {
+  color: rgb(255, 30, 0);
+}
+.key {
+  color: rgb(255, 153, 0);
 }
