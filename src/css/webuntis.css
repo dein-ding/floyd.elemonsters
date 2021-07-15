@@ -1,308 +1,309 @@
 :root {
-	--clr-hue: 39;
-	--clr-1: var(--navBarBackground);
-	--clr-2: var(--navBarBackground);
+  --clr-hue: 39;
+  --clr-1: var(--navBarBackground);
+  --clr-2: var(--navBarBackground);
 
-	--webuntis-bg: rgb(180, 180, 180);
+  --webuntis-bg: rgb(180, 180, 180);
 
-	--cancelled-bg: hsl(0, 0%, 34%);
-	--cancelled-font-clr: rgb(196, 196, 196);
+  --cancelled-bg: hsl(0, 0%, 34%);
+  --cancelled-font-clr: rgb(196, 196, 196);
 
-	--irregular-bg: hsl(39, 100%, 32%);
-	--irregular-font-clr: hsl(39, 100%, 70%);
+  --irregular-bg: hsl(39, 100%, 32%);
+  --irregular-font-clr: hsl(39, 100%, 70%);
 
-	--default-bg: hsl(115, 66%, 18%);
-	--default-font-clr: hsl(115, 100%, 70%);
+  --default-bg: hsl(115, 66%, 18%);
+  --default-font-clr: hsl(115, 100%, 70%);
 }
 body {
-	background: var(--clr-2);
-	min-height: 100vh;
+  background: var(--clr-2);
+  min-height: 100vh;
 }
 .container {
-	position: relative;
-	/* outline: 2px solid red; */
+  position: relative;
+  /* outline: 2px solid red; */
 
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*////////////////////////// general WebUntis UI ///////////////////////////////*/
 .webuntis-container {
-	/* outline: 2px solid red; */
-	width: 100%;
-	height: calc(100vh - 70px);
+  /* outline: 2px solid red; */
+  width: 100%;
+  height: calc(100vh - 70px);
 
-	position: relative;
+  position: relative;
 
-    padding: 10px;
+  padding: 10px;
 }
 .sidebar-toggle-btn {
-	z-index: 1;
-	position: absolute;
-	top: 30px;
-	right: 30px;
+  z-index: 2;
+  position: absolute;
+  top: 30px;
+  right: 30px;
 
-	height: 4rem;
-	width: 4rem;
+  height: 4rem;
+  width: 4rem;
 
-	font-size: 2.2rem;
-	/* color: white; */
-	border: 0;
-	border-radius: 50%;
+  font-size: 2.2rem;
+  /* color: white; */
+  border: 0;
+  border-radius: 50%;
 
-	cursor: pointer;
+  cursor: pointer;
 
-	background: var(--webuntis-bg);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
+  background: var(--webuntis-bg);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
 
-	transition: 200ms;
+  transition: 200ms;
 }
 .sidebar-toggle-btn:is(:hover, :focus) {
-	transform: scale(1.1);
+  transform: scale(1.1);
 }
 #sidebar-toggle:checked ~ .sidebar {
-	transform: translateX(0);
+  transform: translateX(0);
 }
 .sidebar {
-	box-sizing: border-box;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	bottom: 10px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
 
-	width: 300px;
+  width: 300px;
 
-	transform: translateX(320px);
-	transition: 200ms;
+  transform: translateX(320px);
+  transition: 200ms;
 
-	padding: 40px;
-	border-radius: 8px;
+  padding: 40px;
+  border-radius: 8px;
 
-	background: var(--webuntis-bg);
-	box-shadow: 0 0 30px rgba(0, 0, 0, 0.527);
+  background: var(--webuntis-bg);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.527);
 }
 
 /*////////////////////////// TIMETABLE ///////////////////////////////*/
 .timetable {
-    --item-height: 100px;
-	width: max-content;
+  --item-height: 100px;
+  width: max-content;
 
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
-	padding: 20px;
-	border-radius: 8px;
+  padding: 20px;
+  border-radius: 8px;
 
-	background: var(--webuntis-bg);
+  background: var(--webuntis-bg);
 }
 
 /*////////////////// TIMEGRID ///////////////////////*/
 .timegrid {
-    padding: 20px;
-	border-radius: 8px;
+  padding: 20px;
+  border-radius: 8px;
 
-    margin-right: 40px;
+  margin-right: 40px;
 
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
 }
 .time {
-    height: var(--item-height);
-    
-    padding: 10px;
-	border-radius: 8px;
-    text-align: center;
+  height: var(--item-height);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
 
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.329);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.329);
 }
 .time + .time {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .time > * {
-    margin: 0;
+  margin: 0;
 }
 .time .endTime {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
-    filter: opacity(0.4);
+  filter: opacity(0.4);
 }
 
 /*/////////////// TIMETABLE WEEK ////////////////////*/
 .timetableWeek {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 /*/////////// TIMETABLE for each day ////////////////*/
 .timetableDay {
-	width: 320px;
+  width: 320px;
 
-	padding: 20px;
-	border-radius: 8px;
+  padding: 20px;
+  border-radius: 8px;
 
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.527);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.527);
 
-	transition: 200ms ease-out;
+  transition: 200ms ease-out;
 }
 .timetableDay:hover {
-	transform: scale(1.005);
+  transform: scale(1.005);
 }
 .timetableDay + .timetableDay {
-	margin-left: 20px;
+  margin-left: 20px;
 }
 
 /*/////////// lesson blocks ////////////////*/
 .lesson {
-	position: relative;
-    height: var(--item-height);
+  position: relative;
+  height: var(--item-height);
 
-	padding: 10px;
-	border-radius: 6px;
+  padding: 10px;
+  border-radius: 6px;
 
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.527);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.527);
 
-	transition: 200ms ease-out;
+  transition: 200ms ease-out;
 }
-.lesson:hover {
-	transform: scale(1.02);
+.lesson:is(.regular, .irregular, .cancelled):hover {
+  transform: scale(1.02);
 }
 .lesson + .lesson {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 .lesson.regular {
-	color: var(--default-font-clr);
-	background: var(--default-bg);
+  color: var(--default-font-clr);
+  background: var(--default-bg);
 }
 .lesson::before,
 .lesson.cancelled::before {
-    content: "";
+  content: "";
 
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	height: 5px;
-	width: 106%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 5px;
+  width: 106%;
 
-	transform-origin: left;
+  transform-origin: left;
 
-	border-radius: 5px;
+  border-radius: 5px;
 
-	transform: rotate(19.5deg);
-	transition: 200ms;
+  transform: rotate(19.5deg);
+  transition: 200ms;
 }
 .lesson:not(.regular, .irregular, .cancelled)::before {
-	/* background: rgb(146, 146, 146); */
+  /* background: rgb(146, 146, 146); */
 
-	transition: 200ms;
+  transition: 200ms;
 }
 /* /////// cancelled lessons //////// */
 .lesson.cancelled {
-	position: relative;
-	background: var(--cancelled-bg);
-	color: var(--cancelled-font-clr);
+  position: relative;
+  background: var(--cancelled-bg);
+  color: var(--cancelled-font-clr);
 }
 .lesson.cancelled::before {
-	background: red;
-	box-shadow: 0 0 20px rgba(255, 0, 0, 0.644);
+  background: red;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.644);
 
-	transition: 200ms;
+  transition: 200ms;
 }
 .lesson.cancelled:hover::before {
-	top: -0.5%;
-	transform: rotate(0);
-	width: 100%;
+  top: -0.5%;
+  transform: rotate(0);
+  width: 100%;
 }
 
 /* /////// irregular lessons //////// */
 .lesson.irregular {
-	position: relative;
-	background: var(--irregular-bg);
-	color: var(--irregular-font-clr);
+  position: relative;
+  background: var(--irregular-bg);
+  color: var(--irregular-font-clr);
 }
 .lesson.irregular::after {
-	content: "irregular";
+  content: "irregular";
 
-	position: absolute;
-	bottom: 5px;
-	right: 5px;
-	filter: brightness(0.8);
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  filter: brightness(0.8);
 }
 
 /* /////// lesson sub elements //////// */
 .lesson .more-info-btn {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	background: none;
-	border: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
 
-	filter: opacity(0.7);
+  filter: opacity(0.7);
 
-	cursor: pointer;
+  cursor: pointer;
 
-	font-size: 1.3rem;
-	transition: transform 200ms;
+  font-size: 1.3rem;
+  transition: transform 200ms;
 }
 
 .lesson > :is(h1, h2, h3, h4, h5, h6) {
-	margin-top: 0;
-    margin-bottom: 5px;
-	/* height: 50px; */
-    width: 90%;
-	word-wrap: wrap;
+  margin-top: 0;
+  margin-bottom: 5px;
+  /* height: 50px; */
+  width: 90%;
+  word-wrap: wrap;
 }
 .lesson p {
-	margin: 0;
+  margin: 0;
 }
 .lesson p.teacher {
-	/* transform: translateY(-15px); */
-	filter: brightness(0.85);
+  /* transform: translateY(-15px); */
+  filter: brightness(0.85);
 }
 .lesson p.teacher::before {
-	content: "teachers: ";
-	filter: brightness(0.85);
+  content: "teachers: ";
+  filter: brightness(0.85);
 }
 .lesson p.room {
-	filter: brightness(0.85);
+  filter: brightness(0.85);
 }
 .lesson p.room::before {
-	content: "rooms: ";
-	filter: brightness(0.85);
+  content: "rooms: ";
+  filter: brightness(0.85);
 }
 .lesson :last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /*////////////////////// JSON response //////////////////////////*/
 pre {
-	outline: 1px solid #ccc;
-	padding: 20px;
-	margin: 5px;
+  outline: 1px solid #ccc;
+  padding: 20px;
+  margin: 5px;
 
-	background: rgb(37, 37, 37);
-	color: white;
+  background: rgb(37, 37, 37);
+  color: white;
 }
 .string {
-	color: rgb(0, 207, 0);
+  color: rgb(0, 207, 0);
 }
 .number {
-	color: hsl(278, 100%, 60%);
+  color: hsl(278, 100%, 60%);
 }
 .boolean {
-	color: rgb(0, 110, 255);
+  color: rgb(0, 110, 255);
 }
 .null {
-	color: rgb(255, 30, 0);
+  color: rgb(255, 30, 0);
 }
 .key {
-	color: rgb(255, 153, 0);
+  color: rgb(255, 153, 0);
 }

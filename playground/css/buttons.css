@@ -1,0 +1,59 @@
+/* prettier-ignore */
+section#buttons .grid-container {
+	/*////////////////////////////*/
+	/*//*/	font-size: 10px; /*//*/
+	/*////////////////////////////*/
+}
+.btn-card {
+	padding: 11em 0em;
+	border-radius: 2em;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: hsl(var(--primary-clr-hue), 15%, 22%);
+	box-shadow: 0 0 1em rgba(0, 0, 0, 0.589);
+
+	transition: 200ms ease-in-out;
+}
+/* .btn-card:is(:hover, :focus) {
+    transform: scale(1.01);
+} */
+
+.btn {
+	font-size: 2.5em;
+	border: none;
+	border-radius: 0.5em;
+	padding: 0.6em;
+	color: var(--dark-font-clr);
+
+	--btn-clr: hsl(var(--primary-clr-hue), 90%, 62%);
+	--stagger-delay: 2000ms;
+
+	background: var(--btn-clr);
+
+	/* transition: 200ms ease-out; */
+	/* animation: bump 800ms ease-out; */
+}
+/* .btn:is(:hover, :focus) {
+    transform: scale(1.08);
+} */
+
+@keyframes bump {
+	50% {
+		transform: scale(1.1);
+	}
+}
+
+.btn-1 {
+	font-weight: 600;
+	box-shadow: 0 0 1.5em var(--btn-clr);
+
+	transition: 200ms ease-out;
+}
+.btn-1:hover {
+	--btn-clr: hsl(var(--primary-clr-hue), 100%, 62%);
+	transform: scale(1.08);
+	box-shadow: 0 0.2em 1.7em var(--btn-clr);
+}

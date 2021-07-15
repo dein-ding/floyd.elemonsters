@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- prettier-ignore -->
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- meta data -->
+		<meta name="description" content="Homepage von Floyd Haremsa (dein.ding)">
+		<meta name="author" content="Floyd Haremsa" />
+		<meta name="keywords" content="Musik, music, web, programming, web development, portfolio, blog, creativity, homepage">
+		<!-- libraries -->
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- page items -->
+		<script src="/src/scripts/main.js"></script>
+		<link rel="stylesheet" type="text/css" href="/src/css/main.css" />
+
+		<title>404 | Page not found</title>
+        <style>
+            @import url("/src/css/page-not-found.css");
+        </style>
+        <script>
+            const { availablePages, hiddenPages } = JSON.parse(getFile("/src/data/main.json"));
+            const availablePagesFormatted = availablePages.map(string => string.replace(".html", "").replace(/\//g, ""))
+            const pageSet = new Set(availablePagesFormatted);
+            
+            window.onload = () => {
+                //add the not found path to a span
+                const pathPreview = document.querySelector("#pathPreview");
+                let exampleTypo = "";
+
+                ;(addPathToSpan = () => {
+                    exampleTypo += "/exampleTypo";
+                    pathPreview.innerHTML = `"<span style="color: var(--error-clr);">${location.pathname == "/Page-Not-Found.html" ? exampleTypo : location.pathname}</span>"`;
+                })()
+                pathPreview.onclick = addPathToSpan;
+                
+
+                //add pages from JSON file to options list
+                const datalist = document.querySelector("#pages")
+                availablePagesFormatted.forEach(page => {
+                    const option = document.createElement("option")
+                    option.value = page
+                    datalist.append(option)
+                })
+
+                //redirect to selected page on button click
+                const goToPageBtn = document.querySelector("#goToPageBtn")
+                const searchField = document.querySelector("#searchField")
+                validateSearch = () => searchField.value && pageSet.has(searchField.value)
+                goToPage = () => {
+                    if (validateSearch()) location.href = availablePages[ availablePagesFormatted.indexOf(searchField.value) ];
+                    else custom.confirm("Try the ones from the list.", "", "Okay", "what list?")
+                               .catch(err => custom.confirm("", "The list you get, when you type in the search field.", "got it!", "still no clue"))
+                               .catch(err => custom.confirm("", "Just use the navigation bar at the top of the website, for fuck sakes!", "😳"))
+                };
+                goToPageBtn.onclick = goToPage;
+                searchField.addEventListener("keydown", e => (e.key == "Enter" && validateSearch()) ? goToPage() : {} )
+            }
+        </script>
+	</head>
+	<body class="flex-container rows">
+		<main>
+			<h1 class="_404">404</h1>
+			<hr />
+			<div class="flex-container rows">
+				<!-- prettier-ignore -->
+				<div class="flex-container rows not-found">
+                    <h2><span id="pathPreview">Page</span> not found...</h2>
+                    <p>The page you are looking for does not exist (anymore).</p>
+                </div>
+				<div class="flex-container rows second-container">
+					<div class="causes">
+						<p>This could be caused by the following:</p>
+						<!-- prettier-ignore -->
+						<ul>
+                            <li>The page or document is temporarily not available</li>
+                            <li>The page or document was renamed and no longerexists</li>
+                            <li>The bookmark being used is outdated</li>
+                            <li>The URL was entered incorrectly</li>
+                        </ul>
+					</div>
+
+					<div class="flex-container search-it">
+						<p>Try searching for it: &nbsp;</p>
+						<!-- prettier-ignore -->
+						<div class="search">
+                            <input list="pages" type="text" id="searchField" placeholder="search">
+                            <button id="goToPageBtn">Go to Page</button>
+                        </div>
+						<datalist id="pages"></datalist>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

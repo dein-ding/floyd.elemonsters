@@ -5,65 +5,65 @@
 //////// DevMode ///////
 //prettier-ignore
 const DevMode = {
-    status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
-    keepAcrossPages: false,
-    callback: null,
-    set(status) {
-        this.status = status;
-        this.execute();
-    },
+  status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
+  keepAcrossPages: false,
+  callback: null,
+  set(status) {
+    this.status = status;
+    this.execute();
+  },
+  toggle() {
+    this.status = !this.status;
+    this.execute();
+  },
+  execute() {
+    console.group("%c DevMode ", this.consoleStyle)
+    this.log();
+
+    if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
+    else sessionStorage.removeItem("devModeStatus");
+
+    if (this.callback) {
+      let res = this.callback(this.status);
+      if (res) text = res;
+      else text = `settings ${this.status ? "applied" : "cleared"}`;
+
+      console.log(`%c ${text} `, this.consoleStyle);
+    }
+
+    this.toggleItems(this.status);
+
+    console.groupEnd();
+  },
+  log() {
+    console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
+    if (!this.callback)
+      console.warn("no DevMode callback available");
+  },
+  GUI: {
     toggle() {
-        this.status = !this.status;
-        this.execute();
+      const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
+      devModeGuiToggle.checked = !devModeGuiToggle.checked;
     },
-    execute() {
-        console.group("%c DevMode ", this.consoleStyle)
-        this.log();
+  },
+  items: [],
+  toggleItems(status) {
+    const projectsDropdown = document.querySelector(".projects-dropdown");
+    const devModeItem = document.querySelectorAll(".devModeItem")
+    const navUl = document.querySelector("#navBarHeader nav ul")
+    // console.log(this.items)
 
-        if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
-        else sessionStorage.removeItem("devModeStatus");
+    switch (status) {
+      case true:
+        if (DevMode.items.length == 0) {
+          //adds a link to the playground page
+          let li = document.createElement("li");
+          li.classList.add("devModeItem");
+          li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
+          projectsDropdown.append(li);
+          DevMode.items.push(li);
 
-        if (this.callback) {
-            let res = this.callback(this.status);
-            if (res) text = res;
-            else text = `settings ${this.status ? "applied" : "cleared"}`;
-            
-            console.log(`%c ${text} `, this.consoleStyle);
-        }
-
-        this.toggleItems(this.status);
-
-        console.groupEnd();
-    },
-    log() {
-        console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
-        if (!this.callback)
-            console.warn("no DevMode callback available");
-    },
-    GUI: {
-      toggle() {
-        const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
-        devModeGuiToggle.checked = !devModeGuiToggle.checked;
-        },
-    },
-    items: [],
-    toggleItems(status) {
-        const projectsDropdown = document.querySelector(".projects-dropdown");
-      const devModeItem = document.querySelectorAll(".devModeItem")
-      const navUl = document.querySelector("#navBarHeader nav ul")
-        // console.log(this.items)
-        
-        switch (status) {
-            case true:
-                if (DevMode.items.length == 0) {
-                    //adds a link to the playground page
-                    let li = document.createElement("li");
-                    li.classList.add("devModeItem");
-                    li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
-                    projectsDropdown.append(li);
-                    DevMode.items.push(li);
-                    
-                    navUl.innerHTML = navUl.innerHTML + `
+          navUl.innerHTML = navUl.innerHTML + `
                     <li class="devModeItem navBarDevItem">
                         <div class="devModeOutterContainer">
                             <a id="devModeGuiToggleLabel" onclick="DevMode.GUI.toggle()">
@@ -81,18 +81,19 @@ const DevMode = {
                                     <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
                                         <i class="fas fa-redo-alt"></i>
                                     </button>
-                                    <button class="evalJS" onclick="test('eval')">
-                                        <i class="fab fa-js-square"></i>
+                                    <button class="host-link-btn" title="Link to the hosted version of this page" onclick="DevMode.toolboxFunctions.hostLink()">
+                                        <i class="fad fa-globe"></i>
+                                        <a style="display: none;" target="_blank" id="hostLink"></a>
                                     </button>
         
                                     <button onclick="location.href = 'webuntis.html'">
                                         <i class="fad fa-calendar-alt"></i>
                                     </button>
         
-                                    <button title="show a prompt dialog" onclick="test('prompt')">
+                                    <button title="show a prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
                                         <i class="fas fa-keyboard"></i>
                                     </button>
-                                    <button title="show a confirmation dialog" onclick="test('confirm')">
+                                    <button title="show a confirmation dialog" onclick="DevMode.toolboxFunctions.confirm()">
                                         <i class="fad fa-window"></i>
                                     </button>
                                 </div>
@@ -106,34 +107,69 @@ const DevMode = {
                             </div>
                         </div>
                     </li>`; //prettier-ignore
-                    DevMode.items.push(document.querySelector(".navBarDevItem"));
+          DevMode.items.push(document.querySelector(".navBarDevItem"));
 
-                    let userCountDisplay = document.querySelector(".userCountDisplay")
-                    getUserCountAsync().then((res) => {
-                        userCountDisplay.innerHTML = `
+          let userCountDisplay = document.querySelector(".userCountDisplay")
+          getUserCountAsync().then((res) => {
+            userCountDisplay.innerHTML = `
                         <h3>UserCount</h3>
-                        <p>on host: ${
-                            res.onDomain.toString().length > 18
-                                ? res.onDomain.toString().slice(0, 16) + "..."
-                                : res.onDomain
-                        }</P>
+                        <p>on host: ${res.onDomain.toString().length > 18
+                ? res.onDomain.toString().slice(0, 12) + "..."
+                : res.onDomain
+              }</P>
                         <p>Today: <b>${res.today}</b></P>
                         <p>Yesterday: ${res.yesterday}</P>
                         <p>Ever: ${res.ever}</P>
                         `;
-                        userCountDisplay.style.display = "block";
-                    });
-                }
-                break;
-            case false:
-                if (this.items) this.items.forEach((x) => x.remove())
-                this.items = [];
-                break;
+            userCountDisplay.style.display = "block";
+          });
         }
-        // console.log(this.items)
-        console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
+        break;
+      case false:
+        if (this.items) this.items.forEach((x) => x.remove())
+        this.items = [];
+        break;
+    }
+    // console.log(this.items)
+    console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
+  },
+  toolboxFunctions: {
+    confirm: async () => {
+      custom
+        .confirm(
+          "Attention",
+          "this is a confirmation dialog",
+          "Ok",
+          "leave me alone"
+        )
+        .then(console.info)
+        .catch(console.info);
     },
-    consoleStyle: 'color: rgb(3, 238, 31); background-color: black;',
+    prompt: async () => {
+      console.info(
+        "input recieved: " +
+        (await custom.prompt(
+          "Wait a sec,",
+          "this is a prompt for user input"
+        ))
+      );
+    },
+    eval: async () => {
+      eval(
+        await custom.prompt(
+          "evaluate JS",
+          "type in valid JavaScript for evaluation."
+        )
+      );
+    },
+    hostLink: () => {
+      const hostLinkElem = document.querySelector("#hostLink");
+      hostLinkElem.href = `http://floyd.elemonsters.de/${window.location.pathname}`
+      hostLinkElem.click()
+    }
+
+  },
+  consoleStyle: 'color: rgb(3, 238, 31); background-color: black;',
 };
 
 $(document).ready(async () => {
@@ -145,7 +181,7 @@ $(document).ready(async () => {
   const body = document.body;
 
   //variables
-  const data = JSON.parse(await getFile("../../src/data/main.json"));
+  const data = JSON.parse(await getFile("/src/data/main.json"));
 
   getUserCountAsync()
     .then((res) => {
@@ -168,18 +204,18 @@ $(document).ready(async () => {
   //create script for user counter
   const userCounterScript = document.createElement("script");
   userCounterScript.id = "ebsr5556uh";
-  userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${ DevMode.status ? "(DevMode)" : "" }&start=0&design=5`; //prettier-ignore
+  userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
   head.append(userCounterScript);
 
   //create link for favicon
   const linkFavicon = document.createElement("LINK");
   linkFavicon.rel = "shortcut icon";
   linkFavicon.type = "image/png";
-  linkFavicon.href = "src/assets/images/icons/deinding_favicon.png";
+  linkFavicon.href = "/src/assets/images/icons/deinding_favicon.png";
   head.prepend(linkFavicon);
 
-  // adds a prefix before the title
-  titleTag.innerText = "dein.ding - " + titleTag.innerText;
+  // adds a suffix after the title
+  titleTag.innerText = titleTag.innerText + " - dein.ding";
 
   ////////////////////// Nav Bar //////////////////////
   //create new header if not already existing
@@ -188,19 +224,27 @@ $(document).ready(async () => {
     navBarHeader.id = "navBarHeader";
     document.body.prepend(navBarHeader);
   }
-  navBarHeader.innerHTML = await getFile("src/components/navBar.html");
+  navBarHeader.innerHTML = await getFile("/src/components/navBar.html");
 
   //execute DevMode preferences
   if (DevMode.status) DevMode.execute();
 
-  //adds the activeLink class to active links for the current page
-  var activeLinks = body.dataset.activeLink;
-  if (activeLinks[0] == "[") activeLinks = eval(activeLinks);
-  else activeLinks = activeLinks.toString().split(" ");
+  // add DevMode keybinding
+  document.body.addEventListener("keydown", e => {
+    if (e.key == "™" && e.shiftKey && e.altKey) {
+      console.log("%cDevMode Shortcut used", DevMode.consoleStyle)
 
-  activeLinks.forEach((item) =>
-    document.querySelector(item).classList.add("activeLink")
-  );
+      e.preventDefault()
+      DevMode.toggle();
+    }
+  })
+
+  //adds the activeLink class to active links for the current page
+  let activeLinks = body.dataset.activeLink;
+  if (activeLinks)
+    activeLinks.toString().split(" ").forEach((item) =>
+      document.querySelector(item).classList.add("activeLink")
+    );
 
   //adds a title and an alert to disabled links
   const disabledLink = document.querySelectorAll(".disabledLink");
@@ -227,46 +271,14 @@ $(document).ready(async () => {
     footer.id = "pageFooter";
     document.body.append(footer);
   }
-  footer.innerHTML = await getFile("src/components/footer.html");
+  footer.innerHTML = await getFile("/src/components/footer.html");
 
   { //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
-    } //prettier-ignore
+  } //prettier-ignore
 });
-
-test = async (type) => {
-  switch (type) {
-    case "confirm":
-      custom
-        .confirm(
-          "Attention",
-          "this is a confirmation dialog",
-          "Ok",
-          "leave me alone"
-        )
-        .then(console.info)
-        .catch(console.info);
-      break;
-    case "prompt":
-      console.info(
-        "input recieved: " +
-          (await custom.prompt(
-            "Wait a sec,",
-            "this is a prompt for user input"
-          ))
-      );
-      break;
-    case "eval":
-      eval(
-        await custom.prompt(
-          "evaluate JS",
-          "type in valid JavaScript for evaluation."
-        )
-      );
-  }
-};
 
 getUserCount = () => {
   if (besucher)
@@ -307,7 +319,7 @@ async function getUserCountAsync() {
   });
 }
 
-getFile = async (URL) => {
+getFile = (URL) => {
   var XHR = new XMLHttpRequest();
   XHR.open("GET", URL, false);
   XHR.send();
@@ -452,6 +464,10 @@ const custom = {
   },
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////  COPIED FROM STACK OVERFLOW /////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  * determine if a function call comes from the console
  */
@@ -486,29 +502,30 @@ fromConsole = () => {
  * @param {*} l
  * @returns
  */
-pSBC = (p,c0,c1,l) => {
-    let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
-    if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
-    if(!this.pSBCr)this.pSBCr=(d)=>{
-        let n=d.length,x={};
-        if(n>9){
-            [r,g,b,a]=d=d.split(","),n=d.length;
-            if(n<3||n>4)return null;
-            x.r=i(r[3]=="a"?r.slice(5):r.slice(4)),x.g=i(g),x.b=i(b),x.a=a?parseFloat(a):-1
-        }else{
-            if(n==8||n==6||n<4)return null;
-            if(n<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(n>4?d[4]+d[4]:"");
-            d=i(d.slice(1),16);
-            if(n==9||n==5)x.r=d>>24&255,x.g=d>>16&255,x.b=d>>8&255,x.a=m((d&255)/0.255)/1000;
-            else x.r=d>>16,x.g=d>>8&255,x.b=d&255,x.a=-1
-        }return x};
-    h=c0.length>9,h=a?c1.length>9?true:c1=="c"?!h:false:h,f=this.pSBCr(c0),P=p<0,t=c1&&c1!="c"?this.pSBCr(c1):P?{r:0,g:0,b:0,a:-1}:{r:255,g:255,b:255,a:-1},p=P?p*-1:p,P=1-p;
-    if(!f||!t)return null;
-    if(l)r=m(P*f.r+p*t.r),g=m(P*f.g+p*t.g),b=m(P*f.b+p*t.b);
-    else r=m((P*f.r**2+p*t.r**2)**0.5),g=m((P*f.g**2+p*t.g**2)**0.5),b=m((P*f.b**2+p*t.b**2)**0.5);
-    a=f.a,t=t.a,f=a>=0||t>=0,a=f?a<0?t:t<0?a:a*P+t*p:0;
-    if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
-    else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
+pSBC = (p, c0, c1, l) => {
+  let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
+  if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+  if (!this.pSBCr) this.pSBCr = (d) => {
+    let n = d.length, x = {};
+    if (n > 9) {
+      [r, g, b, a] = d = d.split(","), n = d.length;
+      if (n < 3 || n > 4) return null;
+      x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1
+    } else {
+      if (n == 8 || n == 6 || n < 4) return null;
+      if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
+      d = i(d.slice(1), 16);
+      if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+      else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1
+    } return x
+  };
+  h = c0.length > 9, h = a ? c1.length > 9 ? true : c1 == "c" ? !h : false : h, f = this.pSBCr(c0), P = p < 0, t = c1 && c1 != "c" ? this.pSBCr(c1) : P ? { r: 0, g: 0, b: 0, a: -1 } : { r: 255, g: 255, b: 255, a: -1 }, p = P ? p * -1 : p, P = 1 - p;
+  if (!f || !t) return null;
+  if (l) r = m(P * f.r + p * t.r), g = m(P * f.g + p * t.g), b = m(P * f.b + p * t.b);
+  else r = m((P * f.r ** 2 + p * t.r ** 2) ** 0.5), g = m((P * f.g ** 2 + p * t.g ** 2) ** 0.5), b = m((P * f.b ** 2 + p * t.b ** 2) ** 0.5);
+  a = f.a, t = t.a, f = a >= 0 || t >= 0, a = f ? a < 0 ? t : t < 0 ? a : a * P + t * p : 0;
+  if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
+  else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
 } //prettier-ignore
 
 /**
@@ -526,7 +543,7 @@ function syntaxHighlight(json) {
     .replace(/>/g, "&gt;");
   return json.replace(
     /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-    function (match) {
+    match => {
       var cls = "number";
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
@@ -539,7 +556,62 @@ function syntaxHighlight(json) {
       } else if (/null/.test(match)) {
         cls = "null";
       }
-      return '<span class="' + cls + '">' + match + "</span>";
+      return `<span class="${cls}">${match}</span>`
     }
   );
+}
+
+/**
+ * **Get the dominant/average color of an image**
+ * 
+ * Stack Overflow Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
+ * @param {HTMLImageElement | string} image HTMLImageElement or URL to an image
+ * @param {string} colorFormat "rgb" | "rgba" | "hex"
+ * @param {boolean} log log the calculated value
+ * @returns color string (rgb || rgba || hex)
+ */
+function getDominantColor(image, colorFormat, log) {
+  let imageObject;
+
+  if (typeof image == "string") {
+    imageObject = new Image();
+    imageObject.setAttribute('crossOrigin', '');
+    imageObject.src = image;
+  }
+  else if (typeof image == "object") imageObject = image;
+  else console.error("no valid image object or URL provided")
+
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  document.body.append(canvas)
+
+  canvas.width = 1;
+  canvas.height = 1;
+
+  //draw the image to one pixel and let the browser find the dominant color
+  ctx.drawImage(imageObject, 0, 0, 1, 1);
+
+  //get pixel color
+  const i = ctx.getImageData(0, 0, 1, 1).data;
+
+  canvas.remove();
+
+  let rgb = `rgb(${i[0]},${i[1]},${i[2]})`;
+  let rgba = `rgba(${i[0]},${i[1]},${i[2]},${i[3]})`;
+  let hex = "#" + ((1 << 24) + (i[0] << 16) + (i[1] << 8) + i[2]).toString(16).slice(1);
+
+  switch (colorFormat) {
+    case "rgb":
+      if (log) console.log("%c" + rgb, `color: ${rgb}`);
+      return rgb;
+    case "rgba":
+      if (log) console.log("%c" + rgba, `color: ${rgb}`);
+      return rgba;
+    default:
+      if (log) console.log("%c" + hex, `color: ${hex}`);
+      return hex;
+  }
+
+
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
-    <!-- prettier-ignore -->
-    <head>
+	<!-- prettier-ignore -->
+	<head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,74 +16,74 @@
         <title>Horoskop</title>
         <link rel="stylesheet" href="src/css/Horoskop.css">
     </head>
-    <body data-active-link="['#projectsLink','#horoskopLink']">
-        <header id="navBarHeader">
-            <!-- navBar goes here -->
-        </header>
-        <div id="container">
-            <div id="eingabe_div">
-                <h1 id="title">Horoskop</h1>
-                <p>
-                    <label for="Name_input">Name:</label>
-                    <input id="Name_input" placeholder="Vorname" />
-                    <img
-                        class="lockIcons"
-                        src="src/assets/images/icons/lock-icon.png"
-                    />
-                </p>
-                <p>
-                    <label for="Geburtsdatum_input">Geburtstag:</label>
-                    <input
-                        id="Geburtsdatum_input"
-                        placeholder="DD"
-                        maxlength="2"
-                        required
-                    />
-                    <img
-                        class="lockIcons"
-                        src="src/assets/images/icons/lock-icon.png"
-                    />
-                </p>
-                <p>
-                    <label for="Geburtsmonat_input">Geburtsmonat:</label>
-                    <input
-                        id="Geburtsmonat_input"
-                        placeholder="MM"
-                        maxlength="2"
-                        required
-                    />
-                    <img
-                        class="lockIcons"
-                        src="src/assets/images/icons/lock-icon.png"
-                    />
-                </p>
-                <p>
-                    <label for="kategorie_dropdown">Kategorie:</label>
-                    <select id="kategorie_dropdown" required>
-                        <option>Auswählen</option>
-                        <option>Liebe</option>
-                        <option>Karriere</option>
-                        <option>Freundeskreis</option>
-                    </select>
-                    <img
-                        class="lockIcons"
-                        src="src/assets/images/icons/lock-icon.png"
-                    />
-                </p>
-                <!-- prettier-ignore -->
-                <div class="buttons">
+	<body data-active-link="#projectsLink #horoskopLink">
+		<header id="navBarHeader">
+			<!-- navBar goes here -->
+		</header>
+		<div id="container">
+			<div id="eingabe_div">
+				<h1 id="title">Horoskop</h1>
+				<p>
+					<label for="Name_input">Name:</label>
+					<input id="Name_input" placeholder="Vorname" />
+					<img
+						class="lockIcons"
+						src="src/assets/images/icons/lock-icon.png"
+					/>
+				</p>
+				<p>
+					<label for="Geburtsdatum_input">Geburtstag:</label>
+					<input
+						id="Geburtsdatum_input"
+						placeholder="DD"
+						maxlength="2"
+						required
+					/>
+					<img
+						class="lockIcons"
+						src="src/assets/images/icons/lock-icon.png"
+					/>
+				</p>
+				<p>
+					<label for="Geburtsmonat_input">Geburtsmonat:</label>
+					<input
+						id="Geburtsmonat_input"
+						placeholder="MM"
+						maxlength="2"
+						required
+					/>
+					<img
+						class="lockIcons"
+						src="src/assets/images/icons/lock-icon.png"
+					/>
+				</p>
+				<p>
+					<label for="kategorie_dropdown">Kategorie:</label>
+					<select id="kategorie_dropdown" required>
+						<option>Auswählen</option>
+						<option>Liebe</option>
+						<option>Karriere</option>
+						<option>Freundeskreis</option>
+					</select>
+					<img
+						class="lockIcons"
+						src="src/assets/images/icons/lock-icon.png"
+					/>
+				</p>
+				<!-- prettier-ignore -->
+				<div class="buttons">
                     <button id="reload_button" onclick="neuladen()" title="Eingaben überarbeiten"></button>
                     <button id="submit_button" onclick="klick()" title="Eingaben absenden">submit</button>
                     <button id="cancel_button" onclick="abbrechen()" title="Eingaben löschen"></button>
                 </div>
-            </div>
-            <div id="ausgabe_div">
-                <p id="Ausgabe"></p>
-            </div>
-        </div>
-        <footer id="footer">
-            <!-- footer goes here -->
-        </footer>
-        <script src="src/scripts/Horoskop.js"></script>
-    </body>
+			</div>
+			<div id="ausgabe_div">
+				<p id="Ausgabe"></p>
+			</div>
+		</div>
+		<footer id="footer">
+			<!-- footer goes here -->
+		</footer>
+		<script src="src/scripts/Horoskop.js"></script>
+	</body>
 </html>

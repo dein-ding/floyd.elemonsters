@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- libraries -->
+		<link
+			rel="stylesheet"
+			href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"
+		/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- other -->
+		<script defer src="js/main.js"></script>
+		<link rel="stylesheet" href="css/main.css" />
+
+		<title>Design Tests</title>
+		<!-- <link rel="stylesheet" href="css/buttons.css"> -->
+		<script defer src="js/designTests.js"></script>
+		<style>
+			@import url("./css/design-tests.css");
+			@import url("./css/buttons.css");
+			@import url("./css/tintedBackgrounds.css");
+		</style>
+	</head>
+	<body data-active-link=".designTestsLink">
+		<main>
+			<h1>Design Tests</h1>
+			<section id="buttons">
+				<h2>Buttons</h2>
+
+				<div class="grid-container">
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+					<div class="btn-card">
+						<button class="btn"></button>
+					</div>
+				</div>
+			</section>
+			<section id="tintedBackgrounds">
+				<h2>images with tinted background</h2>
+				<div class="grid-container" id="tintedBackgroundsContainer">
+					<div class="card first">
+						<h3>drones</h3>
+						<img
+							src="https://source.unsplash.com/600x500/?drones"
+							id="first"
+						/>
+					</div>
+				</div>
+				<button class="btn add-image-btn" onclick="addImageCard()">
+					+
+				</button>
+			</section>
+		</main>
+	</body>
+</html>

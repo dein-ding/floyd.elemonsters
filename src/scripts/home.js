@@ -5,14 +5,22 @@ $(document).ready(async function () {
         .style.setProperty("--navBarBackground", "rgba(0, 0, 0, .3)"); */
   //console.log(document.querySelector("body").dataset);
 
-  setTimeout(() => {
-    if (!sessionStorage.hasBeenPrompted) {
+  if (!sessionStorage.hasBeenPrompted)
+    setTimeout(() => {
       custom.confirm(
         "Attention",
         "This website is work in progress, so be kind if there are bugs.",
         "continue"
       );
       sessionStorage.hasBeenPrompted = true;
-    }
-  }, 500);
+    }, 500);
+
+  const img = document.querySelector("section img");
+  const imgUrl = /* img.src ||  */"./src/assets/images/deinding\ collage.png";
+
+  const imageObject = new Image();
+  imageObject.setAttribute('crossOrigin', '');
+  imageObject.src = imgUrl;
+
+  getDominantColor(img, "rgb", true)
 });

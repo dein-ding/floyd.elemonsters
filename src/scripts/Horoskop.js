@@ -16,7 +16,7 @@ const Ausgabe = document.getElementById("Ausgabe");
 //Variables
 var mm, dd;
 var sternzeichenIndex;
-const data = JSON.parse(await getFile("../../src/data/horoskopTexte.json"));
+const data = JSON.parse(getFile("../../src/data/horoskopTexte.json"));
 const sternzeichen = data.sternzeichen;
 const kategorieText = data.kategorieText;
 
@@ -189,7 +189,7 @@ function submit() {
 
         console.log("Tierkreiszeichen: " + sternzeichen[sternzeichenIndex]);
 
-        var ausgabeText = `${Name_input.value}, mit dem Tierkreiszeichen ${sternzeichen[sternzeichenIndex]}, 
+        var ausgabeText = `${Name_input.value}, mit dem Tierkreiszeichen ${sternzeichen[sternzeichenIndex]},
                             hat am ${dd}.${mm} Geburtstag 
                             und die Kategorie ${kategorie_dropdown.value} gewählt.`;
 
@@ -239,29 +239,19 @@ function animation(ein_aus_klappen, ausgabe_text) {
 
             interval = setInterval(() => {
                 if (ausgabe_height == 60) {
-                    clearInterval(id);
+                    clearInterval(interval);
                     Ausgabe.style.padding = "0px";
                     Ausgabe.innerHTML = ausgabe_text;
 
                     Name_input.readOnly = false;
-                    Name_input.style.backgroundColor =
-                        INPUT_DEFAULT_BACKGROUND_COLOR;
+                    Name_input.style.backgroundColor = INPUT_DEFAULT_BACKGROUND_COLOR;
                     Geburtstag_input.readOnly = false;
-                    Geburtstag_input.style.backgroundColor =
-                        INPUT_DEFAULT_BACKGROUND_COLOR;
+                    Geburtstag_input.style.backgroundColor = INPUT_DEFAULT_BACKGROUND_COLOR;
                     Geburtsmonat_input.readOnly = false;
-                    Geburtsmonat_input.style.backgroundColor =
-                        INPUT_DEFAULT_BACKGROUND_COLOR;
+                    Geburtsmonat_input.style.backgroundColor = INPUT_DEFAULT_BACKGROUND_COLOR;
                     kategorie_dropdown.disabled = false;
-                    kategorie_dropdown.style.backgroundColor = INPUT_DEFAULT_BACKGROUND_COLOR; //prettier-ignore
-                    document.querySelectorAll(".lockIcons")[0].style.opacity =
-                        "0%";
-                    document.querySelectorAll(".lockIcons")[1].style.opacity =
-                        "0%";
-                    document.querySelectorAll(".lockIcons")[2].style.opacity =
-                        "0%";
-                    document.querySelectorAll(".lockIcons")[3].style.opacity =
-                        "0%";
+                    kategorie_dropdown.style.backgroundColor = INPUT_DEFAULT_BACKGROUND_COLOR;
+                    document.querySelectorAll(".lockIcons").forEach(elem => elem.style.opacity = "0%")
                     if (abbrechen_var == true) {
                         submit_button.innerText = "submit";
                         DevMode.execute(); //resetting the inputs
@@ -277,7 +267,7 @@ function animation(ein_aus_klappen, ausgabe_text) {
 
             interval2 = setInterval(() => {
                 if (ausgabe_width == 180) {
-                    clearInterval(id2);
+                    clearInterval(interval2);
                 } else {
                     ausgabe_width--;
                     ausgabe_div.style.width = ausgabe_width + "px";
@@ -289,7 +279,7 @@ function animation(ein_aus_klappen, ausgabe_text) {
 
             interval3 = setInterval(() => {
                 if (Container_height == 405) {
-                    clearInterval(id3);
+                    clearInterval(interval3);
                 } else {
                     Container_height--;
                     CONTAINER.style.height = Container_height + "px";
@@ -308,24 +298,14 @@ function animation(ein_aus_klappen, ausgabe_text) {
                 dis_appear("AN");
 
                 Name_input.readOnly = true;
-                Name_input.style.backgroundColor =
-                    INPUT_READONLY_BACKGROUND_COLOR;
+                Name_input.style.backgroundColor = INPUT_READONLY_BACKGROUND_COLOR;
                 Geburtstag_input.readOnly = true;
-                Geburtstag_input.style.backgroundColor =
-                    INPUT_READONLY_BACKGROUND_COLOR;
+                Geburtstag_input.style.backgroundColor = INPUT_READONLY_BACKGROUND_COLOR;
                 Geburtsmonat_input.readOnly = true;
-                Geburtsmonat_input.style.backgroundColor =
-                    INPUT_READONLY_BACKGROUND_COLOR;
+                Geburtsmonat_input.style.backgroundColor = INPUT_READONLY_BACKGROUND_COLOR;
                 kategorie_dropdown.disabled = true;
-                kategorie_dropdown.style.backgroundColor = INPUT_READONLY_BACKGROUND_COLOR; //prettier-ignore
-                document.querySelectorAll(".lockIcons")[0].style.opacity =
-                    "100%";
-                document.querySelectorAll(".lockIcons")[1].style.opacity =
-                    "100%";
-                document.querySelectorAll(".lockIcons")[2].style.opacity =
-                    "100%";
-                document.querySelectorAll(".lockIcons")[3].style.opacity =
-                    "100%";
+                kategorie_dropdown.style.backgroundColor = INPUT_READONLY_BACKGROUND_COLOR;
+                document.querySelectorAll(".lockIcons").forEach(elem => elem.style.opacity = "100%")
 
                 let interval1, interval2, interval3;
                 var ausgabe_height = 60; //default height

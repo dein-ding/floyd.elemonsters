@@ -1,0 +1,234 @@
+{
+  "requestQueries": {
+    "dateReadable": "2021-5-17",
+    "date": "2021-05-17T00:00:00.000Z",
+    "username": "GroßerSep25",
+    "password": "20011025",
+    "school": "OSZ KIM_Berlin",
+    "base_url": "urania.webuntis.com",
+    "homeschooling": false,
+    "no_conference": ["Sport", "Webtechnologien"]
+  },
+  "day": "monday",
+  "timegrid": [
+    {
+      "startTime": "08:00",
+      "endTime": "09:30"
+    },
+    {
+      "startTime": "09:50",
+      "endTime": "11:20"
+    },
+    {
+      "startTime": "11:40",
+      "endTime": "13:10"
+    },
+    {
+      "startTime": "13:40",
+      "endTime": "15:10"
+    },
+    {
+      "startTime": "15:20",
+      "endTime": "16:50"
+    }
+  ],
+  "firstLesson": {
+    "status": "irregular",
+    "name": "DE Klausur Nachschreiber",
+    "room": "B 0.07",
+    "teacher": "",
+    "startTime": "13:40",
+    "endTime": "15:10",
+    "lessonNumber": 4
+  },
+  "timetable": [
+    [
+      {
+        "status": "cancelled",
+        "name": "Betriebswirtscahftliche Prozesse",
+        "room": "A 2.14",
+        "teacher": "Scheller",
+        "startTime": "08:00",
+        "endTime": "09:30",
+        "lessonNumber": 1
+      },
+      {
+        "status": "",
+        "name": "Sport",
+        "room": "SP-NE",
+        "teacher": "Puhlmann",
+        "startTime": "09:50",
+        "endTime": "11:20",
+        "lessonNumber": 2
+      },
+
+      {
+        "status": "irregular",
+        "name": "DE Klausur Nachschreiber",
+        "room": "B 0.07",
+        "teacher": "",
+        "startTime": "13:40",
+        "endTime": "15:10",
+        "lessonNumber": 4
+      }
+    ],
+    [
+      {
+        "status": "",
+        "name": "Deutsch",
+        "room": "Online",
+        "teacher": "Hryniewicz",
+        "startTime": "08:00",
+        "endTime": "09:30",
+        "lessonNumber": 1,
+        "info": "Arbeitsauftrag im Lernraum"
+      },
+      {
+        "status": "",
+        "name": "Wirtschafts- und Sozialkunde",
+        "room": "Online",
+        "teacher": "Johow",
+        "startTime": "09:50",
+        "endTime": "11:20",
+        "lessonNumber": 2
+      },
+      {
+        "status": "",
+        "name": "Mathematik",
+        "room": "Online",
+        "teacher": "Spieß",
+        "startTime": "11:40",
+        "endTime": "13:10",
+        "lessonNumber": 3,
+        "info": "Arbeitsauftrag im Lernraum: Coladose Aufgabe 1-4. Fristverlängerung: Abgabe bis Mi 19.5."
+      },
+      {
+        "status": "",
+        "name": "Audiotechnik",
+        "room": "Online",
+        "teacher": "Johow",
+        "startTime": "13:40",
+        "endTime": "15:10",
+        "lessonNumber": 4
+      }
+    ],
+    [
+      {
+        "status": "cancelled",
+        "name": "Mediendesign",
+        "room": "B 3.04",
+        "teacher": "Lippert",
+        "startTime": "08:00",
+        "endTime": "09:30",
+        "lessonNumber": 1
+      },
+      {
+        "status": "",
+        "name": "Videotechnik",
+        "room": "Online_",
+        "teacher": ["Monsh", "Biehl"],
+        "startTime": "09:50",
+        "endTime": "11:20",
+        "lessonNumber": 2,
+        "info": "FERNUNTERRICHT"
+      },
+      {
+        "status": "",
+        "name": "Englisch",
+        "room": "Online",
+        "teacher": "Riethdorf",
+        "startTime": "11:40",
+        "endTime": "13:10",
+        "lessonNumber": 3
+      },
+      {
+        "status": "",
+        "name": "Mediendesign",
+        "room": "Online",
+        "teacher": "Lippert",
+        "startTime": "13:40",
+        "endTime": "15:10",
+        "lessonNumber": 4
+      }
+    ],
+    [
+      {
+        "status": "",
+        "name": "Videotechnik",
+        "room": "B 2.07",
+        "teacher": "Monshausen",
+        "startTime": "08:00",
+        "endTime": "09:30",
+        "lessonNumber": 1,
+        "info": "HYBRIDUNTERRICHT: Präsenz & https://www.lernraum-berlin.de/osz/mod/bigbluebuttonbn/view.php?id=1019052"
+      },
+      {
+        "status": "",
+        "name": "Audiotechnik",
+        "room": "B 1.17",
+        "teacher": ["Spieß", "Johow"],
+        "startTime": "09:50",
+        "endTime": "11:20",
+        "lessonNumber": 2
+      },
+      {
+        "status": "",
+        "name": "Webtechnologien",
+        "room": "B 2.13",
+        "teacher": "Heinig",
+        "startTime": "11:40",
+        "endTime": "13:10",
+        "lessonNumber": 3
+      },
+      {
+        "status": "",
+        "name": "Betriebswirtscahftliche Prozesse",
+        "room": ["B 2.08", "A 2.09"],
+        "teacher": ["Schel", "Stein"],
+        "startTime": "13:40",
+        "endTime": "15:10",
+        "lessonNumber": 4,
+        "info": "Klassenarbeit zum Thema: Handelskalkulation (alle Varianten!) Diese Klassenarbeit findet in Präsenz statt!!!"
+      }
+    ],
+    [
+      {
+        "status": "",
+        "name": "Webtechnologien",
+        "room": "B 2.10",
+        "teacher": "Heinig",
+        "startTime": "08:00",
+        "endTime": "09:30",
+        "lessonNumber": 1
+      },
+      {
+        "status": "",
+        "name": "Audiotechnik",
+        "room": "V 0.04",
+        "teacher": "Johow",
+        "startTime": "09:50",
+        "endTime": "11:20",
+        "lessonNumber": 2,
+        "info": "WSK Klassenarbeit"
+      },
+      {
+        "status": "",
+        "name": "Webtechnologien",
+        "room": ["B 2.06", "B 2.07"],
+        "teacher": ["Heinig", "Heinig"],
+        "startTime": "11:40",
+        "endTime": "13:10",
+        "lessonNumber": 3
+      },
+      {
+        "status": "",
+        "name": "Webtechnologien",
+        "room": "B 2.07",
+        "teacher": ["Kuhl", "Heinig"],
+        "startTime": "13:40",
+        "endTime": "15:10",
+        "lessonNumber": 4
+      }
+    ]
+  ]
+}

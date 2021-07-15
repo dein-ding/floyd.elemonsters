@@ -21,7 +21,7 @@ if (!navBarContainer) {
 }
 navBarContainer.innerHTML = getFile("./components/nav-bar.html");
 
-document.querySelector("#return-to-main").href = `../${sessionStorage.currURL}`;
+document.querySelector("#return-to-main").href = `${sessionStorage.currURL}`;
 document
   .querySelector(document.body.dataset.activeLink)
   .classList.add("active");
@@ -48,8 +48,7 @@ main = () => {
 
   /////////////// search-bar ///////////////
   searchbar.addEventListener("keydown", (event) => {
-    if (event.keyCode == 13) {
-      // ENTER
+    if (event.key == "Enter") {
       searchbar.blur();
       if (searchbar.value)
         custom
@@ -62,8 +61,7 @@ main = () => {
           .catch(() => searchbar.select());
     }
 
-    if (event.keyCode == 27) {
-      // ESC
+    if (event.key == "Escape") {
       if (searchbar.value == "") searchbar.blur();
       searchbar.value = "";
     }
@@ -75,8 +73,8 @@ main = () => {
 
   ///////////////// links /////////////////
   document
-            .querySelectorAll(".dummy")
-            .forEach( item => item.onclick = () => custom.confirm("this is just a dummy link", "", "OK") ); //prettier-ignore
+    .querySelectorAll(".dummy")
+    .forEach(item => item.onclick = () => custom.confirm("this is just a dummy link", "", "OK")); //prettier-ignore
 };
 
 const colorTheme = {
@@ -98,7 +96,7 @@ const colorTheme = {
 
     window.localStorage.defaultHue = hue;
 
-    console.log(`%c colorTheme changed: (${ ("00" + colorTheme.hue).slice(-3) }) 🀫🀫🀫`, `color: hsl(${colorTheme.hue}, 100%, 70%); font-family: menlo;`); //prettier-ignore
+    console.log(`%c colorTheme changed: (${("00" + colorTheme.hue).slice(-3)}) 🀫🀫🀫`, `color: hsl(${colorTheme.hue}, 100%, 70%); font-family: menlo;`); //prettier-ignore
   },
   setRandomHue: () => colorTheme.setHue(Math.floor(Math.random() * 360)),
   change: (state) => {
