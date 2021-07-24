@@ -312,37 +312,44 @@ nav ul ul li {
     } */
 
 	nav ul {
+		/* outline: 1px solid rgb(255, 0, 247); */
 		display: flex;
 		justify-content: flex-end;
-		/* border: 1px solid rgb(255, 0, 247); */
 	}
-	nav ul li {
-		width: 135px;
-		height: 13px;
+	nav li {
+		/* outline: 1px solid red; */
+		width: max-content;
+		height: max-content;
+		margin: 0;
+	}
+	nav > ul > li {
+		margin-left: 30px;
 	}
 	.projects-li {
 		width: 160px;
 	}
 
-	nav ul ul li:not(:first-child) {
-		margin-top: 15px;
-	}
 	nav ul ul li {
-		margin-left: 5px;
+		/* margin-left: 5px; */
+		margin: 0;
+	}
+	nav ul ul li + li {
+		margin-top: 7px;
 	}
 	.projects-dropdown-toggle {
 		display: none;
 	}
 	.projects-dropdown {
+		width: max-content;
+		left: 630px;
+
 		display: flex;
 		flex-direction: column;
-		text-align: left;
-		background-color: var(--navBarBackground);
-		/* width: 240px; */
-		padding: 7px;
-		padding-bottom: 20px;
-		left: 640px;
 
+		text-align: left;
+		padding: 10px 30px 10px 10px;
+
+		background-color: var(--navBarBackground);
 		box-shadow: 0 20px 20px -20px black;
 
 		transform-origin: top;
@@ -367,9 +374,6 @@ nav ul ul li {
 
 footer {
 	width: 100%;
-	/* position: absolute;
-    left: 0;
-    bottom: 0; */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -677,4 +681,33 @@ footer .fab {
 	.dialog.appear {
 		transform: scale(0.85);
 	}
+}
+
+/*////////////////////// JSON response //////////////////////////*/
+pre.JSON {
+	outline: 1px solid #ccc;
+	padding: 20px;
+	margin: 5px;
+	/* margin-top: 150px; */
+
+	background: rgb(40, 44, 52);
+	color: rgb(134, 205, 248);
+}
+pre.JSON .string {
+	color: hsl(42, 100%, 55%);
+}
+pre.JSON .number {
+	color: rgb(251, 118, 244);
+}
+pre.JSON .boolean {
+	color: rgb(16, 177, 254);
+}
+pre.JSON .null {
+	color: rgb(255, 30, 0);
+}
+pre.JSON .key {
+	color: rgb(211, 145, 125);
+}
+pre.JSON .bracket {
+	color: rgb(60, 255, 0);
 }

@@ -22,5 +22,11 @@
 		"colorPicker.html",
 		"Taschenrechner.html"
 	],
-	"hiddenPages": ["webuntis.html", "playground/"]
+	"hiddenPages": ["webuntis.html", "playground/"],
+	"test": {
+		"number": 42,
+		"string": "string",
+		"boolean": true,
+		"null": null
+	}
 }

@@ -175,7 +175,7 @@ const DevMode = {
   consoleStyle: 'color: rgb(3, 238, 31); background-color: black;',
 };
 
-$(document).ready(async () => {
+window.onload = async () => {
 	//elements
 	const head = document.getElementsByTagName("HEAD")[0];
 	const titleTag = document.querySelector("title");
@@ -231,7 +231,7 @@ $(document).ready(async () => {
 		navBarHeader.id = "navBarHeader";
 		body.prepend(navBarHeader);
 	}
-	navBarHeader.innerHTML = await getFile("/src/components/navBar.html");
+	navBarHeader.innerHTML = await getFile("/src/components/navBar.html"); //inject navBar component
 
 	//execute DevMode preferences
 	if (DevMode.status) DevMode.execute();
@@ -252,12 +252,11 @@ $(document).ready(async () => {
 		activeLinks
 			.toString()
 			.split(" ")
-			.forEach((item) => document.querySelector(item).classList.add("activeLink"));
+			.forEach((selector) => document.querySelector(selector).classList.add("activeLink"));
 
 	//adds a title and an alert to disabled links
-	const disabledLink = document.querySelectorAll(".disabledLink");
-	const disabledLinkMsg = "Diese Seite gibt es noch nicht :(";
-	disabledLink.forEach((item) => {
+	const disabledLinkMsg = "This site does not exsist yet :(";
+	document.querySelectorAll(".disabledLink").forEach((item) => {
 		item.title = disabledLinkMsg;
 		item.onclick = () => {
 			custom.confirm("", disabledLinkMsg, "Okay");
@@ -278,14 +277,15 @@ $(document).ready(async () => {
 		footer.id = "pageFooter";
 		body.append(footer);
 	}
-	footer.innerHTML = await getFile("/src/components/footer.html");
+	footer.innerHTML = await getFile("/src/components/footer.html"); //inject footer component
+	if (body.dataset.mainBackground == "true") footer.style.color = "white";
 
 	{ //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
   } //prettier-ignore
-});
+};
 
 getUserCount = () => {
 	if (besucher)
@@ -537,28 +537,27 @@ pSBC = (p, c0, c1, l) => {
 /**
  *
  * @param {string | object} json the JSON string or object you want to syntax highlight
+ * @param {number} indentation the number of spaces to
  * @returns HTML string
  */
-function syntaxHighlight(json) {
+function syntaxHighlight(json, indentation = 4) {
 	if (typeof json != "string") {
-		json = JSON.stringify(json, undefined, 4);
+		json = JSON.stringify(json, undefined, indentation);
 	}
 	json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	return json.replace(
 		/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
 		(match) => {
-			var cls = "number";
+			let cls = "number";
 			if (/^"/.test(match)) {
 				if (/:$/.test(match)) {
 					cls = "key";
 				} else {
 					cls = "string";
 				}
-			} else if (/true|false/.test(match)) {
-				cls = "boolean";
-			} else if (/null/.test(match)) {
-				cls = "null";
-			}
+			} else if (/true|false/.test(match)) cls = "boolean";
+			else if (/null/.test(match)) cls = "null";
+
 			return `<span class="${cls}">${match}</span>`;
 		}
 	);
@@ -585,7 +584,7 @@ function getDominantColor(image, colorFormat, log) {
 
 	const canvas = document.createElement("canvas");
 	const ctx = canvas.getContext("2d");
-	body.append(canvas);
+	document.body.append(canvas);
 
 	canvas.width = 1;
 	canvas.height = 1;

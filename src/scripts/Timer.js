@@ -52,15 +52,6 @@ DevMode.callback = (devMode) => {
     }
 };
 
-///////////////////////// testing //////////////////////////////
-/* $(document).ready(function () {
-    alert("added new option for testing");
-    newOption = document.createElement("option");
-    newOption.innerText = "test 123";
-    document.getElementById("alarmSound_options").append(newOption);
-}); */
-////////////////////////////////////////////////////////////////
-
 document.addEventListener("keydown", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();

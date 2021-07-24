@@ -1,26 +1,22 @@
-$(document).ready(async function () {
-  /* just for testing */
-  /* document
+window.onload = async () => {
+	/* just for testing */
+	/* document
         .querySelector(":root")
         .style.setProperty("--navBarBackground", "rgba(0, 0, 0, .3)"); */
-  //console.log(document.querySelector("body").dataset);
+	//console.log(document.querySelector("body").dataset);
 
-  if (!sessionStorage.hasBeenPrompted)
-    setTimeout(() => {
-      custom.confirm(
-        "Attention",
-        "This website is work in progress, so be kind if there are bugs.",
-        "continue"
-      );
-      sessionStorage.hasBeenPrompted = true;
-    }, 500);
+	if (!sessionStorage.hasBeenPrompted)
+		setTimeout(() => {
+			custom.confirm("Attention", "This website is work in progress, so be kind if there are bugs.", "continue");
+			sessionStorage.hasBeenPrompted = true;
+		}, 500);
 
-  const img = document.querySelector("section img");
-  const imgUrl = /* img.src ||  */"./src/assets/images/deinding\ collage.png";
+	const img = document.querySelector("section img");
+	const imgUrl = /* img.src ||  */ "./src/assets/images/deinding collage.png";
 
-  const imageObject = new Image();
-  imageObject.setAttribute('crossOrigin', '');
-  imageObject.src = imgUrl;
+	const imageObject = new Image();
+	imageObject.setAttribute("crossOrigin", "");
+	imageObject.src = imgUrl;
 
-  getDominantColor(img, "rgb", true)
-});
+	getDominantColor(img, "rgb", true);
+};
