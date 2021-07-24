@@ -1,59 +1,48 @@
 body {
-    height: 100vh;
-    /* padding-top: 60px; */
-    margin: 0;
+	height: 100vh;
+	/* padding-top: 60px; */
+	margin: 0;
 
-    font-family: futura;
+	font-family: futura;
 
-    background: black;
+	background: black;
 }
-.background {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: -10;
 
-    /* background-color: rgb(21, 21, 21); */
-    background-image: url(../../src/assets/images/black\ triangle\ background.jpg);
-    background-size: cover;
-
-    filter: grayscale(1) hue-rotate(180deg) blur(5px) brightness(0.8);
-}
 .section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #section-1 {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
 
-    filter: contrast(1.1) saturate(1.3);
-    /* padding: 30px; */
+	filter: contrast(1.1) saturate(1.3);
+	/* padding: 30px; */
 }
 .image {
-    height: 55%;
+	height: 55%;
 
-    animation: swing 2.5s ease-in-out infinite;  
+	animation: swing 2.5s ease-in-out infinite;
 }
 
 footer {
-    /* position: absolute;
+	/* position: absolute;
     bottom: 0; */
-    color: white;
-    /* z-index: 10; */
+	color: white;
+	/* z-index: 10; */
 }
 @keyframes swing {
-    /* 0%, 100% {
+	/* 0%, 100% {
         transform: rotate(0deg);
     } */
-    0%, 100% {
-        transform: rotate(-3deg) translate(240px, -50px);
-        transform-origin: center bottom;
-    }
-    50% {
-        transform: rotate(7deg) translate(-200px, 50px);
-        transform-origin: right bottom;
-    }
+	0%,
+	100% {
+		transform: rotate(-3deg) translate(240px, -50px);
+		transform-origin: center bottom;
+	}
+	50% {
+		transform: rotate(7deg) translate(-200px, 50px);
+		transform-origin: right bottom;
+	}
 }

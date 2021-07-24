@@ -20,47 +20,9 @@
         <style>
             @import url("/src/css/page-not-found.css");
         </style>
-        <script>
-            const { availablePages, hiddenPages } = JSON.parse(getFile("/src/data/main.json"));
-            const availablePagesFormatted = availablePages.map(string => string.replace(".html", "").replace(/\//g, ""))
-            const pageSet = new Set(availablePagesFormatted);
-            
-            window.onload = () => {
-                //add the not found path to a span
-                const pathPreview = document.querySelector("#pathPreview");
-                let exampleTypo = "";
-
-                ;(addPathToSpan = () => {
-                    exampleTypo += "/exampleTypo";
-                    pathPreview.innerHTML = `"<span style="color: var(--error-clr);">${location.pathname == "/Page-Not-Found.html" ? exampleTypo : location.pathname}</span>"`;
-                })()
-                pathPreview.onclick = addPathToSpan;
-                
-
-                //add pages from JSON file to options list
-                const datalist = document.querySelector("#pages")
-                availablePagesFormatted.forEach(page => {
-                    const option = document.createElement("option")
-                    option.value = page
-                    datalist.append(option)
-                })
-
-                //redirect to selected page on button click
-                const goToPageBtn = document.querySelector("#goToPageBtn")
-                const searchField = document.querySelector("#searchField")
-                validateSearch = () => searchField.value && pageSet.has(searchField.value)
-                goToPage = () => {
-                    if (validateSearch()) location.href = availablePages[ availablePagesFormatted.indexOf(searchField.value) ];
-                    else custom.confirm("Try the ones from the list.", "", "Okay", "what list?")
-                               .catch(err => custom.confirm("", "The list you get, when you type in the search field.", "got it!", "still no clue"))
-                               .catch(err => custom.confirm("", "Just use the navigation bar at the top of the website, for fuck sakes!", "😳"))
-                };
-                goToPageBtn.onclick = goToPage;
-                searchField.addEventListener("keydown", e => (e.key == "Enter" && validateSearch()) ? goToPage() : {} )
-            }
-        </script>
+        <script src="/src/scripts/page-not-found.js"></script>
 	</head>
-	<body class="flex-container rows">
+	<body class="flex-container rows" data-main-background="true">
 		<main>
 			<h1 class="_404">404</h1>
 			<hr />
@@ -68,7 +30,7 @@
 				<!-- prettier-ignore -->
 				<div class="flex-container rows not-found">
                     <h2><span id="pathPreview">Page</span> not found...</h2>
-                    <p>The page you are looking for does not exist (anymore).</p>
+                    <p>The page you are looking for does not exist (anymore/yet).</p>
                 </div>
 				<div class="flex-container rows second-container">
 					<div class="causes">

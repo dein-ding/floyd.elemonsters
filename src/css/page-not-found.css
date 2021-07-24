@@ -3,8 +3,7 @@
 }
 
 body {
-	background: rgb(22, 22, 22);
-	padding: 10px;
+	/* padding: 10px; */
 
 	color: white;
 }
@@ -33,16 +32,45 @@ main {
 }
 
 ._404 {
+	position: relative;
 	width: max-content;
 
 	font-size: 6rem;
 	margin: 10px;
 
+	/* background: linear-gradient(145deg, #1db005, #3773fd); */
+	/* -webkit-background-clip: text;
+	background-clip: text; */
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 3px rgb(104, 104, 104);
+}
+._404::before {
+	content: "404";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
 	background: linear-gradient(145deg, #1db005, #3773fd);
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 3px transparent;
+	overflow: hidden;
+
+	animation: reveal-gradient 6s steps(3) infinite;
 }
+@keyframes reveal-gradient {
+	0% {
+		width: 0;
+	}
+	70%,
+	100% {
+		width: 100%;
+	}
+}
+
 .second-container > div {
 	margin: 20px 0;
 	width: 100%;
@@ -56,6 +84,43 @@ main {
 }
 #pathPreview {
 	word-break: break-all;
+}
+#pathPreview span {
+	position: relative;
+	color: var(--error-clr);
+	/* text-shadow: 0 0 3px var(--error-clr); */
+	transition: 200ms;
+
+	--stagger-delay: 300ms;
+	--animation-duration: 500ms;
+	--animation-timing-function: linear;
+	animation: swgiggle var(--animation-duration) var(--animation-timing-function) calc(var(--stagger-delay) * var(--i));
+}
+/* #pathPreview span:hover {
+} */
+@keyframes swgiggle {
+	0%,
+	100% {
+		bottom: 0;
+	}
+	50% {
+		--clr: #3773fd;
+		/* text-shadow: 0 0 20px var(--error-clr); */
+		bottom: 5px;
+		filter: brightness(1.4);
+	}
+}
+@keyframes swgiggle2 {
+	0%,
+	100% {
+		bottom: 0;
+	}
+	50% {
+		--clr: #3773fd;
+		/* text-shadow: 0 0 20px var(--error-clr); */
+		bottom: 5px;
+		filter: brightness(1.4);
+	}
 }
 .not-found p {
 	margin: 10px 0 0;
@@ -106,20 +171,33 @@ main {
 	appearance: none;
 	-webkit-appearance: none;
 	margin-right: 5px;
+
+	--background: white;
+	background: var(--background);
+	box-shadow: 0 0 1px 1px var(--background);
+
+	transition: 200ms;
 }
 #searchField:focus {
 	outline: none;
+	box-shadow: 0 0 5px var(--background), 0 0 10px var(--background), 0 0 20px var(--background);
 }
 #goToPageBtn {
-	transition: 150ms;
+	width: 5.8rem;
 	cursor: pointer;
 
 	font-weight: 700;
 
-	background: var(--activeLinkColor);
+	--background: var(--activeLinkColor);
+	background: var(--background);
+	box-shadow: 0 0 1px 1px var(--background);
+
+	transition: 170ms;
 }
 #goToPageBtn:hover {
-	filter: brightness(0.8);
+	/* filter: brightness(0.8); */
+	box-shadow: 0 0 5px var(--background), 0 0 10px var(--background), 0 0 20px var(--background);
+	font-weight: 900;
 }
 
 footer {

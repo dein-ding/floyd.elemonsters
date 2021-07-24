@@ -71,6 +71,9 @@ const DevMode = {
                             </a>
                             <input type="checkbox" id="devModeGuiToggle" style="display: none;">
                             <div class="devModeContainer">
+                                <div class="shortcutHint">
+                                    <h2>Shortcut: <span class="keyboard-key">⎇</span> <span class="keyboard-key">⇧</span> <span class="keyboard-key">D</span></h2>
+                                </div>
                                 <div class="toolbox">
                                     <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
                                         <i class="fas fa-power-off"></i>
@@ -173,107 +176,111 @@ const DevMode = {
 };
 
 $(document).ready(async () => {
-  //elements
-  const head = document.getElementsByTagName("HEAD")[0];
-  const titleTag = document.querySelector("title");
-  var navBarHeader = document.querySelector("#navBarHeader");
-  var footer = document.querySelector("#footer");
-  const body = document.body;
+	//elements
+	const head = document.getElementsByTagName("HEAD")[0];
+	const titleTag = document.querySelector("title");
+	var navBarHeader = document.querySelector("#navBarHeader");
+	var footer = document.querySelector("#footer");
+	const body = document.body;
 
-  //variables
-  const data = JSON.parse(await getFile("/src/data/main.json"));
+	//variables
+	const data = JSON.parse(await getFile("/src/data/main.json"));
 
-  getUserCountAsync()
-    .then((res) => {
-      console.groupCollapsed(
-        `%c userCount: ${res.today}`,
-        "color: orange; font-weight: 700;"
-      );
-      console.table(res);
-      console.groupEnd();
-    })
-    .catch(console.warn);
+	getUserCountAsync()
+		.then((res) => {
+			console.groupCollapsed(`%c userCount: ${res.today}`, "color: orange; font-weight: 700;");
+			console.table(res);
+			console.groupEnd();
+		})
+		.catch(console.warn);
 
-  var locationURL = {
-    prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
-    curr: location.pathname,
-  };
-  sessionStorage.currURL = location.pathname;
-  sessionStorage.prevURL = locationURL.prev;
+	var locationURL = {
+		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
+		curr: location.pathname,
+	};
+	sessionStorage.currURL = location.pathname;
+	sessionStorage.prevURL = locationURL.prev;
 
-  //create script for user counter
-  const userCounterScript = document.createElement("script");
-  userCounterScript.id = "ebsr5556uh";
-  userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
-  head.append(userCounterScript);
+	//create script for user counter
+	const userCounterScript = document.createElement("script");
+	userCounterScript.id = "ebsr5556uh";
+	userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
+	head.append(userCounterScript);
 
-  //create link for favicon
-  const linkFavicon = document.createElement("LINK");
-  linkFavicon.rel = "shortcut icon";
-  linkFavicon.type = "image/png";
-  linkFavicon.href = "/src/assets/images/icons/deinding_favicon.png";
-  head.prepend(linkFavicon);
+	//create link for favicon
+	const linkFavicon = document.createElement("LINK");
+	linkFavicon.rel = "shortcut icon";
+	linkFavicon.type = "image/png";
+	linkFavicon.href = "/src/assets/images/icons/deinding_favicon.png";
+	head.prepend(linkFavicon);
 
-  // adds a suffix after the title
-  titleTag.innerText = titleTag.innerText + " - dein.ding";
+	// adds a suffix after the title
+	titleTag.innerText = titleTag.innerText + " - dein.ding";
 
-  ////////////////////// Nav Bar //////////////////////
-  //create new header if not already existing
-  if (!navBarHeader) {
-    navBarHeader = document.createElement("header");
-    navBarHeader.id = "navBarHeader";
-    document.body.prepend(navBarHeader);
-  }
-  navBarHeader.innerHTML = await getFile("/src/components/navBar.html");
+	if (body.dataset.mainBackground == "true") {
+		console.info("%cbackground image injected", "color: yellow");
+		const mainBackground = document.createElement("div");
+		mainBackground.classList.add("main-background");
+		body.prepend(mainBackground);
+	}
 
-  //execute DevMode preferences
-  if (DevMode.status) DevMode.execute();
+	////////////////////// Nav Bar //////////////////////
+	//create new header if not already existing
+	if (!navBarHeader) {
+		navBarHeader = document.createElement("header");
+		navBarHeader.id = "navBarHeader";
+		body.prepend(navBarHeader);
+	}
+	navBarHeader.innerHTML = await getFile("/src/components/navBar.html");
 
-  // add DevMode keybinding
-  document.body.addEventListener("keydown", e => {
-    if (e.key == "™" && e.shiftKey && e.altKey) {
-      console.log("%cDevMode Shortcut used", DevMode.consoleStyle)
+	//execute DevMode preferences
+	if (DevMode.status) DevMode.execute();
 
-      e.preventDefault()
-      DevMode.toggle();
-    }
-  })
+	// add DevMode keybinding
+	body.addEventListener("keydown", (e) => {
+		if (e.key == "™" && e.shiftKey && e.altKey) {
+			console.log("%cDevMode Shortcut used", DevMode.consoleStyle);
 
-  //adds the activeLink class to active links for the current page
-  let activeLinks = body.dataset.activeLink;
-  if (activeLinks)
-    activeLinks.toString().split(" ").forEach((item) =>
-      document.querySelector(item).classList.add("activeLink")
-    );
+			e.preventDefault();
+			DevMode.toggle();
+		}
+	});
 
-  //adds a title and an alert to disabled links
-  const disabledLink = document.querySelectorAll(".disabledLink");
-  const disabledLinkMsg = "Diese Seite gibt es noch nicht :(";
-  disabledLink.forEach((item) => {
-    item.title = disabledLinkMsg;
-    item.onclick = () => {
-      custom.confirm("", disabledLinkMsg, "Okay");
-    };
-  });
+	//adds the activeLink class to active links for the current page
+	let activeLinks = body.dataset.activeLink;
+	if (activeLinks)
+		activeLinks
+			.toString()
+			.split(" ")
+			.forEach((item) => document.querySelector(item).classList.add("activeLink"));
 
-  //opens and closes the projects dropdown menu
-  const projectsDrpdwntggl = document.querySelector(".projects-dropdown-toggle"); //prettier-ignore
-  window.onclick = (event) => {
-    if (event.target.matches(".prjct-tggl"))
-      projectsDrpdwntggl.checked = !projectsDrpdwntggl.checked;
-    else projectsDrpdwntggl.checked = false;
-  };
+	//adds a title and an alert to disabled links
+	const disabledLink = document.querySelectorAll(".disabledLink");
+	const disabledLinkMsg = "Diese Seite gibt es noch nicht :(";
+	disabledLink.forEach((item) => {
+		item.title = disabledLinkMsg;
+		item.onclick = () => {
+			custom.confirm("", disabledLinkMsg, "Okay");
+		};
+	});
 
-  /////////////////////// footer ///////////////////////
-  //create new footer if not already existing
-  if (!footer) {
-    footer = document.createElement("footer");
-    footer.id = "pageFooter";
-    document.body.append(footer);
-  }
-  footer.innerHTML = await getFile("/src/components/footer.html");
+	//opens and closes the projects dropdown menu
+	const projectsDrpdwntggl = document.querySelector(".projects-dropdown-toggle"); //prettier-ignore
+	window.onclick = (event) => {
+		if (event.target.matches(".prjct-tggl")) projectsDrpdwntggl.checked = !projectsDrpdwntggl.checked;
+		else projectsDrpdwntggl.checked = false;
+	};
 
-  { //assigning URLs to links
+	/////////////////////// footer ///////////////////////
+	//create new footer if not already existing
+	if (!footer) {
+		footer = document.createElement("footer");
+		footer.id = "pageFooter";
+		body.append(footer);
+	}
+	footer.innerHTML = await getFile("/src/components/footer.html");
+
+	{ //assigning URLs to links
     document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
     document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
     document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
@@ -281,75 +288,75 @@ $(document).ready(async () => {
 });
 
 getUserCount = () => {
-  if (besucher)
-    return {
-      onDomain: location.hostname,
-      online: besucher[0],
-      today: besucher[1],
-      yesterday: besucher[2],
-      ever: besucher[3],
-      since: besucher[4],
-    };
-  else return "not ready yet";
+	if (besucher)
+		return {
+			onDomain: location.hostname,
+			online: besucher[0],
+			today: besucher[1],
+			yesterday: besucher[2],
+			ever: besucher[3],
+			since: besucher[4],
+		};
+	else return "not ready yet";
 };
 
 async function getUserCountAsync() {
-  return new Promise((resolve, reject) => {
-    let i = 1;
-    let wait = setInterval(() => {
-      // console.log(`waiting for user count... (${i})`);
-      i++;
-      if (i > 20) {
-        clearInterval(wait);
-        reject("could not fetch UserCount (besucher)");
-      }
+	return new Promise((resolve, reject) => {
+		let i = 1;
+		let wait = setInterval(() => {
+			// console.log(`waiting for user count... (${i})`);
+			i++;
+			if (i > 20) {
+				clearInterval(wait);
+				reject("could not fetch UserCount (besucher)");
+			}
 
-      if (window.besucher) {
-        clearInterval(wait);
-        resolve({
-          onDomain: location.hostname,
-          online: besucher[0],
-          today: besucher[1],
-          yesterday: besucher[2],
-          ever: besucher[3],
-          since: besucher[4],
-        });
-      }
-    }, 200);
-  });
+			if (window.besucher) {
+				clearInterval(wait);
+				resolve({
+					onDomain: location.hostname,
+					online: besucher[0],
+					today: besucher[1],
+					yesterday: besucher[2],
+					ever: besucher[3],
+					since: besucher[4],
+				});
+			}
+		}, 200);
+	});
 }
 
 getFile = (URL) => {
-  var XHR = new XMLHttpRequest();
-  XHR.open("GET", URL, false);
-  XHR.send();
+	var XHR = new XMLHttpRequest();
+	XHR.open("GET", URL, false);
+	XHR.send();
 
-  //console.log("injected:" + XHR.responseText);
-  return XHR.responseText;
+	//console.log("injected:" + XHR.responseText);
+	return XHR.responseText;
 };
 
 const custom = {
-  /**
-   * **presents a custom alert dialog**
-   * @param {string} title leave empty string or "no title" for no title
-   * @param {string} text
-   * @param {string} primaryBtn
-   * @param {string} secondaryBtn leave empty string, undefined or "no btn" for no secondary button
-   * @returns {Promise<string>} button response
-   */
-  confirm: (title, text, primaryBtn, secondaryBtn) => {
-    //input formatting
-    if (title == ("" || "no title")) title = undefined;
-    if (secondaryBtn == (undefined || "" || "no btn")) secondaryBtn = undefined;
+	/**
+	 * **presents a custom alert dialog**
+	 * @param {string} title leave empty string or "no title" for no title
+	 * @param {string} text
+	 * @param {string} primaryBtn
+	 * @param {string} secondaryBtn leave empty string, undefined or "no btn" for no secondary button
+	 * @returns {Promise<string>} button response
+	 */
+	confirm: (title, text, primaryBtn, secondaryBtn) => {
+		//input formatting
+		if (title == ("" || "no title")) title = undefined;
+		if (secondaryBtn == (undefined || "" || "no btn")) secondaryBtn = undefined;
 
-    //create container
-    var dialogContainer = document.createElement("div");
-    dialogContainer.classList.add("dialogContainer");
-    dialogContainer.style.opacity = 0;
-    document.body.prepend(dialogContainer);
+		//create container
+		var dialogContainer = document.createElement("div");
+		dialogContainer.classList.add("dialogContainer");
+		dialogContainer.style.opacity = 0;
+		document.body.prepend(dialogContainer);
 
-    //create the actual pop up dialog
-    dialogContainer.innerHTML = `
+		//create the actual pop up dialog
+		dialogContainer.innerHTML = `
         <div class='dialog'>
             <div class='dialogText'>
                 <h3>${title ? title : ""}</h3>
@@ -362,63 +369,63 @@ const custom = {
         </div>
     `; //prettier-ignore
 
-    //adds the text
-    document.querySelector(".dialogText p").innerText = text;
+		//adds the text
+		document.querySelector(".dialogText p").innerText = text;
 
-    document.querySelector(".dialog").classList.add("appear");
-    $(".dialogContainer").fadeTo(200, 1);
+		document.querySelector(".dialog").classList.add("appear");
+		$(".dialogContainer").fadeTo(200, 1);
 
-    return new Promise((resolve, reject) => {
-      clickPrimary = (event) => {
-        event.stopPropagation();
-        if (event.keyCode === 13) {
-          //ENTER
-          event.preventDefault();
-          buttonPressed("primary");
-        }
-        if (event.keyCode === 27 && secondaryBtn) {
-          //ESC
-          event.preventDefault();
-          buttonPressed("secondary");
-        }
-      };
+		return new Promise((resolve, reject) => {
+			clickPrimary = (event) => {
+				event.stopPropagation();
+				if (event.keyCode === 13) {
+					//ENTER
+					event.preventDefault();
+					buttonPressed("primary");
+				}
+				if (event.keyCode === 27 && secondaryBtn) {
+					//ESC
+					event.preventDefault();
+					buttonPressed("secondary");
+				}
+			};
 
-      document.addEventListener("keydown", clickPrimary, { capture: true });
+			document.addEventListener("keydown", clickPrimary, { capture: true });
 
-      buttonPressed = (response) => {
-        if (response == "primary") resolve(primaryBtn);
-        if (response == "secondary") reject(secondaryBtn);
+			buttonPressed = (response) => {
+				if (response == "primary") resolve(primaryBtn);
+				if (response == "secondary") reject(secondaryBtn);
 
-        document.removeEventListener("keydown", clickPrimary, {
-          capture: true,
-        });
+				document.removeEventListener("keydown", clickPrimary, {
+					capture: true,
+				});
 
-        document.querySelector(".dialog").classList.remove("appear");
-        $(".dialogContainer").fadeTo(200, 0);
-        setTimeout(() => {
-          document.body.removeChild(dialogContainer);
-        }, 300);
-      };
-    });
-  },
-  /**
-   * **presents a custom prompt dialog for user input**
-   * @param {string} title leave empty string or "no title" for no title
-   * @param {string} text
-   * @returns {Promise<string>} input value
-   */
-  prompt: (title, text) => {
-    //input formatting
-    if (title == ("" || "no title")) title = undefined;
+				document.querySelector(".dialog").classList.remove("appear");
+				$(".dialogContainer").fadeTo(200, 0);
+				setTimeout(() => {
+					document.body.removeChild(dialogContainer);
+				}, 300);
+			};
+		});
+	},
+	/**
+	 * **presents a custom prompt dialog for user input**
+	 * @param {string} title leave empty string or "no title" for no title
+	 * @param {string} text
+	 * @returns {Promise<string>} input value
+	 */
+	prompt: (title, text) => {
+		//input formatting
+		if (title == ("" || "no title")) title = undefined;
 
-    //create container
-    var dialogContainer = document.createElement("div");
-    dialogContainer.classList.add("dialogContainer");
-    dialogContainer.style.opacity = 0;
-    document.body.prepend(dialogContainer);
+		//create container
+		var dialogContainer = document.createElement("div");
+		dialogContainer.classList.add("dialogContainer");
+		dialogContainer.style.opacity = 0;
+		body.prepend(dialogContainer);
 
-    //create the actual pop up dialog
-    dialogContainer.innerHTML = `
+		//create the actual pop up dialog
+		dialogContainer.innerHTML = `
         <div class='dialog'>
             <div class='dialogText prompt'>
                 <h3>${title ? title : ""}</h3>
@@ -431,37 +438,37 @@ const custom = {
         </div>
         `; //prettier-ignore
 
-    //focus the input field for faster workflow
-    document.querySelector(".promptInput").select();
+		//focus the input field for faster workflow
+		document.querySelector(".promptInput").select();
 
-    document.querySelector(".dialog").classList.add("appear");
-    $(".dialogContainer").fadeTo(200, 1);
+		document.querySelector(".dialog").classList.add("appear");
+		$(".dialogContainer").fadeTo(200, 1);
 
-    return new Promise((resolve, reject) => {
-      click = (event) => {
-        event.stopPropagation();
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          buttonPressed();
-        }
-      };
+		return new Promise((resolve, reject) => {
+			click = (event) => {
+				event.stopPropagation();
+				if (event.keyCode === 13) {
+					event.preventDefault();
+					buttonPressed();
+				}
+			};
 
-      document.addEventListener("keydown", click, { capture: true });
+			document.addEventListener("keydown", click, { capture: true });
 
-      buttonPressed = () => {
-        let input = document.querySelector(".promptInput").value;
-        resolve(input);
+			buttonPressed = () => {
+				let input = document.querySelector(".promptInput").value;
+				resolve(input);
 
-        document.removeEventListener("keydown", click, { capture: true });
+				document.removeEventListener("keydown", click, { capture: true });
 
-        document.querySelector(".dialog").classList.remove("appear");
-        $(".dialogContainer").fadeTo(200, 0);
-        setTimeout(() => {
-          document.body.removeChild(dialogContainer);
-        }, 300);
-      };
-    });
-  },
+				document.querySelector(".dialog").classList.remove("appear");
+				$(".dialogContainer").fadeTo(200, 0);
+				setTimeout(() => {
+					body.removeChild(dialogContainer);
+				}, 300);
+			};
+		});
+	},
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,25 +479,24 @@ const custom = {
  * determine if a function call comes from the console
  */
 fromConsole = () => {
-  var stack;
-  try {
-    // Throwing the error for Safari's sake, in Chrome and Firefox
-    // var stack = new Error().stack; is sufficient.
-    throw new Error();
-  } catch (e) {
-    stack = e.stack;
-  }
-  if (!stack) return false;
+	var stack;
+	try {
+		// Throwing the error for Safari's sake, in Chrome and Firefox
+		// var stack = new Error().stack; is sufficient.
+		throw new Error();
+	} catch (e) {
+		stack = e.stack;
+	}
+	if (!stack) return false;
 
-  var lines = stack.split("\n");
-  for (var i = 0; i < lines.length; i++) {
-    if (lines[i].indexOf("at Object.InjectedScript.") >= 0) return true; // Chrome console
-    if (lines[i].indexOf("@debugger eval code") == 0) return true; // Firefox console
-    if (lines[i].indexOf("_evaluateOn") == 0) return true; // Safari console
-    if (lines[i].indexOf("evaluateWithScopeExtension@[native code]") == 0)
-      return true; // Safari console
-  }
-  return false;
+	var lines = stack.split("\n");
+	for (var i = 0; i < lines.length; i++) {
+		if (lines[i].indexOf("at Object.InjectedScript.") >= 0) return true; // Chrome console
+		if (lines[i].indexOf("@debugger eval code") == 0) return true; // Firefox console
+		if (lines[i].indexOf("_evaluateOn") == 0) return true; // Safari console
+		if (lines[i].indexOf("evaluateWithScopeExtension@[native code]") == 0) return true; // Safari console
+	}
+	return false;
 };
 /**
  * **manipulate color (RGB or HEX) values**
@@ -534,36 +540,33 @@ pSBC = (p, c0, c1, l) => {
  * @returns HTML string
  */
 function syntaxHighlight(json) {
-  if (typeof json != "string") {
-    json = JSON.stringify(json, undefined, 4);
-  }
-  json = json
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-  return json.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-    match => {
-      var cls = "number";
-      if (/^"/.test(match)) {
-        if (/:$/.test(match)) {
-          cls = "key";
-        } else {
-          cls = "string";
-        }
-      } else if (/true|false/.test(match)) {
-        cls = "boolean";
-      } else if (/null/.test(match)) {
-        cls = "null";
-      }
-      return `<span class="${cls}">${match}</span>`
-    }
-  );
+	if (typeof json != "string") {
+		json = JSON.stringify(json, undefined, 4);
+	}
+	json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	return json.replace(
+		/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+		(match) => {
+			var cls = "number";
+			if (/^"/.test(match)) {
+				if (/:$/.test(match)) {
+					cls = "key";
+				} else {
+					cls = "string";
+				}
+			} else if (/true|false/.test(match)) {
+				cls = "boolean";
+			} else if (/null/.test(match)) {
+				cls = "null";
+			}
+			return `<span class="${cls}">${match}</span>`;
+		}
+	);
 }
 
 /**
  * **Get the dominant/average color of an image**
- * 
+ *
  * Stack Overflow Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
  * @param {HTMLImageElement | string} image HTMLImageElement or URL to an image
  * @param {string} colorFormat "rgb" | "rgba" | "hex"
@@ -571,47 +574,43 @@ function syntaxHighlight(json) {
  * @returns color string (rgb || rgba || hex)
  */
 function getDominantColor(image, colorFormat, log) {
-  let imageObject;
+	let imageObject;
 
-  if (typeof image == "string") {
-    imageObject = new Image();
-    imageObject.setAttribute('crossOrigin', '');
-    imageObject.src = image;
-  }
-  else if (typeof image == "object") imageObject = image;
-  else console.error("no valid image object or URL provided")
+	if (typeof image == "string") {
+		imageObject = new Image();
+		imageObject.setAttribute("crossOrigin", "");
+		imageObject.src = image;
+	} else if (typeof image == "object") imageObject = image;
+	else console.error("no valid image object or URL provided");
 
+	const canvas = document.createElement("canvas");
+	const ctx = canvas.getContext("2d");
+	body.append(canvas);
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  document.body.append(canvas)
+	canvas.width = 1;
+	canvas.height = 1;
 
-  canvas.width = 1;
-  canvas.height = 1;
+	//draw the image to one pixel and let the browser find the dominant color
+	ctx.drawImage(imageObject, 0, 0, 1, 1);
 
-  //draw the image to one pixel and let the browser find the dominant color
-  ctx.drawImage(imageObject, 0, 0, 1, 1);
+	//get pixel color
+	const i = ctx.getImageData(0, 0, 1, 1).data;
 
-  //get pixel color
-  const i = ctx.getImageData(0, 0, 1, 1).data;
+	canvas.remove();
 
-  canvas.remove();
+	let rgb = `rgb(${i[0]},${i[1]},${i[2]})`;
+	let rgba = `rgba(${i[0]},${i[1]},${i[2]},${i[3]})`;
+	let hex = "#" + ((1 << 24) + (i[0] << 16) + (i[1] << 8) + i[2]).toString(16).slice(1);
 
-  let rgb = `rgb(${i[0]},${i[1]},${i[2]})`;
-  let rgba = `rgba(${i[0]},${i[1]},${i[2]},${i[3]})`;
-  let hex = "#" + ((1 << 24) + (i[0] << 16) + (i[1] << 8) + i[2]).toString(16).slice(1);
-
-  switch (colorFormat) {
-    case "rgb":
-      if (log) console.log("%c" + rgb, `color: ${rgb}`);
-      return rgb;
-    case "rgba":
-      if (log) console.log("%c" + rgba, `color: ${rgb}`);
-      return rgba;
-    default:
-      if (log) console.log("%c" + hex, `color: ${hex}`);
-      return hex;
-  }
-
-
+	switch (colorFormat) {
+		case "rgb":
+			if (log) console.log("%c" + rgb, `color: ${rgb}`);
+			return rgb;
+		case "rgba":
+			if (log) console.log("%c" + rgba, `color: ${rgb}`);
+			return rgba;
+		default:
+			if (log) console.log("%c" + hex, `color: ${hex}`);
+			return hex;
+	}
 }

@@ -1,5 +1,7 @@
 {
     "liveServer.settings.port": 5501,
     "liveServer.settings.multiRootWorkspaceName": "floyd.elemonsters",
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "prettier.printWidth": 125,
+    "prettier.arrowParens": "avoid"
 }

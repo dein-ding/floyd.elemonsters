@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- prettier-ignore -->
-    <head>
+	<!-- prettier-ignore -->
+	<head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,9 +17,12 @@
         <script src="src/scripts/taschenrechner.js"></script>
         <title>Taschenrechner</title>
     </head>
-    <body data-active-link="#projectsLink #taschenrechnerLink">
-        <!-- prettier-ignore -->
-        <div class="container">
+	<body
+		data-active-link="#projectsLink #taschenrechnerLink"
+		data-main-background="true"
+	>
+		<!-- prettier-ignore -->
+		<div class="container">
             <div id="output"></div>
             <button id="btn-divide" class="btn btn-orange" onclick="addChar('/')">/</button>
             <button id="btn-multi" class="btn btn-orange" onclick="addChar('*')">*</button>
@@ -43,5 +46,5 @@
             <button id="btn-0" class="btn" onclick="addChar('0')">0</button>
             <button id="btn-comma" class="btn" onclick="addChar('.')">,</button>
         </div>
-    </body>
+	</body>
 </html>

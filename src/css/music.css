@@ -1,54 +1,42 @@
 body {
-    min-height: 100vh;
-    margin: 0;
-    background: black;
-    padding-top: 50px;
-}
-.background {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: -10;
-
-    background-image: url(../../src/assets/images/black\ triangle\ background.jpg);
-    background-size: cover;
-
-    filter: grayscale(1) hue-rotate(180deg) blur(5px) brightness(0.8);
+	min-height: 100vh;
+	margin: 0;
+	background: black;
+	padding-top: 50px;
 }
 
 #widgets {
-    padding: 30px;
+	padding: 30px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 
-    /* background: rgba(0, 0, 0, 0.255);
+	/* background: rgba(0, 0, 0, 0.255);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px); */
 }
 #widgets iframe {
-    width: 40%;
-    border-radius: 8px;
+	width: 40%;
+	border-radius: 8px;
 }
 @media screen and (max-width: 1400px) {
-    #widgets iframe {
-        width: 55%;
-    }
+	#widgets iframe {
+		width: 55%;
+	}
 }
 @media screen and (max-width: 1000px) {
-    #widgets iframe {
-        width: 90%;
-    }
+	#widgets iframe {
+		width: 90%;
+	}
 }
 
 iframe.soundcloud {
-    height: 468px;
-    margin-bottom: 20px;
+	height: 468px;
+	margin-bottom: 20px;
 }
 
 #footer {
-    color: white;
+	color: white;
 }
