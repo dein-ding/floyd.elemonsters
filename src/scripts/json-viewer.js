@@ -4,17 +4,16 @@ const dummyWebuntisData = getFile("/src/data/webUntisDummyResponse.json");
 const jsonPre = document.querySelector(".JSON");
 
 const json = {
-	display: json => jsonPre.innerHTML = highlight(json),
-	fetchRequest: async (url) => json.display( await (await fetch(url)).json() ),
+	display: (json) => (jsonPre.innerHTML = highlight(json)),
+	fetchRequest: async (url) => json.display(await (await fetch(url)).json()),
 
 	FileInput: document.querySelector("#jsonFileInput"),
 	StringInput: document.querySelector("#jsonStringInput"),
 	RequestInput: document.querySelector("#jsonRequestInput"),
-}
+};
 
 // display highlighted JSON
-json.FileInput.onchange = async e => json.display(await e.target.files[0].text())
-
+json.FileInput.onchange = async (e) => json.display(await e.target.files[0].text());
 
 // display highlighted JSON
 json.StringInput.oninput = (event) => {
@@ -37,20 +36,17 @@ json.StringInput.addEventListener("keydown", (e) => {
 });
 
 // display highlighted JSON
-json.RequestInput.addEventListener("keydown", e => {
-	if (e.key == "Enter") json.fetchRequest(json.RequestInput.value)
+json.RequestInput.addEventListener("keydown", (e) => {
+	if (e.key == "Enter") json.fetchRequest(json.RequestInput.value);
 
-	json.RequestInput.style.width = (json.RequestInput.value.length + 5) + "ch";
-})
-json.RequestInput.style.width = (json.RequestInput.value.length + 5) + "ch";
-json.fetchRequest(json.RequestInput.value)
-
-
-
+	json.RequestInput.style.width = json.RequestInput.value.length + 5 + "ch";
+});
+json.RequestInput.style.width = json.RequestInput.value.length + 5 + "ch";
+json.fetchRequest(json.RequestInput.value);
 
 function isJSON(content) {
 	try {
-		var parse = JSON.parse(content);
+		let parse = JSON.parse(content);
 		if (parse && typeof parse === "object") {
 			return parse;
 		}

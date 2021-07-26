@@ -26,7 +26,13 @@
 	</head>
 	<body data-active-link="#projectsLink #jsonViewerLink" data-main-background="true">
 		<main>
-			<div class="controlls">
+            <div class="controlls">
+                <div class="paste">
+                    <label>
+                        <input id="jsonStringInput" placeholder="paste your JSON here"></input>
+                    </label>
+                </div>
+            
 				<div class="file">
 					<label>
 						Choose a JSON file to view
@@ -34,12 +40,6 @@
 							select a file
 							<input id="jsonFileInput" type="file" accept="application/json" />
 						</label>
-					</label>
-				</div>
-				
-				<div class="paste">
-					<label>
-						<input id="jsonStringInput" placeholder="paste your JSON here"></input>
 					</label>
 				</div>
 				

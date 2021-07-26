@@ -72,8 +72,9 @@ header {
 
 	transition: 200ms;
 	transition-delay: 200ms;
+	outline: none;
 }
-.logo:hover a {
+.logo a:is(:hover, :focus) {
 	background: linear-gradient(145deg, #1db005, #3773fd);
 	-webkit-background-clip: text;
 	background-clip: text;
@@ -100,7 +101,7 @@ header {
 
 	transition: 450ms;
 }
-.logo:hover a::before {
+.logo a:is(:hover, :focus)::before {
 	width: 0;
 	color: var(--navBarBackground);
 }
@@ -142,12 +143,19 @@ nav a {
 	opacity: 0;
 	transition: 150ms ease-out;
 }
-nav a:hover {
+nav a:is(:hover, :focus) {
 	color: var(--linkHoverColor);
+	outline: none;
 }
-nav .activeLink {
+.activeLink {
 	color: var(--activeLinkColor);
 	font-weight: 600;
+}
+.disabledLink {
+	text-decoration: line-through;
+}
+.disabledLink:not(:hover, :focus) {
+	filter: brightness(0.6);
 }
 
 .nav-toggle {
@@ -278,12 +286,6 @@ nav ul ul li {
 		justify-content: flex-end;
 		align-items: center;
 	}
-	.disabledLink {
-		text-decoration: line-through;
-	}
-	.disabledLink:not(:hover) {
-		filter: brightness(0.6);
-	}
 	nav a {
 		opacity: 1;
 		position: relative;
@@ -302,7 +304,7 @@ nav ul ul li {
 		transform-origin: left;
 		transition: transform ease-in-out 250ms;
 	}
-	nav a:hover::before {
+	nav a:is(:hover, :focus)::before {
 		transform: scale(1, 1);
 		background: var(--linkHoverColor);
 	}

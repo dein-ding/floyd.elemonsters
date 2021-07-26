@@ -1,68 +1,63 @@
-// const linkCustom = document.createElement("script");
-// linkCustom.src = "/src/components/custom/custom.js";
-// document.head.prepend(linkCustom);
-
 //////// DevMode ///////
 //prettier-ignore
 const DevMode = {
-  status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
-  keepAcrossPages: false,
-  callback: null,
-  set(status) {
-    this.status = status;
-    this.execute();
-  },
-  toggle() {
-    this.status = !this.status;
-    this.execute();
-  },
-  execute() {
-    console.group("%c DevMode ", this.consoleStyle)
-    this.log();
+	status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
+	keepAcrossPages: false,
+	callback: null,
+	set(status) {
+		this.status = status;
+		this.execute();
+	},
+	toggle() {
+		this.status = !this.status;
+		this.execute();
+	},
+	execute() {
+		console.group("%c DevMode ", this.consoleStyle);
+		this.log();
 
-    if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
-    else sessionStorage.removeItem("devModeStatus");
+		if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
+		else sessionStorage.removeItem("devModeStatus");
 
-    if (this.callback) {
-      let res = this.callback(this.status);
-      if (res) text = res;
-      else text = `settings ${this.status ? "applied" : "cleared"}`;
+		if (this.callback) {
+			let res = this.callback(this.status);
+			if (res) text = res;
+			else text = `settings ${this.status ? "applied" : "cleared"}`;
 
-      console.log(`%c ${text} `, this.consoleStyle);
-    }
+			console.log(`%c ${text} `, this.consoleStyle);
+		}
 
-    this.toggleItems(this.status);
+		this.toggleItems(this.status);
 
-    console.groupEnd();
-  },
-  log() {
-    console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
-    if (!this.callback)
-      console.info("no DevMode callback available");
-  },
-  GUI: {
-    toggle() {
-      const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
-      devModeGuiToggle.checked = !devModeGuiToggle.checked;
-    },
-  },
-  items: [],
-  toggleItems(status) {
-    const projectsDropdown = document.querySelector(".projects-dropdown");
-    const navUl = document.querySelector("#navBarHeader nav ul")
-	//   console.log(this.items)
+		console.groupEnd();
+	},
+	log() {
+		console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
+		if (!this.callback) console.info("no DevMode callback available");
+	},
+	GUI: {
+		toggle() {
+			const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
+			devModeGuiToggle.checked = !devModeGuiToggle.checked;
+		},
+	},
+	items: [],
+	toggleItems(status) {
+		const projectsDropdown = document.querySelector(".projects-dropdown");
+		const navUl = document.querySelector("#navBarHeader nav ul");
+		//   console.log(this.items)
 
-    switch (status) {
-      case true:
-        if (DevMode.items.length == 0) {
-			//adds a link to the playground page
-			let li = document.createElement("li");
-			li.classList.add("devModeItem");
-			li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
-			projectsDropdown.append(li);
-			DevMode.items.push(li);
+		switch (status) {
+			case true:
+				if (DevMode.items.length == 0) {
+					//adds a link to the playground page
+					let li = document.createElement("li");
+					li.classList.add("devModeItem");
+					li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
+					projectsDropdown.append(li);
+					DevMode.items.push(li);
 
-          	navUl.innerHTML = navUl.innerHTML + `
+					navUl.innerHTML = navUl.innerHTML + `
                     <li class="devModeItem navBarDevItem">
                         <div class="devModeOutterContainer">
                             <a id="devModeGuiToggleLabel" onclick="DevMode.GUI.toggle()">
@@ -87,11 +82,11 @@ const DevMode = {
                                         <i class="fad fa-globe"></i>
                                         <a style="display: none;" target="_blank" id="hostLink"></a>
                                     </button>
-        
+				
                                     <button onclick="location.href = 'webuntis.html'">
                                         <i class="fad fa-calendar-alt"></i>
                                     </button>
-        
+				
                                     <button title="show a prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
                                         <i class="fas fa-keyboard"></i>
                                     </button>
@@ -109,87 +104,65 @@ const DevMode = {
                             </div>
                         </div>
                     </li>`; //prettier-ignore
-			DevMode.items.push(document.querySelector(".navBarDevItem"));
-			
-			getString = (data) => data != null ? `
-				<h3>UserCount</h3>
-				<p>on host: ${data.onDomain.toString().length > 18
-					? data.onDomain.slice(0, 12) + "..."
-					: data.onDomain
-				}</p>
-				<p>Today: <b>${data.today}</b></p>
-				<p>Yesterday: ${data.yesterday}</p>
-				<p>Ever: ${data.ever}</p>
-			` : `
-				<h3>UserCount</h3>
-				<p>on host: ${location.hostname.toString().length > 18
-					? location.hostname.slice(0, 12) + "..."
-					: location.hostname
-				}</p>
-				<p>Today: ${failed = "<span style='color:red'>failed to load</span>"}</p>
-				<p>Yesterday: ${failed}</p>
-				<p>Ever: ${failed}</p>
-			`;
+					DevMode.items.push(document.querySelector(".navBarDevItem"));
 
-			const userCountDisplay = document.querySelector(".userCountDisplay");
-			getUserCountAsync()
-				.then((res) => {
-					userCountDisplay.innerHTML = getString(res);
-				})
-				.catch(err => {
-					console.warn(err);
-					userCountDisplay.innerHTML = getString(null);
-				})
-        }
-        break;
-      case false:
-        if (this.items) this.items.forEach((item) => item.remove())
-        this.items = [];
-        break;
-	}
-	
-	console.log(this.items)
-	console.log(document.querySelectorAll(".devModeItem"))
-	  
-    console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
-  },
-  toolboxFunctions: {
-    confirm: async () => {
-      custom
-        .confirm(
-          "Attention",
-          "this is a confirmation dialog",
-          "Ok",
-          "leave me alone"
-        )
-        .then(console.info)
-        .catch(console.info);
-    },
-    prompt: async () => {
-      console.info(
-        "input recieved: " +
-        (await custom.prompt(
-          "Wait a sec,",
-          "this is a prompt for user input"
-        ))
-      );
-    },
-    eval: async () => {
-      eval(
-        await custom.prompt(
-          "evaluate JS",
-          "type in valid JavaScript for evaluation."
-        )
-      );
-    },
-    hostLink: () => {
-      const hostLinkElem = document.querySelector("#hostLink");
-      hostLinkElem.href = `http://floyd.elemonsters.de/${window.location.pathname}`
-      hostLinkElem.click()
-    }
+					getString = (data) =>
+						data != null ? `
+						<h3>UserCount</h3>
+						<p>on host: ${data.onDomain.toString().length > 18 ? data.onDomain.slice(0, 12) + "..." : data.onDomain}</p>
+						<p>Today: <b>${data.today}</b></p>
+						<p>Yesterday: ${data.yesterday}</p>
+						<p>Ever: ${data.ever}</p>
+					` : `
+						<h3>UserCount</h3>
+						<p>on host: ${location.hostname.toString().length > 18 ? location.hostname.slice(0, 12) + "..." : location.hostname}</p>
+						<p>Today: ${(failed = "<span style='color:red'>failed to load</span>")}</p>
+						<p>Yesterday: ${failed}</p>
+						<p>Ever: ${failed}</p>
+					`; //prettier-ignore
 
-  },
-  consoleStyle: 'color: rgb(3, 238, 31); background-color: black;',
+					const userCountDisplay = document.querySelector(".userCountDisplay");
+					getUserCount()
+						.then((res) => {
+							userCountDisplay.innerHTML = getString(res);
+						})
+						.catch((err) => {
+							console.warn(err);
+							userCountDisplay.innerHTML = getString(null);
+						});
+				}
+				break;
+			case false:
+				if (this.items) this.items.forEach((item) => item.remove());
+				this.items = [];
+				break;
+		}
+
+		console.log(this.items);
+		console.log(document.querySelectorAll(".devModeItem"));
+
+		console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
+	},
+	toolboxFunctions: {
+		confirm: async () => {
+			custom
+				.confirm("Attention", "this is a confirmation dialog", "Ok", "leave me alone")
+				.then(console.info)
+				.catch(console.info);
+		},
+		prompt: async () => {
+			console.info("input recieved: " + (await custom.prompt("Wait a sec,", "this is a prompt for user input")));
+		},
+		eval: async () => {
+			eval(await custom.prompt("evaluate JS", "type in valid JavaScript for evaluation."));
+		},
+		hostLink: () => {
+			const hostLinkElem = document.querySelector("#hostLink");
+			hostLinkElem.href = `http://floyd.elemonsters.de/${window.location.pathname}`;
+			hostLinkElem.click();
+		},
+	},
+	consoleStyle: "color: rgb(3, 238, 31); background-color: black;",
 };
 
 window.onload = async () => {
@@ -203,16 +176,8 @@ window.onload = async () => {
 	//variables
 	const data = JSON.parse(await getFile("/src/data/main.json"));
 
-	// getUserCountAsync();
-	// 	.then((res) => {
-	// 		console.groupCollapsed(`%c userCount: ${res.today}`, "color: orange; font-weight: 700;");
-	// 		console.table(res);
-	// 		console.groupEnd();
-	// 	})
-	// 	.catch(console.warn);
-
 	var locationURL = {
-		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
+		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined,
 		curr: location.pathname,
 	};
 	sessionStorage.currURL = location.pathname;
@@ -304,7 +269,7 @@ window.onload = async () => {
   } //prettier-ignore
 };
 
-async function getUserCountAsync() {
+getUserCount = async () => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
 		const wait = setInterval(() => {
@@ -327,14 +292,14 @@ async function getUserCountAsync() {
 			}
 		}, 200);
 	});
-}
+};
 
+//TODO: add an async function
 getFile = (URL) => {
-	var XHR = new XMLHttpRequest();
+	const XHR = new XMLHttpRequest();
 	XHR.open("GET", URL, false);
 	XHR.send();
 
-	//console.log("injected:" + XHR.responseText);
 	return XHR.responseText;
 };
 
@@ -372,7 +337,7 @@ const custom = {
         </div>
     `; //prettier-ignore
 
-		//adds the text
+		//add the text
 		document.querySelector(".dialogText p").innerText = text;
 
 		document.querySelector(".dialog").classList.add("appear");
@@ -501,6 +466,7 @@ fromConsole = () => {
 	}
 	return false;
 };
+
 /**
  * **manipulate color (RGB or HEX) values**
  *
@@ -575,7 +541,7 @@ function syntaxHighlight(json, indentation = 4) {
  * @param {boolean} log log the calculated value
  * @returns color string (rgb || rgba || hex)
  */
-function getDominantColor(image, colorFormat, log) {
+function getDominantColor(image, colorFormat = "hex", log = false) {
 	let imageObject;
 
 	if (typeof image == "string") {
@@ -583,7 +549,10 @@ function getDominantColor(image, colorFormat, log) {
 		imageObject.setAttribute("crossOrigin", "");
 		imageObject.src = image;
 	} else if (typeof image == "object") imageObject = image;
-	else console.error("no valid image object or URL provided");
+	else {
+		console.error("no valid image object or URL provided");
+		return;
+	}
 
 	const canvas = document.createElement("canvas");
 	const ctx = canvas.getContext("2d");
@@ -608,10 +577,12 @@ function getDominantColor(image, colorFormat, log) {
 		case "rgb":
 			if (log) console.log("%c" + rgb, `color: ${rgb}`);
 			return rgb;
+
 		case "rgba":
 			if (log) console.log("%c" + rgba, `color: ${rgb}`);
 			return rgba;
-		default:
+
+		case "hex":
 			if (log) console.log("%c" + hex, `color: ${hex}`);
 			return hex;
 	}
