@@ -38,7 +38,7 @@ const DevMode = {
   log() {
     console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
     if (!this.callback)
-      console.warn("no DevMode callback available");
+      console.info("no DevMode callback available");
   },
   GUI: {
     toggle() {
@@ -49,21 +49,20 @@ const DevMode = {
   items: [],
   toggleItems(status) {
     const projectsDropdown = document.querySelector(".projects-dropdown");
-    const devModeItem = document.querySelectorAll(".devModeItem")
     const navUl = document.querySelector("#navBarHeader nav ul")
-    // console.log(this.items)
+	//   console.log(this.items)
 
     switch (status) {
       case true:
         if (DevMode.items.length == 0) {
-          //adds a link to the playground page
-          let li = document.createElement("li");
-          li.classList.add("devModeItem");
-          li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
-          projectsDropdown.append(li);
-          DevMode.items.push(li);
+			//adds a link to the playground page
+			let li = document.createElement("li");
+			li.classList.add("devModeItem");
+			li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
+			projectsDropdown.append(li);
+			DevMode.items.push(li);
 
-          navUl.innerHTML = navUl.innerHTML + `
+          	navUl.innerHTML = navUl.innerHTML + `
                     <li class="devModeItem navBarDevItem">
                         <div class="devModeOutterContainer">
                             <a id="devModeGuiToggleLabel" onclick="DevMode.GUI.toggle()">
@@ -110,30 +109,48 @@ const DevMode = {
                             </div>
                         </div>
                     </li>`; //prettier-ignore
-          DevMode.items.push(document.querySelector(".navBarDevItem"));
+			DevMode.items.push(document.querySelector(".navBarDevItem"));
+			
+			getString = (data) => data != null ? `
+				<h3>UserCount</h3>
+				<p>on host: ${data.onDomain.toString().length > 18
+					? data.onDomain.slice(0, 12) + "..."
+					: data.onDomain
+				}</p>
+				<p>Today: <b>${data.today}</b></p>
+				<p>Yesterday: ${data.yesterday}</p>
+				<p>Ever: ${data.ever}</p>
+			` : `
+				<h3>UserCount</h3>
+				<p>on host: ${location.hostname.toString().length > 18
+					? location.hostname.slice(0, 12) + "..."
+					: location.hostname
+				}</p>
+				<p>Today: ${failed = "<span style='color:red'>failed to load</span>"}</p>
+				<p>Yesterday: ${failed}</p>
+				<p>Ever: ${failed}</p>
+			`;
 
-          let userCountDisplay = document.querySelector(".userCountDisplay")
-          getUserCountAsync().then((res) => {
-            userCountDisplay.innerHTML = `
-                        <h3>UserCount</h3>
-                        <p>on host: ${res.onDomain.toString().length > 18
-                ? res.onDomain.toString().slice(0, 12) + "..."
-                : res.onDomain
-              }</P>
-                        <p>Today: <b>${res.today}</b></P>
-                        <p>Yesterday: ${res.yesterday}</P>
-                        <p>Ever: ${res.ever}</P>
-                        `;
-            userCountDisplay.style.display = "block";
-          });
+			const userCountDisplay = document.querySelector(".userCountDisplay");
+			getUserCountAsync()
+				.then((res) => {
+					userCountDisplay.innerHTML = getString(res);
+				})
+				.catch(err => {
+					console.warn(err);
+					userCountDisplay.innerHTML = getString(null);
+				})
         }
         break;
       case false:
-        if (this.items) this.items.forEach((x) => x.remove())
+        if (this.items) this.items.forEach((item) => item.remove())
         this.items = [];
         break;
-    }
-    // console.log(this.items)
+	}
+	
+	console.log(this.items)
+	console.log(document.querySelectorAll(".devModeItem"))
+	  
     console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
   },
   toolboxFunctions: {
@@ -186,13 +203,13 @@ window.onload = async () => {
 	//variables
 	const data = JSON.parse(await getFile("/src/data/main.json"));
 
-	getUserCountAsync()
-		.then((res) => {
-			console.groupCollapsed(`%c userCount: ${res.today}`, "color: orange; font-weight: 700;");
-			console.table(res);
-			console.groupEnd();
-		})
-		.catch(console.warn);
+	// getUserCountAsync();
+	// 	.then((res) => {
+	// 		console.groupCollapsed(`%c userCount: ${res.today}`, "color: orange; font-weight: 700;");
+	// 		console.table(res);
+	// 		console.groupEnd();
+	// 	})
+	// 	.catch(console.warn);
 
 	var locationURL = {
 		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined, //prettier-ignore
@@ -287,24 +304,10 @@ window.onload = async () => {
   } //prettier-ignore
 };
 
-getUserCount = () => {
-	if (besucher)
-		return {
-			onDomain: location.hostname,
-			online: besucher[0],
-			today: besucher[1],
-			yesterday: besucher[2],
-			ever: besucher[3],
-			since: besucher[4],
-		};
-	else return "not ready yet";
-};
-
 async function getUserCountAsync() {
 	return new Promise((resolve, reject) => {
-		let i = 1;
-		let wait = setInterval(() => {
-			// console.log(`waiting for user count... (${i})`);
+		let i = 0;
+		const wait = setInterval(() => {
 			i++;
 			if (i > 20) {
 				clearInterval(wait);
@@ -542,7 +545,7 @@ pSBC = (p, c0, c1, l) => {
  */
 function syntaxHighlight(json, indentation = 4) {
 	if (typeof json != "string") {
-		json = JSON.stringify(json, undefined, indentation);
+		json = JSON.stringify(json, null, indentation);
 	}
 	json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	return json.replace(

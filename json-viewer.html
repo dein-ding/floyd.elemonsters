@@ -22,12 +22,13 @@
 		<style>
 			@import url("./src/css/json-viewer.css");
 		</style>
-		<script src="./src/scripts/json-viewer.js"></script>
+		<script defer src="./src/scripts/json-viewer.js"></script>
 	</head>
 	<body data-active-link="#projectsLink #jsonViewerLink" data-main-background="true">
 		<main>
 			<div class="controlls">
 				<input type="file" accept="application/json" id="jsonFileInput" />
+				<textarea cols="30" rows="1" id="jsonStringInput" placeholder="paste your JSON data here"></textarea>
 			</div>
 			<pre class="JSON"></pre>
 		</main>

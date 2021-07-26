@@ -330,14 +330,10 @@ nav ul ul li {
 	}
 
 	nav ul ul li {
-		/* margin-left: 5px; */
 		margin: 0;
 	}
 	nav ul ul li + li {
 		margin-top: 7px;
-	}
-	.projects-dropdown-toggle {
-		display: none;
 	}
 	.projects-dropdown {
 		width: max-content;
@@ -461,7 +457,7 @@ footer .fab {
 	color: hsl(120, 87%, 76%);
 }
 .shortcutHint h2 {
-	font-size: 1.4rem;
+	font-size: 1.3rem;
 }
 .keyboard-key {
 	display: inline-block;
@@ -685,29 +681,42 @@ footer .fab {
 
 /*////////////////////// JSON response //////////////////////////*/
 pre.JSON {
-	outline: 1px solid #ccc;
+	--key-clr: hsl(14, 49%, 66%);
+	--number-clr: hsl(303, 100%, 63%);
+	--boolean-clr: hsl(199, 99%, 53%);
+	--string-clr: hsl(42, 100%, 55%);
+	--null-clr: hsl(7, 100%, 61%);
+
+	margin: 10px;
+	border: 1px solid rgb(88, 88, 88);
+
+	border-radius: 10px;
 	padding: 20px;
-	margin: 5px;
-	/* margin-top: 150px; */
+	font-family: menlo, monospace;
+	font-size: 1rem;
+	color: rgb(134, 205, 248);
+	word-break: break-all;
 
 	background: rgb(40, 44, 52);
-	color: rgb(134, 205, 248);
-}
-pre.JSON .string {
-	color: hsl(42, 100%, 55%);
-}
-pre.JSON .number {
-	color: rgb(251, 118, 244);
-}
-pre.JSON .boolean {
-	color: rgb(16, 177, 254);
-}
-pre.JSON .null {
-	color: rgb(255, 30, 0);
 }
 pre.JSON .key {
-	color: rgb(211, 145, 125);
+	color: var(--key-clr);
 }
-pre.JSON .bracket {
-	color: rgb(60, 255, 0);
+pre.JSON .number {
+	color: var(--number-clr);
+}
+pre.JSON .boolean {
+	color: var(--boolean-clr);
+}
+pre.JSON .null {
+	color: var(--null-clr);
+}
+pre.JSON .string {
+	color: var(--string-clr);
+}
+pre.JSON a {
+	transition: filter 150ms;
+}
+pre.JSON a:hover {
+	filter: brightness(0.8);
 }
