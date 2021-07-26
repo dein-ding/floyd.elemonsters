@@ -1,28 +1,52 @@
 log = console.log;
+const dummyWebuntisData = getFile("/src/data/webUntisDummyResponse.json");
 
 const jsonPre = document.querySelector(".JSON");
-jsonPre.innerHTML = highlight(getFile("/src/data/webUntisDummyResponse.json"));
 
-const jsonStringInput = document.querySelector("#jsonStringInput");
-const jsonFileInput = document.querySelector("#jsonFileInput");
+const json = {
+	display: json => jsonPre.innerHTML = highlight(json),
+	fetchRequest: async (url) => json.display( await (await fetch(url)).json() ),
 
-jsonStringInput.oninput = (event) => {
-	if (isJSON(jsonStringInput.value)) {
-		jsonPre.innerHTML = highlight(jsonStringInput.value);
-		jsonStringInput.blur();
+	FileInput: document.querySelector("#jsonFileInput"),
+	StringInput: document.querySelector("#jsonStringInput"),
+	RequestInput: document.querySelector("#jsonRequestInput"),
+}
+
+// display highlighted JSON
+json.FileInput.onchange = async e => json.display(await e.target.files[0].text())
+
+
+// display highlighted JSON
+json.StringInput.oninput = (event) => {
+	if (isJSON(json.StringInput.value)) {
+		json.display(json.StringInput.value);
+		json.StringInput.blur();
 	}
 };
-jsonStringInput.addEventListener("keydown", (e) => {
+json.StringInput.addEventListener("keydown", (e) => {
 	if (e.key == "Enter") {
 		e.preventDefault();
-		jsonStringInput.blur();
-		if (isJSON(jsonStringInput.value)) jsonPre.innerHTML = highlight(jsonStringInput.value);
+		json.StringInput.blur();
+
+		if (isJSON(json.StringInput.value)) json.display(json.StringInput.value);
 		else {
-			jsonStringInput.value = "";
+			json.StringInput.value = "";
 			custom.confirm("this is not a JSON string", "", "Ok");
 		}
 	}
 });
+
+// display highlighted JSON
+json.RequestInput.addEventListener("keydown", e => {
+	if (e.key == "Enter") json.fetchRequest(json.RequestInput.value)
+
+	json.RequestInput.style.width = (json.RequestInput.value.length + 5) + "ch";
+})
+json.RequestInput.style.width = (json.RequestInput.value.length + 5) + "ch";
+json.fetchRequest(json.RequestInput.value)
+
+
+
 
 function isJSON(content) {
 	try {
@@ -38,6 +62,7 @@ function isJSON(content) {
 
 function highlight(json, indentation = 4) {
 	if (typeof json == "string") json = JSON.parse(json);
+
 	json = JSON.stringify(json, null, indentation);
 
 	escapeHTML = (unsafe) =>
