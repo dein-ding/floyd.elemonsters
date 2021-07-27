@@ -138,8 +138,8 @@ const DevMode = {
 				break;
 		}
 
-		console.log(this.items);
-		console.log(document.querySelectorAll(".devModeItem"));
+		// console.log(this.items);
+		// console.log(document.querySelectorAll(".devModeItem"));
 
 		console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
 	},

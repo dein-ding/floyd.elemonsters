@@ -1,5 +1,5 @@
 const { availablePages, hiddenPages } = JSON.parse(getFile("/src/data/main.json"));
-const availablePagesFormatted = availablePages.map((string) => string.replace(".html", "").replace(/\//g, ""));
+const availablePagesFormatted = availablePages.map((string) => string.replace(".html", "").replace(/\//g, "").replace(/-/g, " "));
 const pageSet = new Set(availablePagesFormatted);
 
 window.onload = () => {

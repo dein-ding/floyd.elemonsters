@@ -302,7 +302,7 @@ nav ul ul li {
 
 		transform: scale(0, 1);
 		transform-origin: left;
-		transition: transform ease-in-out 250ms;
+		transition: ease-in-out 250ms;
 	}
 	nav a:is(:hover, :focus)::before {
 		transform: scale(1, 1);

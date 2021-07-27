@@ -13,6 +13,7 @@
 			"href": "https://www.instagram.com/dein.ding"
 		}
 	},
+	"deploymentHostname": "http://floyd.elemonsters.de/",
 	"availablePages": [
 		"pong.html",
 		"home.html",
@@ -20,7 +21,8 @@
 		"Timer.html",
 		"Horoskop.html",
 		"colorPicker.html",
-		"Taschenrechner.html"
+		"Taschenrechner.html",
+		"json-viewer.html"
 	],
 	"hiddenPages": ["webuntis.html", "playground/"],
 	"test": {

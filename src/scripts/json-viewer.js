@@ -5,8 +5,26 @@ const jsonPre = document.querySelector(".JSON");
 
 const json = {
 	display: (json) => (jsonPre.innerHTML = highlight(json)),
-	fetchRequest: async (url) => json.display(await (await fetch(url)).json()),
+	fetchRequest: async (url) => {
+		try {
+			const res = await fetch(url);
+			
+			if (res.status == 200) {
+				try {
+					let jsonParsed = await res.json();
+					json.display(jsonParsed);
+				} catch (err) {
+					throw `The response from the server is not json.`
+					throw err
+				}
+			}
+			else throw `Failed to load: The server responded with a status of ${res.status}${res.status == 404 ? " (Not Found)" : ""}`;
 
+		} catch (err) {
+			custom.confirm("Something went wrong.", err, "Ok")
+			console.warn(err)
+		}
+	},
 	FileInput: document.querySelector("#jsonFileInput"),
 	StringInput: document.querySelector("#jsonStringInput"),
 	RequestInput: document.querySelector("#jsonRequestInput"),
@@ -38,10 +56,8 @@ json.StringInput.addEventListener("keydown", (e) => {
 // display highlighted JSON
 json.RequestInput.addEventListener("keydown", (e) => {
 	if (e.key == "Enter") json.fetchRequest(json.RequestInput.value);
-
-	json.RequestInput.style.width = json.RequestInput.value.length + 5 + "ch";
 });
-json.RequestInput.style.width = json.RequestInput.value.length + 5 + "ch";
+;(json.RequestInput.oninput = e => json.RequestInput.style.width = json.RequestInput.value.length + 3 + "ch")()
 json.fetchRequest(json.RequestInput.value);
 
 function isJSON(content) {
