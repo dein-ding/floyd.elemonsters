@@ -1,5 +1,6 @@
-//////// DevMode ///////
-//prettier-ignore
+log = console.log;
+
+////////////////// DevMode /////////////////
 const DevMode = {
 	status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
 	keepAcrossPages: false,
@@ -174,7 +175,7 @@ window.onload = async () => {
 	const body = document.body;
 
 	//variables
-	const data = JSON.parse(await getFile("/src/data/main.json"));
+	const data = await getFileAsync("/src/data/main.json", true);
 
 	var locationURL = {
 		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined,
@@ -213,7 +214,7 @@ window.onload = async () => {
 		navBarHeader.id = "navBarHeader";
 		body.prepend(navBarHeader);
 	}
-	navBarHeader.innerHTML = await getFile("/src/components/navBar.html"); //inject navBar component
+	navBarHeader.innerHTML = await getFileAsync("/src/components/navBar.html"); //inject navBar component
 
 	//execute DevMode preferences
 	if (DevMode.status) DevMode.execute();
@@ -259,7 +260,7 @@ window.onload = async () => {
 		footer.id = "pageFooter";
 		body.append(footer);
 	}
-	footer.innerHTML = await getFile("/src/components/footer.html"); //inject footer component
+	footer.innerHTML = await getFileAsync("/src/components/footer.html"); //inject footer component
 	if (body.dataset.mainBackground == "true") footer.style.color = "white";
 
 	{ //assigning URLs to links
@@ -294,7 +295,11 @@ getUserCount = async () => {
 	});
 };
 
-//TODO: add an async function
+/**
+ * Get content of the given URL **synchronously**.
+ * @param {string} URL
+ * @returns {string} content of file (plain text)
+ */
 getFile = (URL) => {
 	const XHR = new XMLHttpRequest();
 	XHR.open("GET", URL, false);
@@ -302,6 +307,23 @@ getFile = (URL) => {
 
 	return XHR.responseText;
 };
+
+/**
+ * Get content of the given URL **asynchronously**.
+ * @param {string} URL
+ * @param {boolean} isJson wether the content should be parsed as JSON. [defaults to false]
+ * @param {boolean} log wether the content should be logged [defaults to false]
+ * @returns {string | object} content of file
+ */
+getFileAsync = async (URL, isJson = false, log = false) =>
+	fetch(URL).then((res) => {
+		let data;
+		if (isJson) data = res.json();
+		else data = res.text();
+
+		if (log) data.then(console.info);
+		return data;
+	});
 
 const custom = {
 	/**

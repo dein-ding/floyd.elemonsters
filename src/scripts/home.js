@@ -1,4 +1,4 @@
-window.onload = async () => {
+document.onload = async () => {
 	/* just for testing */
 	/* document
         .querySelector(":root")
@@ -18,5 +18,5 @@ window.onload = async () => {
 	imageObject.setAttribute("crossOrigin", "");
 	imageObject.src = imgUrl;
 
-	getDominantColor(img, "rgb", true);
+	// getDominantColor(img, "rgb", true);
 };
