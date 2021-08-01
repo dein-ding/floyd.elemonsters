@@ -32,6 +32,6 @@ h1::before {
 ```
 
 ##### Python:
-
 ```python
 print('hello world')
+```
