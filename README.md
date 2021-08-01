@@ -7,6 +7,8 @@
  * have some info about me (soon)
  * built some small handy tools for myself and perhabs others
 
+<hr>
+
 ### Markdown tests:
 
 ##### Bash:
