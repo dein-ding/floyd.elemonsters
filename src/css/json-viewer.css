@@ -1,78 +1,160 @@
 :root {
-    --margin-big: 10px;
-    --padding-big: 20px;
+	--margin-big: 10px;
+	--padding-big: 20px;
 }
 body {
-    margin: 0;
-    padding: 5px;
-    padding-top: 70px;
+	margin: 0;
+	padding: 5px;
+	padding-top: 70px;
 }
-input[type=file], .btn {
-    cursor: pointer;
-}
-.btn {
-    transition: 180ms;
-}
-.btn:hover {
-    filter: brightness(.8);
-}
+input[type="file"],
+main > * {
+	margin: var(--margin-big);
 
-.controlls {
-    margin: var(--margin-big);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
 	border: 1px solid rgb(88, 88, 88);
 	border-radius: 10px;
 	padding: var(--padding-big);
 	color: rgb(134, 205, 248);
 
-    background: rgb(40, 44, 52);
+	background: rgb(40, 44, 52);
+}
+
+.controlls {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 .controlls > * + * {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 .controlls > * {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 .controlls :is(input, button, .custom-file-input-btn) {
-    font-size: .8rem;
-    border: none;
-    border-radius: 6px;
-    padding: 6px;
+	font-size: 0.8rem;
+	border: none;
+	border-radius: 6px;
+	padding: 6px;
+}
+
+.load-data {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: max-content;
+	height: 80px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	border: 1px solid rgb(88, 88, 88);
+	border-radius: 10px;
+	padding: var(--padding-big);
+	color: rgb(134, 205, 248);
+
+	background: rgb(40, 44, 52);
+	box-shadow: 0 0 40px black, 0 0 50px black;
+
+	--translate: -50%, 0;
+	--scale: 0;
+	transform: translate(var(--translate)) scale(var(--scale));
+	transition: 150ms ease-out;
+}
+.load-data.show {
+	--scale: 1;
+	transition: 150ms ease-out;
+}
+.close-load-data-menu {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	margin: 0;
+	font-size: 1.5rem !important;
+	color: #fff;
+	cursor: pointer;
+
+	padding: 0;
+	background: none;
+	border: none;
+
+	transition: transform 180ms;
+}
+.close-load-data-menu:hover {
+	transform: scale(1.2);
+}
+
+#jsonStringInput {
+	margin-right: 6px;
 }
 
 /* .file {} */
 #jsonFileInput {
-    display: none;
-}
-.custom-file-input-btn {
-    background: rgba(134, 134, 134, 0.418);
+	display: none;
 }
 
 /* .paste {} */
 
-
-.request button {
-    background: var(--activeLinkColor);
-    font-weight: 700;
-}
-
 #jsonRequestInput {
-    margin: 0 6px;
-    /* width: 20rem; */
-    max-width: 50rem;
-    resize: horizontal;
-
+	margin: 0 6px;
+	/* width: 20rem; */
+	min-width: 8rem;
+	max-width: min(50rem, 70vw);
+	resize: horizontal;
 }
-#jsonRequestInput, #jsonStringInput {
-    font-family: menlo, monospace;
+@media screen and (max-width: 1000px) {
+	#jsonRequestInput {
+		max-width: min(50rem, 50vw);
+	}
+}
+#jsonRequestInput,
+#jsonStringInput {
+	font-family: menlo, monospace;
+}
+
+/* .source {
+	margin: var(--margin-big);
+
+	border: 1px solid rgb(88, 88, 88);
+	border-radius: 10px;
+	padding: var(--padding-big);
+	color: rgb(134, 205, 248);
+
+	background: rgb(40, 44, 52);
+} */
+.source {
+	margin: 0 0 10px 0;
+}
+.source :is(h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+}
+.loading {
+	display: flex;
+	align-items: center;
+	font-family: menlo, monospace;
+}
+.loading span {
+	/* outline: 2px solid red; */
+	width: 0;
+	display: block;
+	overflow: hidden;
+	animation: loading 1.5s steps(4) infinite;
+}
+@keyframes loading {
+	0% {
+		width: 0;
+	}
+	100% {
+		width: 4ch;
+	}
 }
 
 pre.JSON {
-    margin: var(--margin-big);
-    padding: var(--padding-big);
+	/* margin: var(--margin-big);
+	padding: var(--padding-big); */
+	padding: 0;
+	margin: 0;
 }

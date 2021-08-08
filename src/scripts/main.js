@@ -1,171 +1,5 @@
 log = console.log;
 
-////////////////// DevMode /////////////////
-const DevMode = {
-	status: location.hostname == "127.0.0.1" ? true : sessionStorage.devModeStatus ? true : false,
-	keepAcrossPages: false,
-	callback: null,
-	set(status) {
-		this.status = status;
-		this.execute();
-	},
-	toggle() {
-		this.status = !this.status;
-		this.execute();
-	},
-	execute() {
-		console.group("%c DevMode ", this.consoleStyle);
-		this.log();
-
-		if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
-		else sessionStorage.removeItem("devModeStatus");
-
-		if (this.callback) {
-			let res = this.callback(this.status);
-			if (res) text = res;
-			else text = `settings ${this.status ? "applied" : "cleared"}`;
-
-			console.log(`%c ${text} `, this.consoleStyle);
-		}
-
-		this.toggleItems(this.status);
-
-		console.groupEnd();
-	},
-	log() {
-		console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
-		if (!this.callback) console.info("no DevMode callback available");
-	},
-	GUI: {
-		toggle() {
-			const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
-			devModeGuiToggle.checked = !devModeGuiToggle.checked;
-		},
-	},
-	items: [],
-	toggleItems(status) {
-		const projectsDropdown = document.querySelector(".projects-dropdown");
-		const navUl = document.querySelector("#navBarHeader nav ul");
-		//   console.log(this.items)
-
-		switch (status) {
-			case true:
-				if (DevMode.items.length == 0) {
-					//adds a link to the playground page
-					let li = document.createElement("li");
-					li.classList.add("devModeItem");
-					li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
-					projectsDropdown.append(li);
-					DevMode.items.push(li);
-
-					navUl.innerHTML = navUl.innerHTML + `
-                    <li class="devModeItem navBarDevItem">
-                        <div class="devModeOutterContainer">
-                            <a id="devModeGuiToggleLabel" onclick="DevMode.GUI.toggle()">
-                                <i class="fad fa-code"></i>
-                            </a>
-                            <input type="checkbox" id="devModeGuiToggle" style="display: none;">
-                            <div class="devModeContainer">
-                                <div class="shortcutHint">
-                                    <h2>Shortcut: <span class="keyboard-key">⎇</span> <span class="keyboard-key">⇧</span> <span class="keyboard-key">D</span></h2>
-                                </div>
-                                <div class="toolbox">
-                                    <button class="quit" title="quit DevMode" onclick="DevMode.set(false)">
-                                        <i class="fas fa-power-off"></i>
-                                    </button>
-                                    <button class="log" title="log DevMode settings" onclick="DevMode.log()">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    <button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
-                                        <i class="fas fa-redo-alt"></i>
-                                    </button>
-                                    <button class="host-link-btn" title="Link to the hosted version of this page" onclick="DevMode.toolboxFunctions.hostLink()">
-                                        <i class="fad fa-globe"></i>
-                                        <a style="display: none;" target="_blank" id="hostLink"></a>
-                                    </button>
-				
-                                    <button onclick="location.href = 'webuntis.html'">
-                                        <i class="fad fa-calendar-alt"></i>
-                                    </button>
-				
-                                    <button title="show a prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
-                                        <i class="fas fa-keyboard"></i>
-                                    </button>
-                                    <button title="show a confirmation dialog" onclick="DevMode.toolboxFunctions.confirm()">
-                                        <i class="fad fa-window"></i>
-                                    </button>
-                                </div>
-                                <div class="userCountDisplay">
-                                  <h3>UserCount</h3>
-                                  <p>on host: Loading...</P>
-                                  <p>Today: Loading...</P>
-                                  <p>Yesterday: Loading...</P>
-                                  <p>Ever: Loading...</P>
-                                </div>
-                            </div>
-                        </div>
-                    </li>`; //prettier-ignore
-					DevMode.items.push(document.querySelector(".navBarDevItem"));
-
-					getString = (data) =>
-						data != null ? `
-						<h3>UserCount</h3>
-						<p>on host: ${data.onDomain.toString().length > 18 ? data.onDomain.slice(0, 12) + "..." : data.onDomain}</p>
-						<p>Today: <b>${data.today}</b></p>
-						<p>Yesterday: ${data.yesterday}</p>
-						<p>Ever: ${data.ever}</p>
-					` : `
-						<h3>UserCount</h3>
-						<p>on host: ${location.hostname.toString().length > 18 ? location.hostname.slice(0, 12) + "..." : location.hostname}</p>
-						<p>Today: ${(failed = "<span style='color:red'>failed to load</span>")}</p>
-						<p>Yesterday: ${failed}</p>
-						<p>Ever: ${failed}</p>
-					`; //prettier-ignore
-
-					const userCountDisplay = document.querySelector(".userCountDisplay");
-					getUserCount()
-						.then((res) => {
-							userCountDisplay.innerHTML = getString(res);
-						})
-						.catch((err) => {
-							console.warn(err);
-							userCountDisplay.innerHTML = getString(null);
-						});
-				}
-				break;
-			case false:
-				if (this.items) this.items.forEach((item) => item.remove());
-				this.items = [];
-				break;
-		}
-
-		// console.log(this.items);
-		// console.log(document.querySelectorAll(".devModeItem"));
-
-		console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
-	},
-	toolboxFunctions: {
-		confirm: async () => {
-			custom
-				.confirm("Attention", "this is a confirmation dialog", "Ok", "leave me alone")
-				.then(console.info)
-				.catch(console.info);
-		},
-		prompt: async () => {
-			console.info("input recieved: " + (await custom.prompt("Wait a sec,", "this is a prompt for user input")));
-		},
-		eval: async () => {
-			eval(await custom.prompt("evaluate JS", "type in valid JavaScript for evaluation."));
-		},
-		hostLink: () => {
-			const hostLinkElem = document.querySelector("#hostLink");
-			hostLinkElem.href = `http://floyd.elemonsters.de/${window.location.pathname}`;
-			hostLinkElem.click();
-		},
-	},
-	consoleStyle: "color: rgb(3, 238, 31); background-color: black;",
-};
-
 window.onload = async () => {
 	//elements
 	const head = document.getElementsByTagName("HEAD")[0];
@@ -184,11 +18,11 @@ window.onload = async () => {
 	sessionStorage.currURL = location.pathname;
 	sessionStorage.prevURL = locationURL.prev;
 
-	//create script for user counter
-	const userCounterScript = document.createElement("script");
-	userCounterScript.id = "ebsr5556uh";
-	userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
-	head.append(userCounterScript);
+	// //create script for user counter
+	// const userCounterScript = document.createElement("script");
+	// userCounterScript.id = "ebsr5556uh";
+	// userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
+	// head.append(userCounterScript);
 
 	//create link for favicon
 	const linkFavicon = document.createElement("LINK");
@@ -201,7 +35,7 @@ window.onload = async () => {
 	titleTag.innerText = titleTag.innerText + " - dein.ding";
 
 	if (body.dataset.mainBackground == "true") {
-		console.info("%cbackground image injected", "color: yellow");
+		if (DevMode.status) console.info("%cbackground image injected", "color: yellow");
 		const mainBackground = document.createElement("div");
 		mainBackground.classList.add("main-background");
 		body.prepend(mainBackground);
@@ -232,10 +66,7 @@ window.onload = async () => {
 	//adds the activeLink class to active links for the current page
 	let activeLinks = body.dataset.activeLink;
 	if (activeLinks)
-		activeLinks
-			.toString()
-			.split(" ")
-			.forEach((selector) => document.querySelector(selector).classList.add("activeLink"));
+		activeLinks.split(" ").forEach((selector) => document.querySelector(selector).classList.add("activeLink"));
 
 	//adds a title and an alert to disabled links
 	const disabledLinkMsg = "This site does not exsist yet :(";
@@ -260,39 +91,267 @@ window.onload = async () => {
 		footer.id = "pageFooter";
 		body.append(footer);
 	}
-	footer.innerHTML = await getFileAsync("/src/components/footer.html"); //inject footer component
+	//inject footer component
+	footer.innerHTML = await getFileAsync("/src/components/footer.html");
 	if (body.dataset.mainBackground == "true") footer.style.color = "white";
 
-	{ //assigning URLs to links
-    document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
-    document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
-    document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
-  } //prettier-ignore
+	document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
+	document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
+	document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
+};
+/**
+ * @param {string}  selector html element selector
+ */
+removeElement = (selector) => document.querySelectorAll(selector).forEach((item) => item.remove());
+
+////////////////// DevMode /////////////////
+const DevMode = {
+	status:
+		location.hostname == "127.0.0.1" || location.hostname == "localhost"
+			? true
+			: sessionStorage.devModeStatus
+			? true
+			: false,
+	keepAcrossPages: false,
+	callback: null,
+	/**
+	 * ### set DevMode status
+	 * @param {boolean} status
+	 * @param {number} delay sets the delay in ms after which DevMode is executed [defaults to 0]
+	 */
+	set(status, delay = 0) {
+		this.status = status;
+		setTimeout(() => {
+			this.execute();
+		}, delay);
+	},
+	/**
+	 * ### toggle DevMode status
+	 * @param {number} delay sets the delay in ms after which DevMode is executed [defaults to 0]
+	 */
+	toggle(delay = 0) {
+		this.status = !this.status;
+		setTimeout(() => {
+			this.execute();
+		}, delay);
+	},
+	execute() {
+		console.group("%c DevMode ", this.consoleStyle);
+		this.log();
+
+		if (this.keepAcrossPages) sessionStorage.devModeStatus = this.status;
+		else sessionStorage.removeItem("devModeStatus");
+
+		if (this.callback) {
+			let res = this.callback(this.status);
+			if (res) text = res;
+			else text = `settings ${this.status ? "applied" : "cleared"}`;
+
+			console.log(`%c ${text} `, this.consoleStyle);
+		}
+
+		document.querySelectorAll(".devModeSwitch").forEach((item) => (item.checked = this.status));
+
+		this.toggleItems(this.status);
+
+		console.groupEnd();
+	},
+	log() {
+		console.log(`%c ${this.status ? "enabled" : "disabled"} on: ${location.hostname} `, this.consoleStyle);
+		if (!this.callback) console.info("no DevMode callback available");
+	},
+	GUI: {
+		switchInNavBar: true,
+		navUlInnerHTML: null,
+		toggle() {
+			const devModeGuiToggle = document.querySelector("#devModeGuiToggle");
+			devModeGuiToggle.checked = !devModeGuiToggle.checked;
+		},
+	},
+	items: [],
+	toggleItems(status) {
+		const projectsDropdown = document.querySelector(".projects-dropdown");
+		const navUl = document.querySelector("#navBarHeader nav ul");
+		//   console.log(this.items)
+
+		switch (status) {
+			case true:
+				if (DevMode.items.length == 0) {
+					//adds a link to the playground page
+					let li = document.createElement("li");
+					li.classList.add("devModeItem");
+					li.innerHTML = `<a href="/playground" id="playgroundLink">playground</a>`;
+					projectsDropdown.append(li);
+					DevMode.items.push(li);
+
+					removeElement(".devModeSwitchNavBarItem");
+					navUl.innerHTML = navUl.innerHTML + `
+						<li class="devModeSwitchNavBarItem"></li>
+						<li class="devModeItem navBarDevItem">
+							<div class="devModeOutterContainer">
+								<a id="devModeGuiToggleLabel" title="DevMode dashboard" onclick="DevMode.GUI.toggle()">
+									<i class="fad fa-code"></i>
+								</a>
+								<input type="checkbox" id="devModeGuiToggle" style="display: none;">
+								<div class="devModeContainer">
+									<div class="shortcutHint">
+										<h2>Shortcut: <span class="keyboard-key">⎇</span> <span class="keyboard-key">⇧</span> <span class="keyboard-key">D</span></h2>
+									</div>
+									<div class="devModeSettings">
+										<div class="toggleSwitch">
+											<input type="checkbox" id="devModeSwitch1" class="devModeSwitch" checked onchange="DevMode.set(this.checked, 400)" style="display: none" />
+											<label class="switch" for="devModeSwitch1">
+												<span class="slider"></span>
+											</label>
+											DevMode
+										</div>
+										<div class="toggleSwitch">
+											<input type="checkbox" id="devMode-NavBarSwitch-Toggle" ${DevMode.GUI.switchInNavBar == true ? "checked" : ""} onchange="DevMode.GUI.switchInNavBar = this.checked; DevMode.execute();" style="display: none" />
+											<label class="switch" for="devMode-NavBarSwitch-Toggle">
+												<span class="slider"></span>
+											</label>
+											DevMode switch in NavBar
+										</div>
+									</div>
+									<div class="toolbox">
+										<button class="log" title="log DevMode settings" onclick="DevMode.log()">
+											<i class="fas fa-info-circle"></i>
+										</button>
+										<button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
+											<i class="fas fa-redo-alt"></i>
+										</button>
+										<button class="host-link-btn" title="Link to the hosted version of this page" onclick="DevMode.toolboxFunctions.hostLink()">
+											<i class="fad fa-globe"></i>
+											<a style="display: none;" target="_blank" id="hostLink"></a>
+										</button>
+					
+										<button onclick="location.href = 'webuntis.html'">
+											<i class="fad fa-calendar-alt"></i>
+										</button>
+					
+										<button title="show a prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
+											<i class="fas fa-keyboard"></i>
+										</button>
+										<button title="show a confirmation dialog" onclick="DevMode.toolboxFunctions.confirm()">
+											<i class="fad fa-window"></i>
+										</button>
+									</div>
+									<div class="userCountDisplay">
+									<h3>UserCount</h3>
+									<p>on host: init...</P>
+									<p>Today: init...</P>
+									<p>Yesterday: init...</P>
+									<p>Ever: init...</P>
+									</div>
+								</div>
+							</div>
+						</li>
+					`; //prettier-ignore
+					DevMode.items.push(document.querySelector(".navBarDevItem"));
+				}
+				const devModeSwitchNavBarItem = document.querySelector(".devModeSwitchNavBarItem");
+				if (devModeSwitchNavBarItem)
+					devModeSwitchNavBarItem.innerHTML = DevMode.GUI.switchInNavBar == true ? `
+						<div class="toggleSwitch">
+							<input type="checkbox" id="devModeSwitch" class="devModeSwitch" checked onchange="DevMode.set(this.checked, 200)" style="display: none" />
+							<label class="switch" for="devModeSwitch" title="toggle DevMode">
+								<span class="slider"></span>
+							</label>
+						</div >
+					` : ""; //prettier-ignore
+
+				// create script for user counter
+				removeElement("#ebsr5556uh");
+				const userCounterScript = document.createElement("script");
+				userCounterScript.id = "ebsr5556uh";
+				userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
+				document.head.append(userCounterScript);
+
+				const userCountDisplay = document.querySelector(".userCountDisplay");
+				userCountDisplay.innerHTML = userCount.getString("loading");
+				userCount
+					.get()
+					.then((res) => (userCountDisplay.innerHTML = userCount.getString("success", res)))
+					.catch((err) => {
+						console.warn(err);
+						userCountDisplay.innerHTML = userCount.getString("failed");
+					});
+				break;
+			case false:
+				removeElement(".devModeItem");
+				// if (this.items) this.items.forEach((item) => item.remove());
+				this.items = [];
+				break;
+		}
+
+		// console.log(this.items);
+		// console.log(document.querySelectorAll(".devModeItem"));
+
+		console.log(`%c items ${status ? "added" : "removed"} `, this.consoleStyle);
+	},
+	toolboxFunctions: {
+		confirm: async () =>
+			custom
+				.confirm("Attention", "this is a confirmation dialog", "Ok", "leave me alone")
+				.then(console.info)
+				.catch(console.info),
+		prompt: async () =>
+			console.info("input recieved: " + (await custom.prompt("Wait a sec,", "this is a prompt for user input"))),
+		eval: async () => eval(await custom.prompt("evaluate JS", "type in valid JavaScript for evaluation.")),
+		hostLink: () => {
+			const hostLinkElem = document.querySelector("#hostLink");
+			hostLinkElem.href = `http://floyd.elemonsters.de/${window.location.pathname}`;
+			hostLinkElem.click();
+		},
+	},
+	consoleStyle: "color: rgb(3, 238, 31); background-color: black;",
 };
 
-getUserCount = async () => {
-	return new Promise((resolve, reject) => {
-		let i = 0;
-		const wait = setInterval(() => {
-			i++;
-			if (i > 20) {
-				clearInterval(wait);
-				reject("could not fetch UserCount (besucher)");
-			}
+const userCount = {
+	get: async () =>
+		new Promise((resolve, reject) => {
+			let i = 0;
+			const wait = setInterval(() => {
+				i++;
 
-			if (window.besucher) {
-				clearInterval(wait);
-				resolve({
-					onDomain: location.hostname,
-					online: besucher[0],
-					today: besucher[1],
-					yesterday: besucher[2],
-					ever: besucher[3],
-					since: besucher[4],
-				});
-			}
-		}, 200);
-	});
+				if (window.besucher) {
+					clearInterval(wait);
+					resolve({
+						onDomain: location.hostname,
+						online: besucher[0],
+						today: besucher[1],
+						yesterday: besucher[2],
+						ever: besucher[3],
+						since: besucher[4],
+					});
+				}
+				if (i > 20) {
+					clearInterval(wait);
+					reject("could not fetch UserCount (besucher)");
+				}
+			}, 200);
+		}),
+	getString: (status, data) =>
+		status == "loading" ? `
+			<h3>UserCount</h3>
+			<p>on host: ${location.hostname.toString().length > 18 ? location.hostname.slice(0, 12) + "..." : location.hostname}</P>
+			<p>Today: Loading...</P>
+			<p>Yesterday: Loading...</P>
+			<p>Ever: Loading...</P>
+		` :
+		status == "success" ? `
+			<h3>UserCount</h3>
+			<p>on host: ${data.onDomain.toString().length > 18 ? data.onDomain.slice(0, 12) + "..." : data.onDomain}</p>
+			<p>Today: <b>${data.today}</b></p>
+			<p>Yesterday: ${data.yesterday}</p>
+			<p>Ever: ${data.ever}</p>
+		` : `
+			<h3>UserCount</h3>
+			<p>on host: ${location.hostname.toString().length > 18 ? location.hostname.slice(0, 12) + "..." : location.hostname}</p>
+			<p>Today: ${(failed = "<span style='color:red'>failed to load</span>")}</p>
+			<p>Yesterday: ${failed}</p>
+			<p>Ever: ${failed}</p>
+		`, //prettier-ignore
 };
 
 /**
@@ -317,13 +376,15 @@ getFile = (URL) => {
  */
 getFileAsync = async (URL, isJson = false, log = false) =>
 	fetch(URL).then((res) => {
-		let data;
-		if (isJson) data = res.json();
-		else data = res.text();
+		let data = isJson ? res.json() : res.text();
 
 		if (log) data.then(console.info);
 		return data;
 	});
+// (async () => {
+// 	getFileAsync("/src/css/pong.css", false, true);
+// 	getFileAsync("/src/data/main.json", true, true);
+// })();
 
 const custom = {
 	/**
@@ -526,32 +587,57 @@ pSBC = (p, c0, c1, l) => {
 } //prettier-ignore
 
 /**
- *
+ * @param {string} content string to be checked for valid JSON
+ * @returns {boolean}
+ */
+function isJSON(content) {
+	try {
+		let parse = JSON.parse(content);
+		if (parse && typeof parse === "object") {
+			return true;
+		}
+	} catch (error) {
+		console.info("Not able to parse JSON: " + error);
+	}
+	return false;
+}
+
+/**
+ * **get
  * @param {string | object} json the JSON string or object you want to syntax highlight
  * @param {number} indentation the number of spaces to
- * @returns HTML string
+ * @returns {string} HTML string
  */
 function syntaxHighlight(json, indentation = 4) {
-	if (typeof json != "string") {
-		json = JSON.stringify(json, null, indentation);
-	}
-	json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-	return json.replace(
-		/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-		(match) => {
-			let cls = "number";
-			if (/^"/.test(match)) {
-				if (/:$/.test(match)) {
-					cls = "key";
-				} else {
-					cls = "string";
-				}
-			} else if (/true|false/.test(match)) cls = "boolean";
-			else if (/null/.test(match)) cls = "null";
+	if (typeof json == "string") json = JSON.parse(json);
 
-			return `<span class="${cls}">${match}</span>`;
+	json = JSON.stringify(json, null, indentation);
+
+	let regexTypes =
+		/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
+	return json.replace(regexTypes, (match) => {
+		let type = "number";
+		if (/^"/.test(match)) {
+			if (/:$/.test(match)) {
+				type = "key";
+			} else {
+				type = "string";
+				let matchWithoutQuotes = match.slice(1, -1); // Cut first and last quotes
+				match = '"' + escapeHTML(matchWithoutQuotes) + '"'; // Escape characters that are markup sensitive
+
+				// Highlight URLs
+				let regexURLs = /(https?:\/\/|ftp:\/\/|file:\/\/|www\.)[^\s,;:]+[^\s".,;:]/g;
+				match = match.replace(regexURLs, (url) => {
+					return `<a href="${url}" target="_blank" class="link" style="color: unset;">${url}</a>`;
+				});
+			}
+		} else if (/true|false/.test(match)) {
+			type = "boolean";
+		} else if (/null/.test(match)) {
+			type = "null";
 		}
-	);
+		return `<span class="${type}">${match}</span>`;
+	});
 }
 
 /**
@@ -609,3 +695,19 @@ function getDominantColor(image, colorFormat = "hex", log = false) {
 			return hex;
 	}
 }
+
+escapeHTML = (unsafe) =>
+	unsafe.replace(/[&<"']/g, (match) => {
+		switch (match) {
+			case "&":
+				return "&amp;";
+			case "<":
+				return "&lt;";
+			case '"':
+				return "&quot;";
+			case "'":
+				return "&apos;";
+			default:
+				return match;
+		}
+	});

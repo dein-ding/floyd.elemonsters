@@ -1,8 +1,10 @@
-const { availablePages, hiddenPages } = JSON.parse(getFile("/src/data/main.json"));
-const availablePagesFormatted = availablePages.map((string) => string.replace(".html", "").replace(/\//g, "").replace(/-/g, " "));
+const { availablePages, hiddenPages } = getFileAsync("/src/data/main.json", true);
+const availablePagesFormatted = availablePages.map((string) =>
+	string.replace(".html", "").replace(/\//g, "").replace(/-/g, " ")
+);
 const pageSet = new Set(availablePagesFormatted);
 
-window.onload = () => {
+document.addEventListener("load", () => {
 	class Animation {
 		constructor(spanCount) {
 			const firstSpan = document.querySelector("#pathPreview span");
@@ -68,4 +70,4 @@ window.onload = () => {
 	};
 	goToPageBtn.onclick = goToPage;
 	searchField.addEventListener("keydown", (e) => (e.key == "Enter" ? goToPage() : {}));
-};
+});

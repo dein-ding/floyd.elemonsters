@@ -31,27 +31,37 @@
                     <label>
                         <input id="jsonStringInput" placeholder="paste your JSON here"></input>
                     </label>
+					<button class="btn btn-success" onclick="json.StringInput.parse(true);">Parse</button>
+					&nbsp;&nbsp; or &nbsp;&nbsp;<button class="btn btn-primary" title="Shortcut: ⎇ L" onclick="toggleLoadDataMenu()">Load Data <i class="fas fa-caret-right"></i></button>
                 </div>
             
-				<div class="file">
-					<label>
-						Choose a JSON file to view
-						<label class="custom-file-input-btn btn" role="button" for="jsonFileInput">
-							upload a file
-							<input id="jsonFileInput" type="file" accept="application/json" />
+				<div class="load-data">
+					<button class="close-load-data-menu" onclick="toggleLoadDataMenu(false)"><i class="far fa-times"></i></button>
+					<div class="file">
+						<label>
+							Load from JSON file:
+							<label class="custom-file-input-btn btn btn-success" role="button" for="jsonFileInput">
+								<i class="far fa-file-upload"></i> upload a file
+								<input id="jsonFileInput" type="file" accept="application/json" />
+							</label>
 						</label>
-					</label>
-				</div>
-				
-				<div class="request">
-					<label for="jsonRequestInput">
-						Make a request to a REST API
-						<input id="jsonRequestInput" rows="1" placeholder="URL" value="https://random-data-api.com/api/cannabis/random_cannabis">
-					</label>
-					<button class="btn" onclick="json.fetchRequest(json.RequestInput.value)">send</button>
+					</div>
+					
+					<div class="request">
+						<label for="jsonRequestInput">
+							Load from URL:
+							<input id="jsonRequestInput" rows="1" placeholder="URL" value="https://random-data-api.com/api/cannabis/random_cannabis"
+							></label
+							><button class="btn btn-success" onclick="json.fetchRequest(json.RequestInput.value)"><i class="fad fa-paper-plane"></i> send</button>
+					</div>
 				</div>
 			</div>
-			<pre class="JSON"></pre>
+			<div>
+				<div class="source">
+					<h3></h3>
+				</div>
+				<pre class="JSON"></pre>
+			</div>
 		</main>
 	</body>
 </html>
