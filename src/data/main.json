@@ -1,18 +1,30 @@
 {
-	"links": {
-		"soundcloud": {
+	"links": [
+		{
+			"name": "Soundcloud",
+			"FaSelector": "fab fa-soundcloud",
 			"username": "dein.ding",
-			"href": "https://soundcloud.com/dein_ding"
+			"link": "https://soundcloud.com/dein_ding"
 		},
-		"spotify": {
+		{
+			"name": "Spotify",
+			"FaSelector": "fab fa-spotify",
 			"username": "dein.ding",
-			"href": "https://open.spotify.com/artist/13XQXZlGCmbAEbQ9ThJSwV?si=4JrVy4K1SNy4rNrgxq6TKw"
+			"link": "https://open.spotify.com/artist/13XQXZlGCmbAEbQ9ThJSwV?si=4JrVy4K1SNy4rNrgxq6TKw"
 		},
-		"instagram": {
+		{
+			"name": "Instagram",
+			"FaSelector": "fab fa-instagram",
 			"username": "dein.ding",
-			"href": "https://www.instagram.com/dein.ding"
+			"link": "https://www.instagram.com/dein.ding"
+		},
+		{
+			"name": "GitHub",
+			"FaSelector": "fab fa-github",
+			"username": "dein-ding",
+			"link": "https://github.com/dein-ding"
 		}
-	},
+	],
 	"deploymentHostname": "http://floyd.elemonsters.de/",
 	"availablePages": [
 		"pong.html",

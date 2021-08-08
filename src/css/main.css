@@ -391,6 +391,9 @@ footer .fab {
 .social-links {
 	font-size: 2.5rem;
 }
+.social-links a {
+	margin-inline: 0.7rem;
+}
 .fa-soundcloud:hover {
 	background-image: linear-gradient(#f0950f, #dd3163);
 	-webkit-background-clip: text;
@@ -419,6 +422,7 @@ footer .fab {
 .footer-text {
 	margin: 10px 0 0 0;
 	transform: translateY(-10px);
+	filter: brightness(0.6);
 }
 
 /*/////////////////////////////// DevMode ///////////////////////////////////////*/

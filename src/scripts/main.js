@@ -95,9 +95,18 @@ window.onload = async () => {
 	footer.innerHTML = await getFileAsync("/src/components/footer.html");
 	if (body.dataset.mainBackground == "true") footer.style.color = "white";
 
-	document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
-	document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
-	document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
+	data.links.forEach((link) => {
+		newLink = document.createElement("a");
+		newLink.className = link.FaSelector;
+		newLink.href = link.link;
+		newLink.title = `${link.name}/${link.username}`;
+
+		document.querySelector("footer .social-links").append(newLink);
+	});
+
+	// document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
+	// document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
+	// document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
 };
 /**
  * @param {string}  selector html element selector
