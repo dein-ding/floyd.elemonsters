@@ -1,284 +1,275 @@
 :root {
-    --gameColor: white;
+	--gameColor: white;
 }
 
 body {
-    background: hsl(0, 0%, 5%);
-    color: white;
-    font-family: helvetica;
+	background: hsl(0, 0%, 5%);
+	color: white;
+	font-family: helvetica;
 }
 main {
-    min-height: calc(100vh - 50px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	min-height: calc(100vh - 50px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 button,
 input[type="color"],
 input[type="range"] {
-    cursor: pointer;
+	cursor: pointer;
 }
-main
-    :is(button, input[type="color"]):is(:hover, :focus):not(#startButton, #startPauseButton) {
-    box-shadow: 0 0 15px var(--gameColor);
+main :is(button, input[type="color"]):is(:hover, :focus):not(#startButton, #startPauseButton) {
+	box-shadow: 0 0 15px var(--gameColor);
 }
 :is(#startButton, #startPauseButton):is(:hover, :focus) {
-    text-shadow: 0 0 30px var(--gameColor);
+	text-shadow: 0 0 30px var(--gameColor);
 }
 .container {
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 #pongGame {
-    /* height: 60vh;
+	/* height: 60vh;
     width: 70vw; */
 
-    background: black;
-    border-radius: 8px;
-    border: 1px solid rgb(255, 255, 255);
+	background: black;
+	border-radius: 8px;
+	border: 1px solid rgb(255, 255, 255);
 }
 
 #startButton {
-    display: none;
+	display: none;
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-30px, 20px);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-30px, 20px);
 
-    border: none;
-    font-size: 4rem;
-    color: var(--gameColor);
+	border: none;
+	font-size: 4rem;
+	color: var(--gameColor);
 
-    background: transparent;
+	background: transparent;
 
-    transition: 200ms;
+	transition: 200ms;
 }
 #startPauseButton {
-    z-index: 1;
-    position: absolute;
-    /* top: 10px;
+	z-index: 1;
+	position: absolute;
+	/* top: 10px;
     right: 10px; */
 
-    transform: translate(550px, -230px);
+	transform: translate(550px, -230px);
 
-    border: none;
-    font-size: 3rem;
-    color: var(--gameColor);
+	border: none;
+	font-size: 3rem;
+	color: var(--gameColor);
 
-    opacity: 1;
+	opacity: 1;
 
-    background: transparent;
+	background: transparent;
 
-    transition: 200ms;
+	transition: 200ms;
 }
 
 #settings-toggle:checked ~ .settings-panel {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: all;
+	opacity: 1;
+	transform: scale(1);
+	pointer-events: all;
 
-    /* transition: display 10ms 250ms; */
+	/* transition: display 10ms 250ms; */
 }
 .settings-panel {
-    opacity: 0;
-    pointer-events: none;
+	opacity: 0;
+	pointer-events: none;
 
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-    border-radius: 8px;
-    padding: 20px;
-    font-size: 1.15rem;
+	border-radius: 8px;
+	padding: 20px;
+	font-size: 1.15rem;
 
-    background: rgba(55, 55, 55, 0.516);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+	background: rgba(55, 55, 55, 0.516);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.838);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.838);
 
-    transform: scale(0.7);
-    transition: all 200ms;
+	transform: scale(0.7);
+	transition: all 200ms;
 }
 .settings-panel h1 {
-    margin: 0 0 10px;
+	margin: 0 0 10px;
 }
 .settings-panel .settings-item {
-    min-width: calc(100% - 20px);
+	min-width: calc(100% - 20px);
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    border-radius: 6px;
-    padding: 10px;
+	border-radius: 6px;
+	padding: 10px;
 
-    background: rgba(74, 74, 74, 0.481);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.687);
+	background: rgba(74, 74, 74, 0.481);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.687);
 }
 .settings-item + .settings-item {
-    margin-top: 15px;
+	margin-top: 15px;
 }
 
 .settings-item.gameActions {
-    height: fit-content;
+	height: fit-content;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
-    /* margin-top: 0; */
-    padding-top: 10px;
+	/* margin-top: 0; */
+	padding-top: 10px;
 }
 .settings-panel .settings-item.gameActions button + button {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 .settings-panel .settings-item.gameActions button {
-    font-size: 1.6rem;
-    color: black;
-    border: none;
-    border-radius: 5px;
+	font-size: 1.6rem;
+	color: black;
+	border: none;
+	border-radius: 5px;
 
-    flex-grow: 1;
+	flex-grow: 1;
 
-    background: var(--gameColor);
+	background: var(--gameColor);
 
-    transition: 200ms;
+	transition: 200ms;
 }
 .settings-panel .settings-item.gameActions button:hover {
-    transform: scale(1.08);
+	transform: scale(1.08);
 }
 
 /* .settings-panel .settings-item.maxScore label {
 } */
 #maxScoreSlider {
-    -webkit-appearance: none; /* Override default CSS styles */
-    appearance: none;
-    height: 5px;
-    background: rgb(185, 185, 185);
-    outline: none;
+	-webkit-appearance: none; /* Override default CSS styles */
+	appearance: none;
+	height: 5px;
+	background: rgb(185, 185, 185);
+	outline: none;
 
-    margin: 0 7px;
-    transform: translateY(-2px);
+	margin: 0 7px;
+	transform: translateY(-2px);
 }
 #maxScoreSlider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 10px;
-    height: 18px;
-    border-radius: 2px;
-    background: var(--gameColor);
-    cursor: pointer;
+	-webkit-appearance: none; /* Override default look */
+	appearance: none;
+	width: 10px;
+	height: 18px;
+	border-radius: 2px;
+	background: var(--gameColor);
+	cursor: pointer;
 }
 #maxScoreSlider::-moz-range-thumb {
-    width: 10px;
-    height: 18px;
-    border-radius: 2px;
-    background: var(--gameColor);
-    cursor: pointer;
+	width: 10px;
+	height: 18px;
+	border-radius: 2px;
+	background: var(--gameColor);
+	cursor: pointer;
 }
 .min,
 .max {
-    filter: brightness(0.8);
-    font-size: 0.9rem;
+	filter: brightness(0.8);
+	font-size: 0.9rem;
 }
 
 .settings-panel .settings-item.gameColor .colorInputs {
-    display: inline-flex;
-    align-items: center;
+	display: inline-flex;
+	align-items: center;
 
-    /* transform: translateY(-3px); */
+	/* transform: translateY(-3px); */
 
-    --itemHeight: 25px;
+	--itemHeight: 25px;
 }
 #gameColorInput {
-    height: var(--itemHeight);
-    box-sizing: border-box;
+	height: var(--itemHeight);
+	box-sizing: border-box;
 
-    border-radius: 6px;
-    border: 2px solid rgb(209, 209, 209);
-    outline: none;
+	border-radius: 6px;
+	border: 2px solid rgb(209, 209, 209);
+	outline: none;
 
-    background: var(--gameColor);
+	background: var(--gameColor);
 }
 .randomColorButton {
-    height: var(--itemHeight);
+	height: var(--itemHeight);
 
-    font-size: 1rem;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    margin-left: 5px;
+	font-size: 1rem;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	margin-left: 5px;
 
-    background: var(--gameColor);
+	background: var(--gameColor);
 }
 .settings-panel .settings-item.gameColor :is(button, input) {
-    /* height: 20px; */
-    transition: 180ms;
+	/* height: 20px; */
+	transition: 180ms;
 }
 .settings-panel .settings-item.gameColor :is(button, input):hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .settings-item.playAudio label {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 .settings-item.playAudio {
-    flex-direction: row;
+	flex-direction: row;
 }
 .settings-item.playAudio .switch {
-    position: relative;
-    display: inline-block;
-    width: 35px;
-    height: 21px;
+	position: relative;
+	display: inline-block;
+	width: 35px;
+	height: 21px;
 
-    transform: translateY(2px);
+	transform: translateY(2px);
 }
 .settings-item.playAudio .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 34px;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 34px;
 
-    background-color: rgb(85, 85, 85);
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+	background-color: rgb(85, 85, 85);
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
 }
 .settings-item.playAudio .slider:before {
-    position: absolute;
-    content: "";
-    height: 15px;
-    width: 15px;
-    left: 3px;
-    bottom: 3px;
-    border-radius: 50%;
+	position: absolute;
+	content: "";
+	height: 15px;
+	width: 15px;
+	left: 3px;
+	bottom: 3px;
+	border-radius: 50%;
 
-    background-color: var(--gameColor);
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+	background-color: var(--gameColor);
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
 }
 
 input:checked + .switch .slider {
-    background-color: var(--gameColor);
+	background-color: var(--gameColor);
 }
 
 input:checked + .switch .slider:before {
-    transform: translateX(13px);
-    background-color: rgb(85, 85, 85);
-}
-
-#pageFooter {
-    position: absolute;
-    bottom: 0;
-
-    color: #ffffff;
-    /* color: white; */
+	transform: translateX(13px);
+	background-color: rgb(85, 85, 85);
 }

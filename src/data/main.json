@@ -23,6 +23,44 @@
 			"FaSelector": "fab fa-github",
 			"username": "dein-ding",
 			"link": "https://github.com/dein-ding"
+		},
+		{
+			"name": "PayPal",
+			"FaSelector": "fab fa-paypal",
+			"username": "deindin",
+			"link": "https://paypal.me/deindin"
+		}
+	],
+	"technologiesLearning": [
+		{
+			"name": "Angular",
+			"FaSelector": "fab fa-angular",
+			"fallbackImageUrl": ""
+		},
+		{
+			"name": "Node.js",
+			"FaSelector": "fab fa-node-js",
+			"fallbackImageUrl": ""
+		},
+		{
+			"name": "Python",
+			"FaSelector": "fab fa-python",
+			"fallbackImageUrl": ""
+		},
+		{
+			"name": "Raspberry Pi",
+			"FaSelector": "fab fa-raspberry-pi",
+			"fallbackImageUrl": ""
+		},
+		{
+			"name": "JavaScript",
+			"FaSelector": "fab fa-js",
+			"fallbackImageUrl": ""
+		},
+		{
+			"name": "TypeScript",
+			"FaSelector": "",
+			"fallbackImageUrl": "/src/assets/images/icons/typescript-logo.png"
 		}
 	],
 	"deploymentHostname": "http://floyd.elemonsters.de/",

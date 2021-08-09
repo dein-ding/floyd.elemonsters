@@ -1,4 +1,4 @@
-window.onload = () => {
+window.addEventListener("load", () => {
 	//elements
 	const ausgabeDiv = document.querySelector("#ausgabeDiv");
 	const pipetteCursor = document.querySelector("#pipetteCursor");
@@ -120,7 +120,7 @@ window.onload = () => {
 			clpbrdMesgIsRunning = false;
 		}, CLIPBOARD_MESSAGE_ANIMATION_DURATION + 100);
 	}
-};
+});
 
 var firstTime = true;
 

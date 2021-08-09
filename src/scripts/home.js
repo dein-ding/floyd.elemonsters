@@ -1,4 +1,4 @@
-document.onload = async () => {
+window.addEventListener("load", async () => {
 	/* just for testing */
 	/* document
         .querySelector(":root")
@@ -19,4 +19,7 @@ document.onload = async () => {
 	imageObject.src = imgUrl;
 
 	// getDominantColor(img, "rgb", true);
-};
+
+	const readmeSection = document.querySelector("#readme-section");
+	readmeSection.innerHTML = getFileAsync("/README.md", false, true);
+});

@@ -383,6 +383,7 @@ footer {
 
 	font-family: var(--primaryFont);
 	color: black;
+	padding-block: 40px;
 }
 footer .fab {
 	color: unset;
@@ -409,6 +410,9 @@ footer .fab {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+.fa-paypal:hover {
+	color: #002c87;
 }
 
 .fab {
@@ -446,7 +450,7 @@ footer .fab {
 	display: flex;
 	flex-direction: column;
 
-	--item-bg: rgba(56, 56, 56, 0.466);
+	--item-bg: hsla(240, 19%, 25%, 0.6);
 }
 .devModeContainer > * + * {
 	margin-top: 10px;
@@ -457,10 +461,10 @@ footer .fab {
 	color: var(--devMode-clr);
 
 	background: var(--item-bg);
-	-webkit-backdrop-filter: blur(6px);
-	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(13px);
+	backdrop-filter: blur(13px);
 
-	box-shadow: 0 0 30px rgba(0, 0, 0, 0.598);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.598), 0 0 30px rgba(0, 0, 0, 0.598);
 }
 
 .shortcutHint :is(h1, h2, h3, h4, h5, h6) {

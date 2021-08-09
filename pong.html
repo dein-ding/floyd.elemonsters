@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- prettier-ignore -->
-    <head>
+	<!-- prettier-ignore -->
+	<head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,22 +20,22 @@
         <link rel="stylesheet" type="text/css" href="src/css/pong.css">
         <script defer src="src/scripts/pong.js"></script>
     </head>
-    <body data-active-link="#projectsLink #pongLink">
-        <main>
-            <div class="container">
-                <p>use your mouse to move the paddle.</p>
-                <button id="startButton" onclick="game.start();">
-                    <i class="fad fa-play"></i>
-                </button>
-                <button id="startPauseButton" onclick="game.pause();">
-                    <i class="fad fa-pause"></i>
-                </button>
-                <!-- prettier-ignore -->
-                <input type="checkbox" id="settings-toggle" style="display: none" />
-                <div class="settings-panel">
-                    <h1>Settings</h1>
-                    <!-- prettier-ignore -->
-                    <div class="settings-item gameActions">
+	<body data-active-link="#projectsLink #pongLink" data-main-background="true">
+		<main>
+			<div class="container">
+				<p>Use your mouse to move the paddle.</p>
+				<button id="startButton" onclick="game.start();">
+					<i class="fad fa-play"></i>
+				</button>
+				<button id="startPauseButton" onclick="game.pause();">
+					<i class="fad fa-pause"></i>
+				</button>
+				<!-- prettier-ignore -->
+				<input type="checkbox" id="settings-toggle" style="display: none" />
+				<div class="settings-panel">
+					<h1>Settings</h1>
+					<!-- prettier-ignore -->
+					<div class="settings-item gameActions">
 
                         <button class="resumeButton" onclick="startPauseButton.click()" title="resume the game">
                             <i class="fad fa-play"></i>
@@ -44,8 +44,8 @@
                             <i class="fad fa-redo-alt"></i>
                         </button>
                     </div>
-                    <!-- prettier-ignore -->
-                    <div class="settings-item maxScore">
+					<!-- prettier-ignore -->
+					<div class="settings-item maxScore">
                         <label for="maxSoreSlider">Max Score (<span id="maxScoreSpan">5</span>)</label>
                         <div>
                             <span class="min">3</span>
@@ -53,28 +53,28 @@
                             <span class="max">15</span>
                         </div>
                     </div>
-                    <div class="settings-item gameColor">
-                        <!-- prettier-ignore -->
-                        <div>
-                            <label for="gameColorInput">game color:</label>
+					<div class="settings-item gameColor">
+						<!-- prettier-ignore -->
+						<div>
+                            <label for="gameColorInput">Game color:</label>
                             <div class="colorInputs">
                                 <input id="gameColorInput" type="color" value="#ffffff" title="change the game color scheme">
                                 <button class="randomColorButton" title="random color scheme"><i class="fad fa-random"></i></button>
                             </div>
                         </div>
-                    </div>
-                    <!-- prettier-ignore -->
-                    <div class="settings-item playAudio">
+					</div>
+					<!-- prettier-ignore -->
+					<div class="settings-item playAudio">
                         <input type="checkbox" id="playAudioSwitch" style="display: none"/>
                         <label class="switch" for="playAudioSwitch">
                             <span class="slider"></span>
                         </label>
-                        play a die-sound
+                        Play a die-sound
                     </div>
-                </div>
-                <canvas id="pongGame" width="1200" height="600"> </canvas>
-                <audio src="src/assets/sounds/die-sound.mp3"></audio>
-            </div>
-        </main>
-    </body>
+				</div>
+				<canvas id="pongGame" width="1200" height="600"> </canvas>
+				<audio src="src/assets/sounds/die-sound.mp3"></audio>
+			</div>
+		</main>
+	</body>
 </html>

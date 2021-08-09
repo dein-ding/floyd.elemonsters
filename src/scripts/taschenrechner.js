@@ -1,4 +1,4 @@
-window.onload = () => {
+window.addEventListener("load", () => {
 	const output = document.querySelector("#output");
 	var numbers = "";
 
@@ -91,4 +91,4 @@ window.onload = () => {
 			addChar("+");
 		}
 	});
-};
+});

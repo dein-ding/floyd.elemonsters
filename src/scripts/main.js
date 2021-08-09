@@ -100,6 +100,7 @@ window.onload = async () => {
 		newLink.className = link.FaSelector;
 		newLink.href = link.link;
 		newLink.title = `${link.name}/${link.username}`;
+		newLink.target = "_blank";
 
 		document.querySelector("footer .social-links").append(newLink);
 	});
