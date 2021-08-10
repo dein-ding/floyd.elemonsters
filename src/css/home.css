@@ -6,6 +6,7 @@ body {
 	font-family: futura;
 
 	background: black;
+	color: white;
 }
 
 .section {
@@ -24,6 +25,29 @@ body {
 	height: 55%;
 
 	animation: swing 2.5s ease-in-out infinite;
+}
+
+section.technologies {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+section.technologies :is(h1, h2, h3, h4, h5, h6) {
+	margin-block: 0px;
+}
+section.technologies .icon-stack {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 50px;
+}
+section.technologies .icon-stack .icon {
+	margin-inline: 5px;
+	transition: transform 180ms;
+}
+section.technologies .icon-stack .icon:hover {
+	transform: scale(1.15);
 }
 
 footer {

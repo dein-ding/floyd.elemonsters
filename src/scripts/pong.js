@@ -3,9 +3,11 @@ var isMobile = false;
 if (screen.width <= 900) {
 	isMobile = true;
 	//redirect to last page
-	custom.confirm("Sorry", "This Game is not optimised for mobile devices yet.", "return").then((response) => {
-		location.href = sessionStorage.prevURL;
-	});
+	custom
+		.confirm({ title: "Sorry", text: "This Game is not optimised for mobile devices yet.", buttons: ["return"] })
+		.then((response) => {
+			location.href = sessionStorage.prevURL;
+		});
 }
 // else
 //   custom

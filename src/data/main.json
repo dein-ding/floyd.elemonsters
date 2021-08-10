@@ -33,34 +33,44 @@
 	],
 	"technologiesLearning": [
 		{
-			"name": "Angular",
-			"FaSelector": "fab fa-angular",
-			"fallbackImageUrl": ""
+			"name": "HTML",
+			"FaSelector": "fab fa-html",
+			"imageUrl": "https://image.flaticon.com/icons/png/512/732/732212.png"
 		},
 		{
-			"name": "Node.js",
-			"FaSelector": "fab fa-node-js",
-			"fallbackImageUrl": ""
-		},
-		{
-			"name": "Python",
-			"FaSelector": "fab fa-python",
-			"fallbackImageUrl": ""
-		},
-		{
-			"name": "Raspberry Pi",
-			"FaSelector": "fab fa-raspberry-pi",
-			"fallbackImageUrl": ""
+			"name": "CSS",
+			"FaSelector": "fab fa-css",
+			"imageUrl": "https://cdn.iconscout.com/icon/free/png-256/css-131-722685.png"
 		},
 		{
 			"name": "JavaScript",
 			"FaSelector": "fab fa-js",
-			"fallbackImageUrl": ""
+			"imageUrl": "https://cdn.iconscout.com/icon/free/png-512/javascript-1-225993.png"
 		},
 		{
 			"name": "TypeScript",
 			"FaSelector": "",
-			"fallbackImageUrl": "/src/assets/images/icons/typescript-logo.png"
+			"imageUrl": "/src/assets/images/icons/typescript-logo.png"
+		},
+		{
+			"name": "Angular",
+			"FaSelector": "fab fa-angular",
+			"imageUrl": "https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_angular_icon_130754.png"
+		},
+		{
+			"name": "Node.js",
+			"FaSelector": "fab fa-node-js",
+			"imageUrl": "https://cdn.iconscout.com/icon/free/png-512/node-js-1174925.png"
+		},
+		{
+			"name": "Python",
+			"FaSelector": "fab fa-python",
+			"imageUrl": "https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png"
+		},
+		{
+			"name": "Raspberry Pi",
+			"FaSelector": "fab fa-raspberry-pi",
+			"imageUrl": "https://upload.wikimedia.org/wikipedia/de/thumb/c/cb/Raspberry_Pi_Logo.svg/2000px-Raspberry_Pi_Logo.svg.png"
 		}
 	],
 	"deploymentHostname": "http://floyd.elemonsters.de/",

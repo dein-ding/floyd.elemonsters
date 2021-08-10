@@ -73,7 +73,7 @@ window.onload = async () => {
 	document.querySelectorAll(".disabledLink").forEach((item) => {
 		item.title = disabledLinkMsg;
 		item.onclick = () => {
-			custom.confirm("", disabledLinkMsg, "Okay");
+			custom.confirm({ text: disabledLinkMsg, buttons: ["Okay"] });
 		};
 	});
 
@@ -97,24 +97,21 @@ window.onload = async () => {
 
 	data.links.forEach((link) => {
 		newLink = document.createElement("a");
-		newLink.className = link.FaSelector;
 		newLink.href = link.link;
-		newLink.title = `${link.name}/${link.username}`;
 		newLink.target = "_blank";
+		newLink.className = link.FaSelector;
+		newLink.title = `${link.name}/${link.username}`;
 
 		document.querySelector("footer .social-links").append(newLink);
 	});
-
-	// document.querySelector("footer .fa-soundcloud").href = data.links.soundcloud.href;
-	// document.querySelector("footer .fa-spotify").href = data.links.spotify.href;
-	// document.querySelector("footer .fa-instagram").href = data.links.instagram.href;
 };
 /**
- * @param {string}  selector html element selector
+ * ### Remove any HTML elements specified with a querySelector string
+ * @param {string}  selector querySelectorAll (css selector)
  */
-removeElement = (selector) => document.querySelectorAll(selector).forEach((item) => item.remove());
+const removeElementAll = (selector) => document.querySelectorAll(selector).forEach((item) => item.remove());
 
-////////////////// DevMode /////////////////
+////////////////////////////////////////////////////////// DevMode /////////////////////////////////////////////////////////
 const DevMode = {
 	status:
 		location.hostname == "127.0.0.1" || location.hostname == "localhost"
@@ -194,7 +191,7 @@ const DevMode = {
 					projectsDropdown.append(li);
 					DevMode.items.push(li);
 
-					removeElement(".devModeSwitchNavBarItem");
+					removeElementAll(".devModeSwitchNavBarItem");
 					navUl.innerHTML = navUl.innerHTML + `
 						<li class="devModeSwitchNavBarItem"></li>
 						<li class="devModeItem navBarDevItem">
@@ -224,25 +221,25 @@ const DevMode = {
 										</div>
 									</div>
 									<div class="toolbox">
-										<button class="log" title="log DevMode settings" onclick="DevMode.log()">
+										<button class="log" title="Log out DevMode settings in console" onclick="DevMode.log()">
 											<i class="fas fa-info-circle"></i>
 										</button>
-										<button class="reExecute" title="reexecute DevMode settings" onclick="DevMode.execute()">
+										<button class="reExecute" title="Reexecute DevMode settings" onclick="DevMode.execute()">
 											<i class="fas fa-redo-alt"></i>
 										</button>
-										<button class="host-link-btn" title="Link to the hosted version of this page" onclick="DevMode.toolboxFunctions.hostLink()">
+										<button class="host-link-btn" title="Open the hosted version of this page" onclick="DevMode.toolboxFunctions.hostLink()">
 											<i class="fad fa-globe"></i>
 											<a style="display: none;" target="_blank" id="hostLink"></a>
 										</button>
 					
-										<button onclick="location.href = 'webuntis.html'">
+										<button onclick="location.href = 'webuntis.html'" title="Open WebUntis Client (does not work yet)" style="background: var(--webuntis-clr);">
 											<i class="fad fa-calendar-alt"></i>
 										</button>
 					
-										<button title="show a prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
+										<button title="Display an example prompt dialog" onclick="DevMode.toolboxFunctions.prompt()">
 											<i class="fas fa-keyboard"></i>
 										</button>
-										<button title="show a confirmation dialog" onclick="DevMode.toolboxFunctions.confirm()">
+										<button title="Display an example confirmation dialog" onclick="DevMode.toolboxFunctions.confirm()">
 											<i class="fad fa-window"></i>
 										</button>
 									</div>
@@ -271,7 +268,7 @@ const DevMode = {
 					` : ""; //prettier-ignore
 
 				// create script for user counter
-				removeElement("#ebsr5556uh");
+				removeElementAll("#ebsr5556uh");
 				const userCounterScript = document.createElement("script");
 				userCounterScript.id = "ebsr5556uh";
 				userCounterScript.src = `https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=floyd.elemonsters.de${DevMode.status ? "(DevMode)" : ""}&start=0&design=5`; //prettier-ignore
@@ -288,7 +285,7 @@ const DevMode = {
 					});
 				break;
 			case false:
-				removeElement(".devModeItem");
+				removeElementAll(".devModeItem");
 				// if (this.items) this.items.forEach((item) => item.remove());
 				this.items = [];
 				break;
@@ -301,10 +298,26 @@ const DevMode = {
 	},
 	toolboxFunctions: {
 		confirm: async () =>
-			custom
-				.confirm("Attention", "this is a confirmation dialog", "Ok", "leave me alone")
-				.then(console.info)
-				.catch(console.info),
+			custom.alert({
+				title: "You have successfully been added!",
+				text: "test text here, test text here, test text here, test text here, test text here, test text here",
+				alertType: "info",
+				timeout: 10000,
+			}),
+		// custom
+		// 	.confirm(
+		// 		{
+		// 			title: "Attention",
+		// 			text: "this is a confirmation dialog",
+		// 			buttons: ["FUCK", "YOU langer test", "test zwei"],
+		// 		},
+		// 		({ title, text }) => {
+		// 			title.style.color = "red";
+		// 			text.style.color = "yellowgreen";
+		// 		}
+		// 	)
+		// 	.then(console.info)
+		// 	.catch(console.info)
 		prompt: async () =>
 			console.info("input recieved: " + (await custom.prompt("Wait a sec,", "this is a prompt for user input"))),
 		eval: async () => eval(await custom.prompt("evaluate JS", "type in valid JavaScript for evaluation.")),
@@ -397,75 +410,173 @@ getFileAsync = async (URL, isJson = false, log = false) =>
 // })();
 
 const custom = {
+	subFunctions: {
+		testFunction(objOrString) {
+			if (typeof objOrString == "string") console.log(objOrString);
+			if (typeof objOrString == "object") {
+				// const { title, text, primaryBtn, secondaryBtn }
+			}
+		},
+		/**
+		 *	format function arguments
+		 * @param {string} data
+		 * @returns {string}
+		 */
+		formatInput({ title, text, buttons, alertType, timeout }) {
+			title = title == "" ? null : title;
+			text = text == "" ? null : text;
+			buttons = !buttons ? ["OK"] : !buttons[0] ? ["OK"] : buttons;
+			alertType = alertType == "" || alertType == null ? "info" : alertType;
+			timeout = timeout ? timeout : 4000;
+
+			return { title, text, buttons, alertType, timeout };
+		},
+		createContainer() {
+			const dialogContainer = document.createElement("div");
+			dialogContainer.classList = "dialogContainer";
+			document.body.prepend(dialogContainer);
+			return dialogContainer;
+		},
+		/**
+		 * 
+		 * @param {{
+			title: string;
+			text: string;
+			primaryBtn: string;
+			secondaryBtn: string;
+			buttons: string[];
+			}} param0 
+		 * @param {*} type 
+		 * @returns 
+		 */
+		getDialogBody({ title, text, buttons, alertType, timeout }, type) {
+			let result;
+			dialogTextBody = () => `
+				<div class='dialogText'>
+					<h3>${escapeHTML(title)}</h3>
+					<p>${escapeHTML(text)}</p>
+				</div>
+			`;
+			switch (type) {
+				case "confirm":
+					result = `
+						<div class='dialog'>
+							${dialogTextBody()}
+							<div class='dialogInput'>
+								${btns = ""}
+								${buttons.forEach((btnText, i) => btns += `<button onclick='buttonPressed(${i})'>${escapeHTML(btnText)}</button>\n`)}
+								${btns}
+							</div>
+						</div>
+					`; //prettier-ignore
+					break;
+				case "prompt":
+					result = `
+						<div class='dialog prompt'>
+							${dialogTextBody()}
+							<div class='dialogInput'>
+								<input class="promptInput" type="text">
+								<button onclick='buttonPressed()'>OK</button>
+							</div>
+						</div>
+					`; //prettier-ignore
+					break;
+				case "alert":
+					result = `
+						<div class='dialog alert ${alertType}'>
+							${
+								alertType == "success"
+									? `<i class="far fa-check-circle"></i>`
+									: alertType == "warning"
+									? `<i class="far fa-exclamation-circle"></i>`
+									: alertType == "error"
+									? `<i class="far fa-exclamation-triangle"></i>`
+									: `<i class="far fa-info-circle"></i>`
+							}
+							<button class="close-alert-box" onclick="closeAlertBox()"><i class="far fa-times"></i></button>
+							<div class='dialogText'>
+								<h2>${escapeHTML(title)}</h2>
+								<p>${escapeHTML(text)}</p>
+							</div>
+							<div class='progress-bar'>
+								<div class='progress' style="animation: progress ${timeout}ms linear"></div>
+							</div>
+						</div>
+					`; //prettier-ignore
+			}
+			return result.replace(/undefined/g, "");
+		},
+		container: () => document.querySelector(".dialogContainer"),
+		dialog: () => document.querySelector(".dialog"),
+		allElements: () => ({
+			container: custom.subFunctions.container(),
+			dialog: custom.subFunctions.dialog(),
+
+			dialogText: document.querySelector(".dialogText"),
+				title: document.querySelector(".dialogText :is(h1, h2, h3, h4, h5, h6)"),
+				text: document.querySelector(".dialogText p"),
+			dialoginput: document.querySelector(".dialogInput"),
+				buttons: [...document.querySelectorAll(".dialogInput button")].reverse(),
+				input: document.querySelector(".dialogInput input")
+		}), //prettier-ignore
+		/**
+		 * @param {"IN" | "OUT"} state
+		 */
+		animation(state) {
+			if (state == "IN") {
+				setTimeout(() => custom.subFunctions.container().classList.add("appear"), 1);
+				setTimeout(() => custom.subFunctions.dialog().classList.add("appear"), 30);
+			}
+			if (state == "OUT") {
+				custom.subFunctions.dialog().classList.remove("appear");
+				setTimeout(() => custom.subFunctions.container().classList.remove("appear"), 40);
+				setTimeout(() => custom.subFunctions.container().remove(), 300);
+			}
+		},
+		keyboardClick(e) {
+			const { btns } = custom.subFunctions;
+			if (e.key == "Enter" || e.key == "Escape") {
+				e.stopPropagation();
+				e.preventDefault();
+				if (e.key == "Enter") buttonPressed(btns.length - 1);
+				if (e.key == "Escape" && btns.length > 1 && btns[0]) buttonPressed(0);
+			}
+		},
+		KeyboardClickListener(state, btns) {
+			if (state == "add") document.addEventListener("keydown", custom.subFunctions.keyboardClick, { capture: true });
+			if (state == "remove")
+				document.removeEventListener("keydown", custom.subFunctions.keyboardClick, { capture: true });
+		},
+	},
 	/**
-	 * **presents a custom alert dialog**
-	 * @param {string} title leave empty string or "no title" for no title
-	 * @param {string} text
-	 * @param {string} primaryBtn
-	 * @param {string} secondaryBtn leave empty string, undefined or "no btn" for no secondary button
+	 * ## presents a custom alert dialog
+	 * @param {{
+			title: string;
+			text: string;
+			buttons: string[];
+			}} data
+	 * @param {() =>} callback 
 	 * @returns {Promise<string>} button response
 	 */
-	confirm: (title, text, primaryBtn, secondaryBtn) => {
-		//input formatting
-		if (title == ("" || "no title")) title = undefined;
-		if (secondaryBtn == (undefined || "" || "no btn")) secondaryBtn = undefined;
+	confirm: ({ title, text, buttons }, callback = () => {}) => {
+		//format function arguments
+		const args = custom.subFunctions.formatInput({ title, text, buttons });
 
-		//create container
-		var dialogContainer = document.createElement("div");
-		dialogContainer.classList.add("dialogContainer");
-		dialogContainer.style.opacity = 0;
-		document.body.prepend(dialogContainer);
+		//create container and insert body
+		custom.subFunctions.createContainer().innerHTML = custom.subFunctions.getDialogBody(args, "confirm");
+		custom.subFunctions.animation("IN");
 
-		//create the actual pop up dialog
-		dialogContainer.innerHTML = `
-        <div class='dialog'>
-            <div class='dialogText'>
-                <h3>${title ? title : ""}</h3>
-                <p></p>
-            </div>
-            <div class='dialogInput'>
-                ${!secondaryBtn ? "" : `<button onclick='buttonPressed("secondary")'>${secondaryBtn}</button>`} 
-                <button onclick='buttonPressed("primary")'>${primaryBtn}</button>
-            </div>
-        </div>
-    `; //prettier-ignore
+		callback(custom.subFunctions.allElements());
 
-		//add the text
-		document.querySelector(".dialogText p").innerText = text;
-
-		document.querySelector(".dialog").classList.add("appear");
-		$(".dialogContainer").fadeTo(200, 1);
-
+		const btns = args.buttons;
+		custom.subFunctions.btns = btns; //loading the buttons into global scope
 		return new Promise((resolve, reject) => {
-			clickPrimary = (event) => {
-				event.stopPropagation();
-				if (event.keyCode === 13) {
-					//ENTER
-					event.preventDefault();
-					buttonPressed("primary");
-				}
-				if (event.keyCode === 27 && secondaryBtn) {
-					//ESC
-					event.preventDefault();
-					buttonPressed("secondary");
-				}
-			};
-
-			document.addEventListener("keydown", clickPrimary, { capture: true });
-
-			buttonPressed = (response) => {
-				if (response == "primary") resolve(primaryBtn);
-				if (response == "secondary") reject(secondaryBtn);
-
-				document.removeEventListener("keydown", clickPrimary, {
-					capture: true,
-				});
-
-				document.querySelector(".dialog").classList.remove("appear");
-				$(".dialogContainer").fadeTo(200, 0);
-				setTimeout(() => {
-					document.body.removeChild(dialogContainer);
-				}, 300);
+			custom.subFunctions.KeyboardClickListener("add", btns);
+			buttonPressed = (res) => {
+				if (res == 0) resolve(btns[0]);
+				else reject(btns[res]);
+				custom.subFunctions.KeyboardClickListener("remove");
+				custom.subFunctions.animation("OUT");
 			};
 		});
 	},
@@ -476,71 +587,67 @@ const custom = {
 	 * @returns {Promise<string>} input value
 	 */
 	prompt: (title, text) => {
-		//input formatting
-		if (title == ("" || "no title")) title = undefined;
+		//format function arguments
+		const args = custom.subFunctions.formatInput({ title, text });
 
-		//create container
-		var dialogContainer = document.createElement("div");
-		dialogContainer.classList.add("dialogContainer");
-		dialogContainer.style.opacity = 0;
-		body.prepend(dialogContainer);
-
-		//create the actual pop up dialog
-		dialogContainer.innerHTML = `
-        <div class='dialog'>
-            <div class='dialogText prompt'>
-                <h3>${title ? title : ""}</h3>
-                <p>${text}</p>
-            </div>
-            <div class='dialogInput prompt'>
-                <input class="promptInput" type="text">
-                <button onclick='buttonPressed()'>OK</button>
-            </div>
-        </div>
-        `; //prettier-ignore
+		//create container and insert body
+		custom.subFunctions.createContainer().innerHTML = custom.subFunctions.getDialogBody(args, "prompt");
+		custom.subFunctions.animation("IN");
 
 		//focus the input field for faster workflow
 		document.querySelector(".promptInput").select();
 
-		document.querySelector(".dialog").classList.add("appear");
-		$(".dialogContainer").fadeTo(200, 1);
-
 		return new Promise((resolve, reject) => {
 			click = (event) => {
-				event.stopPropagation();
-				if (event.keyCode === 13) {
+				if (event.key == "Enter") {
+					event.stopPropagation();
 					event.preventDefault();
 					buttonPressed();
 				}
 			};
-
 			document.addEventListener("keydown", click, { capture: true });
 
 			buttonPressed = () => {
-				let input = document.querySelector(".promptInput").value;
-				resolve(input);
-
+				resolve(document.querySelector(".promptInput").value);
 				document.removeEventListener("keydown", click, { capture: true });
-
-				document.querySelector(".dialog").classList.remove("appear");
-				$(".dialogContainer").fadeTo(200, 0);
-				setTimeout(() => {
-					body.removeChild(dialogContainer);
-				}, 300);
+				custom.subFunctions.animation("OUT");
 			};
 		});
 	},
+	/**
+	 * ## Displays an alert box that disapears after the specified timeout
+	 * @param {{
+			title: string,
+			text: string,
+			alertType: string
+			}} param0 alertType can either be ”success" | "info" | "warning" | "error"
+	 * @param {number} timeout time in ms after wich the alert box disapears *[defaults to 3000]*
+	 */
+	alert({ title, text, alertType, timeout }) {
+		//format function arguments
+		const args = custom.subFunctions.formatInput({ title, text, alertType, timeout });
+
+		//create container and insert body
+		custom.subFunctions.createContainer().innerHTML = custom.subFunctions.getDialogBody(args, "alert");
+		custom.subFunctions.animation("IN");
+
+		const timeoutHandler = setTimeout(() => custom.subFunctions.animation("OUT"), args.timeout);
+		closeAlertBox = () => {
+			clearTimeout(timeoutHandler);
+			custom.subFunctions.animation("OUT"), args.timeout;
+		};
+	},
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////  COPIED FROM STACK OVERFLOW /////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////> COPIED FROM STACK OVERFLOW <///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * determine if a function call comes from the console
+ * ## determine if a function call comes from the console
  */
-fromConsole = () => {
-	var stack;
+const fromConsole = () => {
+	let stack;
 	try {
 		// Throwing the error for Safari's sake, in Chrome and Firefox
 		// var stack = new Error().stack; is sufficient.
@@ -550,7 +657,7 @@ fromConsole = () => {
 	}
 	if (!stack) return false;
 
-	var lines = stack.split("\n");
+	let lines = stack.split("\n");
 	for (var i = 0; i < lines.length; i++) {
 		if (lines[i].indexOf("at Object.InjectedScript.") >= 0) return true; // Chrome console
 		if (lines[i].indexOf("@debugger eval code") == 0) return true; // Firefox console
@@ -561,16 +668,16 @@ fromConsole = () => {
 };
 
 /**
- * **manipulate color (RGB or HEX) values**
+ * ## manipulate color (RGB or HEX) values
  *
- * documentation: https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
+ * #### documentation: https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
  * @param {*} p
- * @param {*} c0 color 1
- * @param {*} c1 color 2
+ * @param {string} c0 color 1
+ * @param {string} c1 color 2
  * @param {*} l
  * @returns
  */
-pSBC = (p, c0, c1, l) => {
+const pSBC = (p, c0, c1, l) => {
   let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
   if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
   if (!this.pSBCr) this.pSBCr = (d) => {
@@ -596,26 +703,42 @@ pSBC = (p, c0, c1, l) => {
   else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
 } //prettier-ignore
 
+escapeHTML = (unsafe) =>
+	unsafe == "" || unsafe == null ? "" :
+		unsafe.replace(/[&<"']/g, (match) => {
+			switch (match) {
+				case "&":
+					return "&amp;";
+				case "<":
+					return "&lt;";
+				case '"':
+					return "&quot;";
+				case "'":
+					return "&apos;";
+				default:
+					return match;
+			}
+		}); //prettier-ignore
+
 /**
+ * ## determine if the given string content is valid JSON
  * @param {string} content string to be checked for valid JSON
  * @returns {boolean}
  */
 function isJSON(content) {
 	try {
 		let parse = JSON.parse(content);
-		if (parse && typeof parse === "object") {
-			return true;
-		}
+		if (parse && typeof parse == "object") return true;
 	} catch (error) {
-		console.info("Not able to parse JSON: " + error);
+		// console.info("Not able to parse JSON: " + error);
 	}
 	return false;
 }
 
 /**
- * **get
+ * ## Get back stringified JSON with syntax highlighting
  * @param {string | object} json the JSON string or object you want to syntax highlight
- * @param {number} indentation the number of spaces to
+ * @param {number} indentation the number of spaces to use
  * @returns {string} HTML string
  */
 function syntaxHighlight(json, indentation = 4) {
@@ -651,12 +774,11 @@ function syntaxHighlight(json, indentation = 4) {
 }
 
 /**
- * **Get the dominant/average color of an image**
- *
- * Stack Overflow Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
+ * ## Get the dominant/average color of an image
+ * #### Stack Overflow Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
  * @param {HTMLImageElement | string} image HTMLImageElement or URL to an image
- * @param {string} colorFormat "rgb" | "rgba" | "hex"
- * @param {boolean} log log the calculated value
+ * @param {"rgb" | "rgba" | "hex"} colorFormat [defaults to hex]
+ * @param {boolean} log log the calculated value [defaults to false]
  * @returns color string (rgb || rgba || hex)
  */
 function getDominantColor(image, colorFormat = "hex", log = false) {
@@ -705,19 +827,3 @@ function getDominantColor(image, colorFormat = "hex", log = false) {
 			return hex;
 	}
 }
-
-escapeHTML = (unsafe) =>
-	unsafe.replace(/[&<"']/g, (match) => {
-		switch (match) {
-			case "&":
-				return "&amp;";
-			case "<":
-				return "&lt;";
-			case '"':
-				return "&quot;";
-			case "'":
-				return "&apos;";
-			default:
-				return match;
-		}
-	});

@@ -1,13 +1,18 @@
 @import url("https://use.typekit.net/mzd5zle.css");
 
 :root {
-	--navBarBackground: hsl(240, 19%, 29%) /* rgb(48, 111, 247) */;
+	--navBar-hue: 240;
+	--navBarBackground: hsl(var(--navBar-hue), 19%, 29%) /* rgb(48, 111, 247) */;
 	--navBarColor: white;
 	--hamburgerColor: var(--navBarColor);
 
-	--linkHoverColor: #3773fd;
-	--activeLinkColor: #1db005;
-	--danger-clr: rgb(255, 53, 53);
+	--linkHoverColor: var(--primary-clr);
+	--activeLinkColor: var(--secondary-clr);
+
+	--primary-clr: #3773fd;
+	--secondary-clr: #1db005;
+	--warning-clr: hsl(39, 100%, 46%);
+	--danger-clr: hsl(0, 100%, 60%);
 
 	--backDropBlur: 6px;
 
@@ -16,8 +21,11 @@
 	--dialogBgBrightness: 100%;
 	--dialogBackground: hsl(0, 0%, var(--dialogBgBrightness));
 
-	--devMode-bg: hsl(0, 0%, 27%);
+	--devMode-bg: hsl(var(--navBar-hue), 019%, 25%);
+	--devMode-bg-alpha: hsla(var(--navBar-hue), 19%, 25%, 0.6);
 	--devMode-clr: hsl(120, 99%, 38%);
+
+	--webuntis-clr: #fda625;
 }
 body {
 	padding-top: 60px;
@@ -73,8 +81,9 @@ header {
 	padding-bottom: 3px;
 
 	color: var(--navBarBackground);
+	text-shadow: 0 0 10px black;
 
-	transition: 200ms;
+	transition: all 200ms;
 	transition-delay: 200ms;
 	outline: none;
 }
@@ -83,7 +92,7 @@ header {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-stroke: 4px transparent;
-	/* text-shadow: 0 0 5px #1db005; */
+	text-shadow: none;
 }
 
 .logo a::before {
@@ -93,6 +102,8 @@ header {
 	left: 0;
 	width: 100%;
 	height: 100%;
+
+	text-shadow: none;
 
 	/* text-shadow: 0 0 20px #3773fd; */
 	/* border-right: 2px solid #3773fd; */
@@ -146,6 +157,8 @@ nav a {
 	text-transform: uppercase;
 	opacity: 0;
 	transition: 150ms ease-out;
+
+	text-shadow: 0 0 8px black;
 }
 nav a:is(:hover, :focus) {
 	color: var(--linkHoverColor);
@@ -303,6 +316,8 @@ nav ul ul li {
 		top: 1.35em;
 		left: 0;
 		right: 0;
+
+		box-shadow: 0 0 4px black;
 
 		transform: scale(0, 1);
 		transform-origin: left;
@@ -531,7 +546,7 @@ footer .fab {
 
 	--bg-clr: var(--devMode-bg);
 	background-color: var(--bg-clr);
-	box-shadow: 0 0 1px 1px var(--devMode-clr);
+	box-shadow: 0 0 1px 1px var(--devMode-clr), 0 0 8px black;
 
 	-webkit-transition: 0.4s;
 	transition: 0.4s;
@@ -660,6 +675,12 @@ header nav .slider {
 	background: rgba(0, 0, 0, 0.58);
 
 	pointer-events: all;
+
+	opacity: 0;
+	transition: 220ms;
+}
+.dialogContainer.appear {
+	opacity: 1;
 }
 .dialog {
 	z-index: 1100;
@@ -669,7 +690,8 @@ header nav .slider {
 	font-family: "helvetica";
 
 	min-width: 280px;
-	max-width: 350px;
+	max-width: 40vw;
+	height: max-content;
 
 	/* background: rgb(72, 72, 72); */
 	background: var(--dialogBackground);
@@ -684,12 +706,22 @@ header nav .slider {
 	user-select: none; /* Standard syntax */
 	--defaultScale: 1;
 	--initScale: 0.7;
-	transform: scale(0.8);
+	transform: scale(0.7);
+	opacity: 0;
 
 	transition: 160ms;
 }
 .dialog.appear {
 	transform: scale(1);
+	opacity: 1;
+}
+@media (max-width: 600px) {
+	.dialog {
+		transform: scale(0.7);
+	}
+	.dialog.appear {
+		transform: scale(0.85);
+	}
 }
 .dialogText {
 	display: flex;
@@ -698,48 +730,31 @@ header nav .slider {
 	align-items: center;
 
 	line-break: break-all;
+	color: rgb(41, 41, 41);
 }
 .dialogText h3 {
 	margin: 0;
-	color: rgb(41, 41, 41);
 }
 .dialogText p {
 	margin: 5px 0 0 0;
-	color: rgb(84, 84, 84);
+	filter: /* brightness(2.3) */ opacity(0.7);
 }
 .dialogInput {
+	/* outline: 2px solid red; */
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
+	align-items: center;
 
-	margin: 10px 0 0;
-}
-.dialogInput.prompt {
-	flex-direction: column;
-}
-.dialogInput.prompt input[type="text"] {
-	margin: 0 0 20px;
-	font-size: 0.85rem;
-	/* font-family: menlo; */
-
-	border: none;
-	border-radius: 6px;
-	padding: 5px;
-
-	background: rgb(225, 225, 225);
-
-	transition: box-shadow 180ms;
-}
-.dialogInput.prompt input[type="text"]:focus {
-	outline: none;
-	box-shadow: 0 0 10px 2px rgba(1, 77, 191, 0.755);
+	margin: 15px 0 0;
 }
 .dialogInput button {
 	background: transparent;
 	border: none;
 	border-radius: 6px;
-	/* padding: 5px; */
+	padding: 5px;
+	padding-inline: 15px;
 
-	margin: 0 30px 0;
+	margin-inline: 7.5px;
 	max-height: 25px;
 
 	font-size: 1rem;
@@ -758,14 +773,97 @@ header nav .slider {
 .dialogInput button:is(:hover, :focus) {
 	background-color: #48484848;
 }
-@media (max-width: 600px) {
-	.dialog {
-		transform: scale(0.7);
+
+.dialog.prompt .dialogInput {
+	flex-direction: column;
+}
+.dialog.prompt .dialogInput input[type="text"] {
+	margin: 0 0 20px;
+	font-size: 0.95rem;
+	/* font-family: menlo; */
+	width: 90%;
+
+	border: none;
+	border-radius: 6px;
+	padding: 5px;
+
+	background: rgb(225, 225, 225);
+
+	transition: box-shadow 180ms;
+}
+.dialog.prompt .dialogInput input[type="text"]:focus {
+	outline: none;
+	box-shadow: 0 0 6px 2px rgba(0, 105, 241, 0.755);
+}
+
+.dialog.alert {
+	position: relative;
+	margin: 10px;
+
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 1px 4px hsl(var(--hue), 100%, 55%), 0 0 10px rgba(0, 0, 0, 0.61) inset;
+
+	background: hsla(var(--hue), 28%, 75%, 1);
+	color: hsl(var(--hue), 0%, 15%);
+}
+.dialog.alert i:not(.fa-times) {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	font-size: 2rem;
+	color: hsl(var(--hue), 100%, 45%);
+	/* text-shadow: 0 0 10px rgba(0, 0, 0, 0.603); */
+}
+.dialog.alert .dialogText :is(h1, h2, h3, h4, h5, h6) {
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-inline: calc(1.7rem + 10px);
+}
+.dialog.alert .dialogText :is(h1, h2, h3, h4, h5, h6, p) {
+	color: hsl(var(--hue), 0%, 15%);
+}
+.close-alert-box {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	margin: 0;
+	transform: translate(0, -8px);
+
+	color: hsl(var(--hue), 100%, 45%);
+	background: none;
+	border: none;
+	font-size: 2rem;
+	cursor: pointer;
+}
+.progress-bar {
+	margin-top: 20px;
+	width: 100%;
+	height: 8px;
+	background: hsl(var(--hue), 70%, 70%);
+
+	border-radius: 10px;
+}
+.progress-bar .progress {
+	background: hsl(var(--hue), 100%, 50%);
+	width: 100%;
+	height: 100%;
+
+	border-radius: 10px;
+}
+@keyframes progress {
+	0% {
+		width: 100%;
 	}
-	.dialog.appear {
-		transform: scale(0.85);
+	100% {
+		width: 00%;
 	}
 }
+/* prettier-ignore */
+.alert.success {--hue: 120;	} /* prettier-ignore */
+.alert.info {	--hue: 200	} /* prettier-ignore */
+.alert.warning {--hue: 33	} /* prettier-ignore */
+.alert.error {	--hue: 0	}
 
 /*////////////////////// general styles //////////////////////////*/
 .btn {

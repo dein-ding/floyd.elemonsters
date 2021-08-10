@@ -7,7 +7,11 @@ window.addEventListener("load", async () => {
 
 	if (!sessionStorage.hasBeenPrompted)
 		setTimeout(() => {
-			custom.confirm("Attention", "This website is work in progress, so be kind if there are bugs.", "continue");
+			custom.confirm({
+				title: "Attention",
+				text: "This website is work in progress, so please be kind if there are bugs.",
+				buttons: ["continue"],
+			});
 			sessionStorage.hasBeenPrompted = true;
 		}, 500);
 
@@ -20,6 +24,14 @@ window.addEventListener("load", async () => {
 
 	// getDominantColor(img, "rgb", true);
 
-	const readmeSection = document.querySelector("#readme-section");
-	readmeSection.innerHTML = getFileAsync("/README.md", false, true);
+	// document.querySelector("#readme-section").innerHTML = await getFileAsync("/README.md", false, true);
+
+	const { technologiesLearning } = await getFileAsync("/src/data/main.json", true);
+	technologiesLearning.forEach((tech) => {
+		newIcon = document.createElement("div");
+		newIcon.innerHTML = `<img src="${tech.imageUrl}" style="height: 30px;"></img>`;
+		newIcon.className = "icon";
+		newIcon.title = tech.name;
+		document.querySelector("section.technologies .icon-stack").append(newIcon);
+	});
 });

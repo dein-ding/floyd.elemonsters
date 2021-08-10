@@ -42,7 +42,7 @@ window.addEventListener("load", () => {
 	var lastEvent;
 
 	//do some stuff when the mouse moves
-	$("body").mousemove((event) => {
+	document.body.addEventListener("mousemove", (event) => {
 		//put the ausgabeDiv on the coordinates of the mouse if using desktop
 		if (!isMobile) {
 			ausgabeDiv.style.setProperty("top", event.pageY + 10 + "px");
@@ -70,14 +70,14 @@ window.addEventListener("load", () => {
 		RGB.output(event);
 		lastEvent = event;
 	});
-	$("div").click((event) => {
+	document.querySelector("div").addEventListener("click", (event) => {
 		//do some stuff when buttons are clicked on
 		switch (event.target.dataset.description) {
 			//change color of colorField
 			case "changeColorButton":
 				event = lastEvent;
 				//setting the color to a randomly genereated rgbValue
-				$(event.target).css({ backgroundColor: RGB.generateValue() });
+				event.target.style.backgroundColor = RGB.generateValue();
 				RGB.output(event);
 				break;
 

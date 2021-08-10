@@ -57,8 +57,8 @@ const json = {
 					res.status == 404 ? " (Not Found)" : ""
 				}`;
 		} catch (err) {
-			custom.confirm("Something went wrong.", err, "Ok");
-			console.warn(err);
+			custom.alert({ title: "Something went wrong.", text: err, alertType: "error", timeout: 7000 });
+			// console.warn(err);
 			json.displayState("failed");
 		}
 	},
@@ -83,7 +83,7 @@ json.StringInput.parse = (prompt = false) => {
 		json.StringInput.blur();
 	} else if (prompt) {
 		json.StringInput.value = "";
-		custom.confirm("this is not a JSON string", "", "Ok");
+		custom.alert({ title: "Not able to parse JSON.", alertType: "warning" });
 	}
 };
 json.StringInput.oninput = (event) => json.StringInput.parse();

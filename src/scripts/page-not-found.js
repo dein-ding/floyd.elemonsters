@@ -63,10 +63,23 @@ document.addEventListener("load", () => {
 	const searchField = document.querySelector("#searchField");
 	validateSearch = () => searchField.value && pageSet.has(searchField.value);
 	goToPage = () => {
-		if (validateSearch()) location.href = `http://${location.host}/${availablePages[ availablePagesFormatted.indexOf(searchField.value) ]}`; //prettier-ignore
-        else custom.confirm("Try the ones from the list.", "", "Okay", "what list?")
-            .catch(err => custom.confirm("", "The list you get, when you type in the search field.", "got it!", "still no clue")) //prettier-ignore
-            .catch(err => custom.confirm("", "Just use the navigation bar at the top of the website, for fuck sakes!", "😳")) //prettier-ignore
+		if (validateSearch())
+			location.href = `http://${location.host}/${availablePages[availablePagesFormatted.indexOf(searchField.value)]}`;
+		else
+			custom
+				.confirm({ title: "Try the ones from the list.", buttons: ["Okay", "what list?"] })
+				.catch((err) =>
+					custom.confirm({
+						text: "The list you get, when you type in the search field.",
+						buttons: ["got it!", "still no clue"],
+					})
+				)
+				.catch((err) =>
+					custom.confirm({
+						text: "Just use the navigation bar at the top of the website, for fuck sakes!",
+						buttons: ["😳"],
+					})
+				);
 	};
 	goToPageBtn.onclick = goToPage;
 	searchField.addEventListener("keydown", (e) => (e.key == "Enter" ? goToPage() : {}));
