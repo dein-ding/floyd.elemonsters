@@ -1,10 +1,10 @@
-const { availablePages, hiddenPages } = getFileAsync("/src/data/main.json", true);
-const availablePagesFormatted = availablePages.map((string) =>
-	string.replace(".html", "").replace(/\//g, "").replace(/-/g, " ")
-);
-const pageSet = new Set(availablePagesFormatted);
+document.addEventListener("load", async () => {
+	const { availablePages, hiddenPages } = getFileAsync("/src/data/main.json", true);
+	const availablePagesFormatted = availablePages.map((string) =>
+		string.replace(".html", "").replace(/\//g, "").replace(/-/g, " ")
+	);
+	const pageSet = new Set(availablePagesFormatted);
 
-document.addEventListener("load", () => {
 	class Animation {
 		constructor(spanCount) {
 			const firstSpan = document.querySelector("#pathPreview span");

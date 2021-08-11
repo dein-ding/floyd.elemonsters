@@ -5,6 +5,7 @@
 	--navBarBackground: hsl(var(--navBar-hue), 19%, 29%) /* rgb(48, 111, 247) */;
 	--navBarColor: white;
 	--hamburgerColor: var(--navBarColor);
+	--navBar-height: 66px;
 
 	--linkHoverColor: var(--primary-clr);
 	--activeLinkColor: var(--secondary-clr);
@@ -28,10 +29,11 @@
 	--webuntis-clr: #fda625;
 }
 body {
-	padding-top: 60px;
+	padding-top: var(--navBar-height);
 	font-family: var(--primaryFont);
 
 	background: rgb(24, 24, 24);
+	color: white;
 }
 .main-background {
 	height: 100%;
@@ -227,6 +229,11 @@ nav a:is(:hover, :focus) {
 	transform: translateY(-9px);
 
 	transition: 200ms;
+}
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+	box-shadow: 0 0 8px rgb(0, 0, 0);
 }
 .hamburger::after {
 	transform: translateY(9px);
@@ -688,27 +695,28 @@ header nav .slider {
 	box-sizing: border-box;
 	padding: 15px;
 	font-family: "helvetica";
-
-	min-width: 280px;
-	max-width: 40vw;
-	height: max-content;
-
-	/* background: rgb(72, 72, 72); */
-	background: var(--dialogBackground);
-	/* background: hsl(0, 0%, var(--dialogBgBrightness)); */
-
 	border-radius: 8px;
 
-	pointer-events: all;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 
+	min-width: 280px;
+	max-width: 30rem;
+	height: max-content;
+
+	background: var(--dialogBackground);
+
+	pointer-events: all;
+	user-select: none; /* Standard syntax */
 	-webkit-user-select: none; /* Safari */
 	-ms-user-select: none; /* IE 10 and IE 11 */
-	user-select: none; /* Standard syntax */
+
 	--defaultScale: 1;
 	--initScale: 0.7;
 	transform: scale(0.7);
 	opacity: 0;
-
 	transition: 160ms;
 }
 .dialog.appear {
@@ -729,6 +737,8 @@ header nav .slider {
 	justify-content: center;
 	align-items: center;
 
+	max-width: 100%;
+
 	line-break: break-all;
 	color: rgb(41, 41, 41);
 }
@@ -737,7 +747,11 @@ header nav .slider {
 }
 .dialogText p {
 	margin: 5px 0 0 0;
-	filter: /* brightness(2.3) */ opacity(0.7);
+
+	text-align: justify;
+	max-width: 100%;
+
+	filter: opacity(0.7);
 }
 .dialogInput {
 	/* outline: 2px solid red; */
@@ -751,11 +765,15 @@ header nav .slider {
 	background: transparent;
 	border: none;
 	border-radius: 6px;
-	padding: 5px;
+	padding-block: 5px !important;
 	padding-inline: 15px;
 
 	margin-inline: 7.5px;
 	max-height: 25px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	font-size: 1rem;
 	font-weight: 650;

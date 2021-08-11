@@ -2,13 +2,12 @@ log = console.log;
 
 window.onload = async () => {
 	//elements
-	const head = document.getElementsByTagName("HEAD")[0];
+	const head = document.querySelector("head");
 	const titleTag = document.querySelector("title");
-	var navBarHeader = document.querySelector("#navBarHeader");
-	var footer = document.querySelector("#footer");
 	const body = document.body;
+	let navBarHeader = document.querySelector("#navBarHeader");
+	let footer = document.querySelector("#footer");
 
-	//variables
 	const data = await getFileAsync("/src/data/main.json", true);
 
 	var locationURL = {
@@ -730,7 +729,7 @@ function isJSON(content) {
 		let parse = JSON.parse(content);
 		if (parse && typeof parse == "object") return true;
 	} catch (error) {
-		// console.info("Not able to parse JSON: " + error);
+		if (DevMode.status) console.info("Not able to parse JSON: " + error);
 	}
 	return false;
 }

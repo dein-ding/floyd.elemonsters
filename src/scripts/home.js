@@ -24,14 +24,5 @@ window.addEventListener("load", async () => {
 
 	// getDominantColor(img, "rgb", true);
 
-	// document.querySelector("#readme-section").innerHTML = await getFileAsync("/README.md", false, true);
-
-	const { technologiesLearning } = await getFileAsync("/src/data/main.json", true);
-	technologiesLearning.forEach((tech) => {
-		newIcon = document.createElement("div");
-		newIcon.innerHTML = `<img src="${tech.imageUrl}" style="height: 30px;"></img>`;
-		newIcon.className = "icon";
-		newIcon.title = tech.name;
-		document.querySelector("section.technologies .icon-stack").append(newIcon);
-	});
+	// document.querySelector("#readme-section").innerHTML = await getFileAsync("/README.md", false, true)
 });
