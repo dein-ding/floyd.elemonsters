@@ -1,4 +1,5 @@
 log = console.log;
+//made from GitHub Codespaces
 
 window.onload = async () => {
 	//elements
