@@ -10,8 +10,8 @@ window.onload = async () => {
 
 	const data = await getFileAsync("/src/data/main.json", true);
 
-	var locationURL = {
-		prev: sessionStorage.currURL ? sessionStorage.currURL : undefined,
+	const locationURL = {
+		prev: sessionStorage.currURL ? sessionStorage.currURL : null,
 		curr: location.pathname,
 	};
 	sessionStorage.currURL = location.pathname;
@@ -108,7 +108,7 @@ window.onload = async () => {
  * ### Remove any HTML elements specified with a querySelector string
  * @param {string}  selector querySelectorAll (css selector)
  */
-const removeElementAll = (selector) => document.querySelectorAll(selector).forEach((item) => item.remove());
+const removeElementAll = (selector) => document.querySelectorAll(selector).forEach((elem) => elem.remove());
 
 ////////////////////////////////////////////////////////// DevMode /////////////////////////////////////////////////////////
 const DevMode = {
@@ -195,8 +195,8 @@ const DevMode = {
 						<li class="devModeSwitchNavBarItem"></li>
 						<li class="devModeItem navBarDevItem">
 							<div class="devModeOutterContainer">
-								<a id="devModeGuiToggleLabel" title="DevMode dashboard" onclick="DevMode.GUI.toggle()">
-									<i class="fad fa-code"></i>
+								<a id="devModeGuiToggleLabel" class="devModeGuiToggleLabel" title="DevMode dashboard" onclick="DevMode.GUI.toggle()">
+									<i class="fad fa-code"></i> <i class="fa fa-caret-down"></i>
 								</a>
 								<input type="checkbox" id="devModeGuiToggle" style="display: none;">
 								<div class="devModeContainer">
@@ -204,7 +204,7 @@ const DevMode = {
 										<h2>Shortcut: <span class="keyboard-key">⎇</span> <span class="keyboard-key">⇧</span> <span class="keyboard-key">D</span></h2>
 									</div>
 									<div class="devModeSettings">
-										<div class="toggleSwitch">
+										<div class="toggleSwitch danger">
 											<input type="checkbox" id="devModeSwitch1" class="devModeSwitch" checked onchange="DevMode.set(this.checked, 400)" style="display: none" />
 											<label class="switch" for="devModeSwitch1">
 												<span class="slider"></span>
@@ -258,7 +258,7 @@ const DevMode = {
 				const devModeSwitchNavBarItem = document.querySelector(".devModeSwitchNavBarItem");
 				if (devModeSwitchNavBarItem)
 					devModeSwitchNavBarItem.innerHTML = DevMode.GUI.switchInNavBar == true ? `
-						<div class="toggleSwitch">
+						<div class="toggleSwitch danger">
 							<input type="checkbox" id="devModeSwitch" class="devModeSwitch" checked onchange="DevMode.set(this.checked, 200)" style="display: none" />
 							<label class="switch" for="devModeSwitch" title="toggle DevMode">
 								<span class="slider"></span>
@@ -297,26 +297,26 @@ const DevMode = {
 	},
 	toolboxFunctions: {
 		confirm: async () =>
-			custom.alert({
-				title: "You have successfully been added!",
-				text: "test text here, test text here, test text here, test text here, test text here, test text here",
-				alertType: "info",
-				timeout: 10000,
-			}),
-		// custom
-		// 	.confirm(
-		// 		{
-		// 			title: "Attention",
-		// 			text: "this is a confirmation dialog",
-		// 			buttons: ["FUCK", "YOU langer test", "test zwei"],
-		// 		},
-		// 		({ title, text }) => {
-		// 			title.style.color = "red";
-		// 			text.style.color = "yellowgreen";
-		// 		}
-		// 	)
-		// 	.then(console.info)
-		// 	.catch(console.info)
+			// 	custom.alert({
+			// 		title: "You have successfully been added!",
+			// 		text: "test text here, test text here, test text here, test text here, test text here, test text here",
+			// 		alertType: "info",
+			// 		timeout: 10000,
+			// 	}),
+			custom
+				.confirm(
+					{
+						title: "Attention",
+						text: "this is a confirmation dialog",
+						buttons: ["FUCK", "YOU langer test", "test zwei"],
+					},
+					({ title, text }) => {
+						title.style.color = "red";
+						text.style.color = "yellowgreen";
+					}
+				)
+				.then(console.info)
+				.catch(console.info),
 		prompt: async () =>
 			console.info("input recieved: " + (await custom.prompt("Wait a sec,", "this is a prompt for user input"))),
 		eval: async () => eval(await custom.prompt("evaluate JS", "type in valid JavaScript for evaluation.")),
@@ -357,9 +357,9 @@ const userCount = {
 		status == "loading" ? `
 			<h3>UserCount</h3>
 			<p>on host: ${location.hostname.toString().length > 18 ? location.hostname.slice(0, 12) + "..." : location.hostname}</P>
-			<p>Today: Loading...</P>
-			<p>Yesterday: Loading...</P>
-			<p>Ever: Loading...</P>
+			<p>Today: <span class="loading">Loading<span>...</span></span></P>
+			<p>Yesterday: <span class="loading">Loading<span>...</span></span></P>
+			<p>Ever: <span class="loading">Loading<span>...</span></span></P>
 		` :
 		status == "success" ? `
 			<h3>UserCount</h3>
@@ -390,13 +390,13 @@ getFile = (URL) => {
 };
 
 /**
- * Get content of the given URL **asynchronously**.
+ * ## Get content of the given URL **asynchronously**.
  * @param {string} URL
  * @param {boolean} isJson wether the content should be parsed as JSON. [defaults to false]
  * @param {boolean} log wether the content should be logged [defaults to false]
  * @returns {string | object} content of file
  */
-getFileAsync = async (URL, isJson = false, log = false) =>
+const getFileAsync = async (URL, isJson = false, log = false) =>
 	fetch(URL).then((res) => {
 		let data = isJson ? res.json() : res.text();
 
@@ -441,11 +441,11 @@ const custom = {
 		 * @param {{
 			title: string;
 			text: string;
-			primaryBtn: string;
-			secondaryBtn: string;
 			buttons: string[];
+			alertType: string;
+			timeout: number;
 			}} param0 
-		 * @param {*} type 
+		 * @param {"confirm" | "prompt" | "alert"} type 
 		 * @returns 
 		 */
 		getDialogBody({ title, text, buttons, alertType, timeout }, type) {
@@ -462,9 +462,11 @@ const custom = {
 						<div class='dialog'>
 							${dialogTextBody()}
 							<div class='dialogInput'>
-								${btns = ""}
-								${buttons.forEach((btnText, i) => btns += `<button onclick='buttonPressed(${i})'>${escapeHTML(btnText)}</button>\n`)}
-								${btns}
+								${buttons
+									.map((btnText, i) =>
+										`<button onclick='custom.subFunctions.buttonPressed(${i})'>${escapeHTML(btnText)}</button>`)
+									.join("\n")
+								}
 							</div>
 						</div>
 					`; //prettier-ignore
@@ -475,7 +477,7 @@ const custom = {
 							${dialogTextBody()}
 							<div class='dialogInput'>
 								<input class="promptInput" type="text">
-								<button onclick='buttonPressed()'>OK</button>
+								<button onclick='custom.subFunctions.buttonPressed()'>OK</button>
 							</div>
 						</div>
 					`; //prettier-ignore
@@ -483,14 +485,13 @@ const custom = {
 				case "alert":
 					result = `
 						<div class='dialog alert ${alertType}'>
-							${
-								alertType == "success"
-									? `<i class="far fa-check-circle"></i>`
-									: alertType == "warning"
-									? `<i class="far fa-exclamation-circle"></i>`
-									: alertType == "error"
-									? `<i class="far fa-exclamation-triangle"></i>`
-									: `<i class="far fa-info-circle"></i>`
+							${alertType == "success"
+								? `<i class="far fa-check-circle"></i>`
+								: alertType == "warning"
+								? `<i class="far fa-exclamation-circle"></i>`
+								: alertType == "error"
+								? `<i class="far fa-exclamation-triangle"></i>`
+								: `<i class="far fa-info-circle"></i>`
 							}
 							<button class="close-alert-box" onclick="closeAlertBox()"><i class="far fa-times"></i></button>
 							<div class='dialogText'>
@@ -512,9 +513,9 @@ const custom = {
 			dialog: custom.subFunctions.dialog(),
 
 			dialogText: document.querySelector(".dialogText"),
-				title: document.querySelector(".dialogText :is(h1, h2, h3, h4, h5, h6)"),
+				title: document.querySelector(".dialogText h2, .dialogText h3"),
 				text: document.querySelector(".dialogText p"),
-			dialoginput: document.querySelector(".dialogInput"),
+			dialogInput: document.querySelector(".dialogInput"),
 				buttons: [...document.querySelectorAll(".dialogInput button")].reverse(),
 				input: document.querySelector(".dialogInput input")
 		}), //prettier-ignore
@@ -537,8 +538,8 @@ const custom = {
 			if (e.key == "Enter" || e.key == "Escape") {
 				e.stopPropagation();
 				e.preventDefault();
-				if (e.key == "Enter") buttonPressed(btns.length - 1);
-				if (e.key == "Escape" && btns.length > 1 && btns[0]) buttonPressed(0);
+				if (e.key == "Enter") custom.subFunctions.buttonPressed(btns.length - 1);
+				if (e.key == "Escape" && btns.length > 1 && btns[0]) custom.subFunctions.buttonPressed(0);
 			}
 		},
 		KeyboardClickListener(state, btns) {
@@ -569,9 +570,11 @@ const custom = {
 
 		const btns = args.buttons;
 		custom.subFunctions.btns = btns; //loading the buttons into global scope
+
 		return new Promise((resolve, reject) => {
 			custom.subFunctions.KeyboardClickListener("add", btns);
-			buttonPressed = (res) => {
+			//loading the button event function into global scope
+			custom.subFunctions.buttonPressed = (res) => {
 				if (res == 0) resolve(btns[0]);
 				else reject(btns[res]);
 				custom.subFunctions.KeyboardClickListener("remove");
@@ -596,17 +599,17 @@ const custom = {
 		//focus the input field for faster workflow
 		document.querySelector(".promptInput").select();
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, _reject) => {
 			click = (event) => {
 				if (event.key == "Enter") {
 					event.stopPropagation();
 					event.preventDefault();
-					buttonPressed();
+					custom.subFunctions.buttonPressed();
 				}
 			};
 			document.addEventListener("keydown", click, { capture: true });
 
-			buttonPressed = () => {
+			custom.subFunctions.buttonPressed = () => {
 				resolve(document.querySelector(".promptInput").value);
 				document.removeEventListener("keydown", click, { capture: true });
 				custom.subFunctions.animation("OUT");
@@ -703,21 +706,22 @@ const pSBC = (p, c0, c1, l) => {
 } //prettier-ignore
 
 escapeHTML = (unsafe) =>
-	unsafe == "" || unsafe == null ? "" :
-		unsafe.replace(/[&<"']/g, (match) => {
-			switch (match) {
-				case "&":
-					return "&amp;";
-				case "<":
-					return "&lt;";
-				case '"':
-					return "&quot;";
-				case "'":
-					return "&apos;";
-				default:
-					return match;
-			}
-		}); //prettier-ignore
+	unsafe == "" || unsafe == null
+		? ""
+		: unsafe.replace(/[&<"']/g, (match) => {
+				switch (match) {
+					case "&":
+						return "&amp;";
+					case "<":
+						return "&lt;";
+					case '"':
+						return "&quot;";
+					case "'":
+						return "&apos;";
+					default:
+						return match;
+				}
+		  }); //prettier-ignore
 
 /**
  * ## determine if the given string content is valid JSON

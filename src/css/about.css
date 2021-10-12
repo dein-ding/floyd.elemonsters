@@ -2,6 +2,7 @@ body {
 	margin: 0;
 }
 section.technologies {
+	padding: 20px 0;
 	border: 1px solid red;
 	display: flex;
 	flex-direction: column;

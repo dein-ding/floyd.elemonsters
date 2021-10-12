@@ -14,9 +14,9 @@ main > * {
 	border: 1px solid rgb(88, 88, 88);
 	border-radius: 10px;
 	padding: var(--padding-big);
-	color: rgb(134, 205, 248);
+	color: hsl(203, 89%, 75%);
 
-	background: rgb(40, 44, 52);
+	background: hsl(220, 13%, 18%);
 }
 
 .controlls {
@@ -130,26 +130,6 @@ main > * {
 }
 .source :is(h1, h2, h3, h4, h5, h6) {
 	margin: 0;
-}
-.loading {
-	display: flex;
-	align-items: center;
-	font-family: menlo, monospace;
-}
-.loading span {
-	/* outline: 2px solid red; */
-	width: 0;
-	display: block;
-	overflow: hidden;
-	animation: loading 1.5s steps(4) infinite;
-}
-@keyframes loading {
-	0% {
-		width: 0;
-	}
-	100% {
-		width: 4ch;
-	}
 }
 
 pre.JSON {

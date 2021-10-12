@@ -55,7 +55,9 @@
 		{
 			"name": "Angular",
 			"FaSelector": "fab fa-angular",
-			"imageUrl": "https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_angular_icon_130754.png"
+			"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1024px-Angular_full_color_logo.svg.png",
+			"imageScale": 1.25,
+			"imageOffset": "0, -1px"
 		},
 		{
 			"name": "Node.js",

@@ -190,8 +190,8 @@ const custom = {
                 <p></p>
             </div>
             <div class='dialogInput'>
-                ${!secondaryBtn ? "" : `<button onclick='buttonPressed("secondary")'>${secondaryBtn}</button>`} 
-                <button onclick='buttonPressed("primary")'>${primaryBtn}</button>
+                ${!secondaryBtn ? "" : `<button onclick='custom.subFunctions.buttonPressed("secondary")'>${secondaryBtn}</button>`} 
+                <button onclick='custom.subFunctions.buttonPressed("primary")'>${primaryBtn}</button>
             </div>
         </div>
     `; //prettier-ignore
@@ -207,18 +207,18 @@ const custom = {
 				if (event.keyCode == 13) {
 					event.preventDefault();
 					event.stopPropagation();
-					buttonPressed("primary");
+					custom.subFunctions.buttonPressed("primary");
 				}
 				if (event.keyCode == 27) {
 					event.preventDefault();
 					event.stopPropagation();
-					buttonPressed("secondary");
+					custom.subFunctions.buttonPressed("secondary");
 				}
 			};
 
 			document.addEventListener("keydown", click, { capture: true });
 
-			buttonPressed = (response) => {
+			custom.subFunctions.buttonPressed = (response) => {
 				if (response == "primary") resolve(primaryBtn);
 				if (response == "secondary") reject(secondaryBtn);
 
@@ -259,7 +259,7 @@ const custom = {
             </div>
             <div class='dialogInput prompt'>
                 <input class="promptInput" type="text">
-                <button onclick='buttonPressed()'>OK</button>
+                <button onclick='custom.subFunctions.buttonPressed()'>OK</button>
             </div>
         </div>
         `; //prettier-ignore
@@ -275,13 +275,13 @@ const custom = {
 				if (event.keyCode === 13) {
 					event.preventDefault();
 					event.stopPropagation();
-					buttonPressed();
+					custom.subFunctions.buttonPressed();
 				}
 			};
 
 			document.addEventListener("keydown", click, { capture: true });
 
-			buttonPressed = () => {
+			custom.subFunctions.buttonPressed = () => {
 				let input = document.querySelector(".promptInput").value;
 				resolve(input);
 
@@ -322,7 +322,7 @@ const custom = {
             </div>
             <div class='dialogInput prompt'>
                 <input class="sliderInput colorSlider" id="colorSlider" type="range" value="${sliderVal}" min="0" max="360">
-                <button onclick='buttonPressed()'>OK</button>
+                <button onclick='custom.subFunctions.buttonPressed()'>OK</button>
             </div>
         </div>
         `; //prettier-ignore
@@ -340,13 +340,13 @@ const custom = {
 				if (event.keyCode === 13 || event.keyCode === 27) {
 					event.preventDefault();
 					event.stopPropagation();
-					buttonPressed();
+					custom.subFunctions.buttonPressed();
 				}
 			};
 
 			document.addEventListener("keydown", click, { capture: true });
 
-			buttonPressed = () => {
+			custom.subFunctions.buttonPressed = () => {
 				resolve(document.querySelector(".sliderInput").value);
 
 				document.removeEventListener("keydown", click, {

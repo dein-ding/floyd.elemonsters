@@ -1,4 +1,4 @@
-<img src="/src/assets/images/icons/deinding%20logo.png" alt="my logo" width="100">
+<img src="/src/assets/images/icons/deinding%20logo.png" alt="my logo can't load" width="100">
 
 # [floyd.elemonsters.de](http://floyd.elemonsters.de)
 
@@ -9,15 +9,10 @@
 -   have some info about me (soon)
 -   built some small handy tools for myself and perhabs others
 
+<br>
 <hr>
 
-### Markdown tests:
-
-##### Bash:
-
-```bash
-echo "hello world"
-```
+### code snippet tests:
 
 ##### JavaScript:
 
@@ -43,4 +38,10 @@ h1::before {
 
 ```python
 print('hello world')
+```
+
+##### Bash:
+
+```bash
+echo "hello world"
 ```

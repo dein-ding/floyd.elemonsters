@@ -48,6 +48,9 @@ body {
 
 	filter: grayscale(1) hue-rotate(180deg) blur(5px) brightness(0.8);
 }
+main {
+	min-height: calc(100vh - var(--navBar-height) - 200px);
+}
 
 /*////////////// Navigation Bar //////////////*/
 
@@ -250,19 +253,34 @@ nav a:is(:hover, :focus) {
 }
 
 /* Dropdown toggle */
-nav ul ul {
-	position: absolute;
-	top: 62px;
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	background-color: var(--navBarBackground);
-	width: 240px;
-	padding: 7px;
-	padding-bottom: 0px;
+.projects-li {
+	/* width: 160px; */
+	position: relative;
 }
 
-nav ul ul li {
+.projects-dropdown {
+	position: absolute;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+
+	background-color: var(--navBarBackground);
+	width: max-content;
+	padding: 7px;
+	padding-bottom: 0px;
+
+	transform-origin: top;
+	transform: scale(1, 0);
+	/* transition: transform 250ms ease-in-out; */
+	/* transition: position linear 500ms; */
+}
+.projects-dropdown-toggle:checked ~ .projects-dropdown {
+	transform: scale(1, 1);
+	position: relative;
+}
+
+.projects-dropdown li {
 	/* height: 35px; */
 	margin-left: 30px;
 	font-size: 0.5rem;
@@ -273,17 +291,6 @@ nav ul ul li {
 .projects-dropdown-toggle-label {
 	cursor: pointer;
 	outline: none;
-}
-.projects-dropdown {
-	transform-origin: top;
-	transform: scale(1, 0);
-	/* transition: transform 250ms ease-in-out; */
-	/* transition: position linear 500ms; */
-}
-.projects-dropdown-toggle:checked ~ .projects-dropdown {
-	transform: scale(1, 1);
-	position: relative;
-	top: -10px;
 }
 
 /* desktop layout */
@@ -339,7 +346,7 @@ nav ul ul li {
         background: var(--activeLinkColor);
     } */
 
-	nav ul {
+	nav > ul {
 		/* outline: 1px solid rgb(255, 0, 247); */
 		display: flex;
 		justify-content: flex-end;
@@ -354,36 +361,41 @@ nav ul ul li {
 		margin-left: 30px;
 	}
 	.projects-li {
-		width: 160px;
+		/* width: 160px; */
+		position: relative;
 	}
 
-	nav ul ul li {
+	.projects-dropdown li {
 		margin: 0;
 	}
-	nav ul ul li + li {
-		margin-top: 7px;
+	.projects-dropdown li + li {
+		margin-top: 8px;
 	}
 	.projects-dropdown {
 		width: max-content;
-		left: 630px;
+		position: absolute;
+		top: 40px;
+		left: -15px;
 
 		display: flex;
 		flex-direction: column;
 
-		text-align: left;
-		padding: 10px 30px 10px 10px;
+		padding: 10px 30px 15px 15px;
 
 		background-color: var(--navBarBackground);
 		box-shadow: 0 20px 20px -20px black;
 
 		transform-origin: top;
 		transform: scale(1, 0);
-		transition: transform 250ms ease-in-out;
+		transition: transform 250ms ease-in-out, position 10ms 250ms, top 10ms 250ms, left 10ms 250ms;
 	}
 	.projects-dropdown-toggle:checked ~ .projects-dropdown {
 		transform: scale(1, 1);
 		position: absolute;
-		top: 62px;
+		top: 40px;
+		left: -15px;
+
+		transition: transform 250ms ease-in-out;
 	}
 	.projects-dropdown * {
 		opacity: 0;
@@ -415,7 +427,7 @@ footer .fab {
 	font-size: 2.5rem;
 }
 .social-links a {
-	margin-inline: 0.7rem;
+	margin: 0 0.5rem;
 }
 .fa-soundcloud:hover {
 	background-image: linear-gradient(#f0950f, #dd3163);
@@ -458,6 +470,9 @@ footer .fab {
 #devModeGuiToggle:checked ~ .devModeContainer {
 	transform: translateX(-50%) scale(1);
 }
+.devModeGuiToggleLabel {
+	cursor: pointer;
+}
 .devModeContainer {
 	position: absolute;
 	top: 150%;
@@ -472,19 +487,19 @@ footer .fab {
 	display: flex;
 	flex-direction: column;
 
-	--item-bg: hsla(240, 19%, 25%, 0.6);
+	--item-bg: hsla(240, 19%, 31%, 0.6);
 }
 .devModeContainer > * + * {
 	margin-top: 10px;
 }
 .devModeContainer > * {
 	padding: 16px;
-	border-radius: 8px;
+	border-radius: 12px;
 	color: var(--devMode-clr);
 
 	background: var(--item-bg);
-	-webkit-backdrop-filter: blur(13px);
-	backdrop-filter: blur(13px);
+	-webkit-backdrop-filter: blur(30px);
+	backdrop-filter: blur(30px);
 
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.598), 0 0 30px rgba(0, 0, 0, 0.598);
 }
@@ -494,20 +509,6 @@ footer .fab {
 }
 .shortcutHint h2 {
 	font-size: 1.3rem;
-}
-.keyboard-key {
-	display: inline-block;
-	text-align: center;
-	height: 1.5rem;
-	width: 1.5rem;
-
-	color: var(--devMode-clr);
-	background: var(--devMode-bg);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.673);
-
-	padding: 4px;
-	font-size: 1.1rem;
-	border-radius: 5px;
 }
 
 .devModeSettings {
@@ -526,62 +527,6 @@ footer .fab {
 .devModeSettings > div * {
 	/* outline: 2px solid red; */
 	margin: 0;
-}
-
-.toggleSwitch label {
-	margin-right: 10px;
-}
-.toggleSwitch {
-	flex-direction: row;
-}
-.toggleSwitch .switch {
-	position: relative;
-	display: inline-block;
-	width: 35px;
-	height: 21px;
-
-	transform: translateY(2px);
-}
-.toggleSwitch .slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	border-radius: 34px;
-
-	--bg-clr: var(--devMode-bg);
-	background-color: var(--bg-clr);
-	box-shadow: 0 0 1px 1px var(--devMode-clr), 0 0 8px black;
-
-	-webkit-transition: 0.4s;
-	transition: 0.4s;
-}
-header nav .slider {
-	--bg-clr: var(var(--navBarBackground));
-}
-.toggleSwitch .slider:before {
-	position: absolute;
-	content: "";
-	height: 15px;
-	width: 15px;
-	left: 3px;
-	bottom: 3px;
-	border-radius: 50%;
-
-	background-color: var(--devMode-clr);
-	-webkit-transition: 0.4s;
-	transition: 0.4s;
-}
-
-.toggleSwitch input:checked + .switch .slider {
-	background-color: var(--devMode-clr);
-}
-
-.toggleSwitch input:checked + .switch .slider:before {
-	transform: translateX(13px);
-	background-color: var(--bg-clr);
 }
 
 .toolbox {
@@ -647,7 +592,7 @@ header nav .slider {
 	line-height: 0.8;
 	font-size: 0.85rem;
 	font-family: menlo, monospace;
-	text-shadow: 0 0 8px rgba(0, 0, 0, 0.598);
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.712), 0 0 20px rgba(0, 0, 0, 0.712);
 
 	-webkit-user-select: none; /* Safari */
 	-ms-user-select: none; /* IE 10 and IE 11 */
@@ -662,7 +607,7 @@ header nav .slider {
 	margin: 10px 0 0;
 }
 
-/*/////////////// customConfirm ////////////////*/
+/*/////////////// custom dialog ////////////////*/
 
 .dialogContainer {
 	z-index: 1090;
@@ -884,6 +829,12 @@ header nav .slider {
 .alert.error {	--hue: 0	}
 
 /*////////////////////// general styles //////////////////////////*/
+::selection {
+	background: var(--primary-clr);
+	filter: unset;
+	opacity: 1;
+	/* color: var(--secondary-clr); */
+}
 .btn {
 	cursor: pointer;
 }
@@ -910,6 +861,105 @@ header nav .slider {
 }
 .btn-danger {
 	--bg-clr: var(--danger-clr);
+}
+
+.loading {
+	display: inline-flex;
+	align-items: center;
+	font-family: menlo, monospace;
+}
+.loading span {
+	/* outline: 2px solid red; */
+	width: 0;
+	display: inline-block;
+	overflow: hidden;
+	animation: loading 1.5s steps(4) infinite;
+}
+@keyframes loading {
+	0% {
+		width: 0;
+	}
+	100% {
+		width: 4ch;
+	}
+}
+
+.keyboard-key {
+	display: inline-block;
+	text-align: center;
+	height: 1.5rem;
+	width: 1.5rem;
+
+	color: var(--devMode-clr);
+	background: var(--devMode-bg);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.673);
+
+	padding: 4px;
+	font-size: 1.1rem;
+	border-radius: 5px;
+}
+
+.toggleSwitch label {
+	margin-right: 10px;
+}
+.toggleSwitch {
+	flex-direction: row;
+
+	--primary-clr: var(--devMode-clr);
+	--secondary-clr: var(--devMode-bg);
+	color: var(--primary-clr);
+}
+.toggleSwitch.danger {
+	--primary-clr: var(--danger-clr);
+}
+.toggleSwitch .switch {
+	position: relative;
+	display: inline-block;
+	width: 35px;
+	height: 21px;
+
+	transform: translateY(2px);
+}
+.toggleSwitch .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 34px;
+
+	--bg-clr: var(--secondary-clr);
+	background-color: var(--bg-clr);
+	box-shadow: 0 0 1px 1px var(--primary-clr), 0 0 8px black;
+
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+header nav .slider {
+	--bg-clr: var(var(--navBarBackground));
+}
+.toggleSwitch .slider:before {
+	position: absolute;
+	content: "";
+	height: 15px;
+	width: 15px;
+	left: 3px;
+	bottom: 3px;
+	border-radius: 50%;
+
+	background-color: var(--primary-clr);
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+
+.toggleSwitch input:checked + .switch .slider {
+	background-color: var(--primary-clr);
+}
+
+.toggleSwitch input:checked + .switch .slider:before {
+	transform: translateX(13px);
+	background-color: var(--bg-clr);
 }
 
 /*////////////////////// JSON response //////////////////////////*/

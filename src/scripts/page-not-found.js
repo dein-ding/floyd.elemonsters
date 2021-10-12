@@ -1,5 +1,5 @@
-document.addEventListener("load", async () => {
-	const { availablePages, hiddenPages } = getFileAsync("/src/data/main.json", true);
+window.addEventListener("load", async () => {
+	const { availablePages, hiddenPages } = await getFileAsync("/src/data/main.json", true);
 	const availablePagesFormatted = availablePages.map((string) =>
 		string.replace(".html", "").replace(/\//g, "").replace(/-/g, " ")
 	);

@@ -16,7 +16,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 const jsonPre = document.querySelector(".JSON");
-const source = document.querySelector(".source :is(h1, h2, h3, h4, h5, h6)");
+const source = document.querySelector(".source h3");
 let i = 0;
 const json = {
 	display: (json_, source) => {
@@ -25,7 +25,14 @@ const json = {
 		toggleLoadDataMenu(false);
 	},
 	displaySource: (source_ = `source (${i++})`) => (source.innerHTML = source_),
+	/**
+	 * @param {string | object} json the stringified or parsed JSON object
+	 */
 	displayJson: (json) => (jsonPre.innerHTML = json == "clear" ? "{\n\n}" : syntaxHighlight(json)),
+	/**
+	 *
+	 * @param {"loading" | "failed"} state
+	 */
 	displayState: (state) => {
 		switch (state) {
 			case "loading":
@@ -39,6 +46,9 @@ const json = {
 				json.displaySource(escapeHTML(state));
 		}
 	},
+	/**
+	 * @param {string} url
+	 */
 	fetchRequest: async (url) => {
 		json.displayState("loading");
 		try {
