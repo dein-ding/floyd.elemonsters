@@ -779,11 +779,11 @@ function syntaxHighlight(json, indentation = 4) {
 
 /**
  * ## Get the dominant/average color of an image
- * #### Stack Overflow Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
+ * @see Stack-Overflow-Question: https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
  * @param {HTMLImageElement | string} image HTMLImageElement or URL to an image
  * @param {"rgb" | "rgba" | "hex"} colorFormat [defaults to hex]
  * @param {boolean} log log the calculated value [defaults to false]
- * @returns color string (rgb || rgba || hex)
+ * @returns color string in rgb, rgba or hex format
  */
 function getDominantColor(image, colorFormat = "hex", log = false) {
 	let imageObject;
