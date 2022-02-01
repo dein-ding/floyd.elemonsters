@@ -1,6 +1,8 @@
+# Note: this is not hosted and doesn't matter anymore
+
 <img src="/src/assets/images/icons/deinding%20logo.png" alt="my logo can't load" width="100">
 
-# [floyd.elemonsters.de](http://floyd.elemonsters.de)
+## [floyd.elemonsters.de](http://floyd.elemonsters.de)
 
 ### This is my personal Website where I:
 
